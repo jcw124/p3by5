@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
 const app = express();
+const mongoose = require("mongoose");
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,6 +14,12 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/nytreact";
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Send every other request to the React app
 // Define any API routes before this runs
