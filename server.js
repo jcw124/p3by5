@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/nytreact";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/project3_quiz_game";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
