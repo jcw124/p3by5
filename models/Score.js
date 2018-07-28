@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 // Save a reference to the Schema constructor
 const Schema = mongoose.Schema;
@@ -15,10 +15,14 @@ const ScoreSchema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    game: {
+        type: Schema.Types.ObjectId,
+        ref: "Game"
     }
 });
 
 // This creates our model from the above schema, using mongoose's model method
 const Score = mongoose.model("Score", ScoreSchema);
 
-export default Score;
+module.exports=Score;
