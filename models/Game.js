@@ -26,7 +26,7 @@ const GameSchema = new Schema({
             ref: "Question"
         }
     ],
-    highScores: [
+    scores: [
         {
             type: Schema.Types.ObjectId,
             ref: "Score"

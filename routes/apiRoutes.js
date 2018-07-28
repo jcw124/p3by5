@@ -8,6 +8,8 @@ const deleteAdmin = require('../controllers/admin').deleteAdmin;
 const getGame = require('../controllers/game').getGame;
 const saveGame = require('../controllers/game').saveGame;
 const deleteGame = require('../controllers/game').deleteGame;
+const getQuestionIDs = require('../controllers/game').getQuestionIDs;
+const getScoreIDs = require('../controllers/game').getQuestionIDs;
 const getQuestion = require('../controllers/question').getQuestion;
 const saveQuestion = require('../controllers/question').saveQuestion;
 const deleteQuestion = require('../controllers/question').deleteQuestion;
@@ -34,15 +36,19 @@ router.post("/game", saveGame);
 
 router.post("/delete/game", deleteGame);
 
+router.get("/game/questions",getQuestionIDs);
+
+router.get("/game/scores",getScoreIDs);
+
 router.get("/question", getQuestion);
 
-router.post("/question", saveQuestion);
+router.post("/question/:gameID", saveQuestion);
 
 router.post("/delete/question", deleteQuestion);
 
 router.get("/score", getScore);
 
-router.post("/score", saveScore);
+router.post("/score/:gameID", saveScore);
 
 router.post("/delete/score", deleteScore);
 
