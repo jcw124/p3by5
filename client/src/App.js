@@ -3,15 +3,15 @@ import Navigation from "./components/Navigation";
 import Login from "./components/Login";
 import Admin from "./components/Admin/Admin";
 import "./App.css";
-import "./components/Questions";
-import "./components/Game";
+import Questins from "./components/Questions";
+import Game from "./components/Game";
 
 const App = () => (
   <div className="App">
       <Navigation />
       <Login />
       <Admin />
-
+      <Game /> 
   </div>
 );
 
