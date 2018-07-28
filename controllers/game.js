@@ -21,7 +21,21 @@ exports.getGame = function (req, res) {
 }
 
 exports.saveGame = function (req, res) {
-
+    /*req.body syntax:
+    {
+        name: {name of game},
+        numberWrongPermitted: {number of wrong answers before user loses},
+        numberofQuestions: {number of total questions}
+    }*/
+    db.Game.create(req.body)
+        .then(function (dbArticle) {
+            // View the added result in the console
+            console.log(dbArticle);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
+        });
 }
 
 exports.deleteGame = function (req, res) {
