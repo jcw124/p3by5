@@ -5,36 +5,24 @@ const Schema = mongoose.Schema;
 
 // Using the Schema constructor, create a new UserSchema object
 // This is similar to a Sequelize model
-const GameSchema = new Schema({
+const QuestionSchema = new Schema({
     // `title` is required and of type String
-    name: {
+    question: {
         type: String,
         required: true
     },
-    numberWrongPermitted: {
-        type: Number,
+    possibleAnswers: {
+        type: Array,
         required: true
     },
     // `link` is required and of type String
-    numberofQuestions: {
-        type: Number,
+    correctAnswer: {
+        type: String,
         required: true
-    },
-    questions: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Question"
-        }
-    ],
-    highScores: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Score"
-        }
-    ]
+    }
 });
 
 // This creates our model from the above schema, using mongoose's model method
-const Game = mongoose.model("Game", GameSchema);
+const Question = mongoose.model("Question", QuestionSchema);
 
-export default Game;
+export default Question;

@@ -16,9 +16,9 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    teacher: {
+    admin: {
         type: Schema.Types.ObjectId,
-        ref: "Teacher"
+        ref: "Admin"
     }
 });
 

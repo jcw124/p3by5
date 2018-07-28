@@ -16,10 +16,18 @@ const AdminSchema = new Schema({
         type: String,
         required: true
     },
-    teacher: {
-        type: Schema.Types.ObjectId,
-        ref: "Teacher"
-    }
+    users: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+    games: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Game"
+        }
+    ],
 });
 
 // This creates our model from the above schema, using mongoose's model method
