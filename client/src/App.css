@@ -22,3 +22,10 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.game{
+  background-image: url("./images/placeholder-blue.png");
+  background-repeat: no-repeat;
+  color: red;
+  height: 500px;
+  width: 100%;  
+}
