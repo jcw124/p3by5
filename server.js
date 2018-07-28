@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const mongoose = require("mongoose");
+const apiRoutes = require("./routes/apiRoutes");
+
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,7 +15,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// Define API routes here
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/project3_quiz_game";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
@@ -21,6 +22,8 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/projec
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
+// Define API routes here
+app.use("/api", apiRoutes);
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {
