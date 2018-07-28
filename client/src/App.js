@@ -6,13 +6,16 @@ import "./App.css";
 import Questions from "./components/Questions";
 import Game from "./components/Game";
 
+
+
 const App = () => (
   <div className="App">
       <Navigation />
       <Login />
       <Admin />
-      <Game />
       <Questions />
+      <Game />
+
   </div>
 );
 

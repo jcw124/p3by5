@@ -5,7 +5,7 @@ import React from "react";
 const Login = props => (
     <div>
       <div>
-      Game
+      This is the Login Componenet
       </div>
     </div>
   );

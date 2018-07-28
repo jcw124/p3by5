@@ -5,7 +5,7 @@ import "./Game.css";
 const Game = props => (
     <div>
       <div>
-      Game
+      This is Game Component
       </div>
     </div>
   );

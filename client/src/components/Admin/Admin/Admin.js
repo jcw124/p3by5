@@ -4,7 +4,7 @@ import React from "react";
 const Admin= props => (
     <div>
       <div>
-      Game
+     This is the Admin Component
       </div>
     </div>
   );
