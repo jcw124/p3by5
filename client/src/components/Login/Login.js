@@ -2,7 +2,7 @@ import React from "react";
 
 const Login = () => (
     <div className="container">
-        <form classNmae="login">
+        <form className="login">
             <h3> Login or Register </h3>
             <div className="form-group">
                 <label for="username">Username</label>
@@ -14,8 +14,6 @@ const Login = () => (
             </div>
             <button type="submit" className="btn btn-primary">Login</button>
             <button className="btn btn-danger">Register</button>
-
-
         </form> 
     </div>
 );
