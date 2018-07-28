@@ -35,7 +35,7 @@ exports.saveScore = function (req, res) {
     db.Score.create(req.body)
         .then(function (dbScore) {
             // View the added result in the console
-            console.log(dbScore);
+            console.log("New Score:",dbScore);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -65,7 +65,7 @@ exports.deleteScore = function (req, res) {
         });
         console.log("New Scores Array:", newScores);
         db.Games.findByIdAndUpdate(game, { highScores: newScores }).then(function (result) {
-            console.log("Updated Game:",result);
+            console.log("Updated Game:", result);
             res.json(result);
         })
     });
