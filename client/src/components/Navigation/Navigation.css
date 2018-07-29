@@ -1,8 +1,3 @@
-.c {
-    color: white !important;
-    text-decoration: none;
-    font-weight: bold;
-}
 li {
     padding-left: 3px;
 }
@@ -17,6 +12,9 @@ li {
 }
 .navbar {
     background: rgba(25, 149, 251, 0.671);
+    position: fixed !important;
+    width: 100%;
+    top: 0px;
 }
 .wrong::before {
     display: inline-block;
