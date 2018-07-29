@@ -4,8 +4,8 @@ const Edit = () => (
     <div className="container">
         <button 
             //onClick={}
-            className="newGame btn btn-primary">
-                New Game
+            className="edit btn btn-primary">
+                Edit Game
         </button>
 
     </div>
