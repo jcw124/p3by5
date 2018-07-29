@@ -1,4 +1,4 @@
-.login h3 {
+.register h3 {
     text-transform: uppercase;
     padding: 7px;
     background: rgba(255, 255, 255, 0.781);
@@ -7,7 +7,7 @@
     font-size: 40px;
     margin: 0 auto 26px;
 }
-.login {
+.register {
     padding-top: 130px;
 }
 .form-group {
@@ -15,14 +15,6 @@
     margin: 0 auto 1rem;
     text-align: center;
     padding: 0px 20px;
-}
-.form-control {
-    border-radius: 90px !important;
-    background-color: rgba(255, 255, 255, 0.863) !important; 
-}
-label {
-    color: #fff;
-    text-transform: uppercase;
 }
 .btn-primary {
     color: #fff!important;
@@ -47,12 +39,6 @@ label {
     background: linear-gradient(to bottom, #0079db 0%,#1995fb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0079db', endColorstr='#1995fb',GradientType=0 ); /* IE6-9 */
 }
-.btn-register {
-    color:#fff;
-    background-color: transparent!important;
-    border-color: transparent!important;
-    font-size: 20px!important;
-}
 
 /* media query */
 
@@ -66,10 +52,10 @@ label {
     
 }
 @media (max-width: 575.98px) {
-    .login h3 {
+    .register h3 {
         font-size: 30px;
     }
-    .login {
+    .register {
         padding-top: 80px;
     }
     .btn-primary {
