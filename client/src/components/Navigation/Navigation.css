@@ -1,9 +1,8 @@
-<<<<<<< HEAD
 .c {
     color: white !important;
     text-decoration: none;
     font-weight: bold;
-=======
+}
 li {
     padding-left: 3px;
 }
@@ -68,5 +67,4 @@ li {
         top: 6px;
         left: 10px;
     }
->>>>>>> master
 }

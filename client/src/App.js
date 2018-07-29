@@ -8,9 +8,6 @@ import NewGame from "./components/NewGame/NewGame";
 import Questions from "./components/Questions";
 import Game from "./components/Game";
 import "./App.css";
-import Questions from "./components/Questions";
-import Game from "./components/Game";
-
 
 const App = () => (
   

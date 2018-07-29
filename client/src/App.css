@@ -23,16 +23,10 @@
   to { transform: rotate(360deg); }
 }
 .game{
-<<<<<<< HEAD
-  background-image: url("./images/placeholder-blue.png");
-=======
->>>>>>> master
   background-repeat: no-repeat;
   color: red;
   height: 500px;
   width: 100%;  
-<<<<<<< HEAD
-=======
 }
 body {
   font-family: 'Assistant', sans-serif !important;
@@ -41,5 +35,4 @@ body {
   background-position: bottom center;
   background-size: cover;
   height: 100vh;
->>>>>>> master
 }
