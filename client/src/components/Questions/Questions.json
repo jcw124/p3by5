@@ -2,37 +2,37 @@
     {
     "question": "What is the color Red?",
     "correctAnswer": "Red",
-    " possibleAnswers": ["Blue", "Red", "Green", "Yellow"]
+    "possibleAnswers": ["Blue", "Red", "Green", "Yellow"]
 },
 {
     "question": "What is the color Blue?",
     "correctAnswer": "Blue",
-    " possibleAnswers": ["Blue", "Green", "Red", "Black"]
+    "possibleAnswers": ["Blue", "Green", "Red", "Black"]
 }, 
 {
     "question": "What is the color Yellow?",
     "correctAnswer": "Yellow",
-    " possibleAnswers": ["Blue", "Red", "Green", "Yellow"]
+    "possibleAnswers": ["Blue", "Red", "Green", "Yellow"]
 },
 {
     "question": "What is the color Green?",
     "correctAnswer": "Green",
-    " possibleAnswers": ["Blue", "Red", "Green", "Yellow"]
+    "possibleAnswers": ["Blue", "Red", "Green", "Yellow"]
 },
 {
     "question": "What is the color Pink?",
     "correctAnswer": "Pink",
-    " possibleAnswers": ["Blue", "Red", "Green", "Yellow"]
+    "possibleAnswers": ["Blue", "Red", "Green", "Yellow"]
 },
 {
     "question": "What is the color Purple?",
     "correctAnswer": "Purple",
-    " possibleAnswers": ["Pink", "Purple", "Orange", "White"]
+    "possibleAnswers": ["Pink", "Purple", "Orange", "White"]
 },
 {
     "question": "What is the color Orange?",
     "correctAnswer": "Orange",
-    " possibleAnswers": ["Pink", "Purple", "Orange", "White"]
+    "possibleAnswers": ["Pink", "Purple", "Orange", "White"]
 },
 {
     "question": "What is the color Black?",
@@ -47,6 +47,6 @@
 {
     "question": "What is the color Magenta?",
     "correctAnswer": "Magenta",
-    " possibleAnswers": ["Pink", "Purple", "Magenta", "White"]
+    "possibleAnswers": ["Pink", "Purple", "Magenta", "White"]
 }
 ]
