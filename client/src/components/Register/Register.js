@@ -6,9 +6,10 @@ import {
     Input,
     Button
 } from 'reactstrap';
+import "./Register.css";
 
 const Register = () => (
-    <div className="container register">
+    <div className="register">
         <h3>Create Account</h3>
         {/* <Form onSubmit={this.saveAndCont}> */}
         <Form>
@@ -27,7 +28,7 @@ const Register = () => (
                     <option>dummy2</option>
                 </Input>
             </FormGroup>
-            <Button type="submit">Create Account</Button>
+            <button type="submit" className="btn btn-primary">Create Account</button>
         </Form>
     </div>
 );

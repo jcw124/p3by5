@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import NewGameBtn from "./NewGameBtn";
 import { GameList, GameListItem } from "./GameList";
+import { Scoreboard, ScoreboardItem } from "./Scoreboard";
+import ProgressBtn from "./ProgressBtn";
+import Edit from "./Edit";
 
 class App extends Component {
     render() {
@@ -9,7 +12,12 @@ class App extends Component {
                 <NewGameBtn />
                 <GameList>
                     <GameListItem />
+                    <ProgressBtn />
+                    <Edit />
                 </GameList>
+                <Scoreboard>
+                    <ScoreboardItem />
+                </Scoreboard>
             </div>
         )
     }
