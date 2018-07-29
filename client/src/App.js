@@ -13,13 +13,13 @@ const App = () => (
   
   <div className="App">
       <Navigation />
-      <Login />
+      {/* <Login />
       <Register />
-      <Admin />
+      <Admin /> */}
       <NewGameName />
-      <NewGame />
+      {/* <NewGame />
       <Game />
-      <Questions />
+      <Questions /> */}
   </div>
 );
 
