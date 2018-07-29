@@ -8,13 +8,14 @@ import Questions from "./components/Questions";
 import Game from "./components/Game";
 
 const App = () => (
+  
   <div className="App">
       <Navigation />
       <Login />
-      <Register />
+      {/* <Register />
       <Admin />
       <Game />
-      <Questions />
+      <Questions /> */}
   </div>
 );
 
