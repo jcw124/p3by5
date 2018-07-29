@@ -23,9 +23,16 @@
   to { transform: rotate(360deg); }
 }
 .game{
-  background-image: url("./images/placeholder-blue.png");
   background-repeat: no-repeat;
   color: red;
   height: 500px;
   width: 100%;  
+}
+body {
+  font-family: 'Assistant', sans-serif !important;
+  background: url('images/bg.jpg');
+  width: 100vw;
+  background-position: bottom center;
+  background-size: cover;
+  height: 100vh;
 }
