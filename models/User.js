@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 // Save a reference to the Schema constructor
 const Schema = mongoose.Schema;
@@ -26,4 +26,4 @@ const UserSchema = new Schema({
 const User = mongoose.model("User", UserSchema);
 
 // Export the Article model
-export default User;
+module.exports = User;

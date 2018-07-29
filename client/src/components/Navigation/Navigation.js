@@ -1,29 +1,34 @@
 import React from "react";
-import{ 
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink
- } from "reactstrap";
- import "./Navigation.css";
+import{
+ Navbar,
+ NavbarBrand,
+ Nav,
+ NavItem,
+ NavLink
+} from "reactstrap";
+import "./Navigation.css";
+import logosm from "../../images/logosm.svg";
 
 const Navigation = () => (
-    <Navbar className="container navbar-expand-md">
+    <Navbar>
+      <div className="container">
       <NavbarBrand href="/">
-        Educational Game!!!
       </NavbarBrand>
-      <Nav className="ml-auto" navbar>
-        <NavItem >
+      <div className="logosm">
+        <img src={logosm} />
+      </div>
+      <Nav navbar>
+        {/* <NavItem >
           <NavLink href="">Games</NavLink>
+        </NavItem> */}
+        <NavItem>
+          <NavLink className="wrong" href="">0</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="">High Scores</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="">Log Out</NavLink>
+          <NavLink className="correct" href="">0</NavLink>
         </NavItem>
       </Nav>
+      </div>
     </Navbar>
 );
 

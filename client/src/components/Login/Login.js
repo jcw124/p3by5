@@ -1,7 +1,8 @@
 import React from "react";
+import "./Login.css";
 
 const Login = () => (
-    <div className="container">
+    <div>
         <form className="login">
             <h3> Login or Register </h3>
             <div className="form-group">
@@ -13,7 +14,7 @@ const Login = () => (
                 <input type="password" name="password" className="form-control" />
             </div>
             <button type="submit" className="btn btn-primary">Login</button>
-            <button className="btn btn-danger">Register</button>
+            <button className="btn btn-register">Register</button>
         </form> 
     </div>
 );
