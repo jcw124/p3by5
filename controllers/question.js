@@ -41,7 +41,7 @@ exports.saveQuestion = function (req, res) {
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
-            res.json(err);
+            return res.json(err);
         });
 }
 
@@ -56,11 +56,9 @@ exports.updateQuestion = function (req, res) {
         */
     db.Question.findOneAndUpdate({ _id: req.body.id },
         {
-            $set: {
                 question: req.body.question,
                 possibleAnswers: req.body.possibleAnswers,
                 correctAnswers: req.body.correctAnswers
-            }
         })
         .then(function (dbQuestion) {
             // If we were able to successfully update an Article, send it back to the client
@@ -68,7 +66,7 @@ exports.updateQuestion = function (req, res) {
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
-            res.json(err);
+            return res.json(err);
         });
 }
 
@@ -85,7 +83,7 @@ exports.deleteQuestion = function (req, res) {
         .then(function (result) {
             const newQuestions = [];
             console.log("target questions:", result);
-            result.highScores.forEach(id => {
+            result.questions.forEach(id => {
                 if (id == question) {
                     db.Question.findByIdAndRemove(id)
                         .then(function (removed) {
