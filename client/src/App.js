@@ -5,8 +5,8 @@ import Register from "./components/Register";
 import Admin from "./components/Admin/Admin";
 import NewGameName from "./components/NewGameName"
 import NewGame from "./components/NewGame/NewGame";
-import Questions from "./components/Questions";
-import Game from "./components/Game";
+import User from "./components/User/User";
+import Game from "./components/Game/Game";
 import "./App.css";
 
 const App = () => (
@@ -18,8 +18,8 @@ const App = () => (
       <Admin />
       <NewGameName />
       <NewGame />
+      <User />
       <Game />
-      <Questions />
   </div>
 );
 
