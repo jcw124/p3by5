@@ -6,16 +6,17 @@ import {
     Input,
     Button
 } from 'reactstrap';
+import"./NewGameName.css";
 
 
 const NewGameName = () => (
-    <div className="container">
+    <div className="newgamename">
+        <h3>Game Name</h3>
         <Form>
             <FormGroup>
-                <Label for="gameName">Game Name</Label>
                 <Input type="gameName" name="gameName" id="gameName" placeholder="What do you want to call this game?" />
             </FormGroup>
-            <Button type="submit">Create Game</Button>
+            <button type="submit" className="btn btn-primary">Create Game</button>
         </Form>
     </div>
 );
