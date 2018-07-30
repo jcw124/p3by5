@@ -82,7 +82,7 @@ exports.deleteAdmin = function (req, res) {
             });
             dbGame.games.forEach(id => {
                 deleteGame({
-                    game: id
+                    game: id,
                     admin: req.body.id
                 }, res);
             });
