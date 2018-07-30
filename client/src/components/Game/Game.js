@@ -4,6 +4,7 @@ import Questions from "./Questions";
 import Answers from "./Answers";
 import PreBtn from "./PreBtn";
 import PostBtn from "./PostBtn";
+import WinLose from "./WinLose";
 import { 
   Card, 
   CardHeader, 
@@ -27,7 +28,8 @@ class App extends Component {
               <p>This is where the game will go</p>
               <Questions />
               <Answers />
-              <p>THe sprites animation will go here</p>
+              <p>The sprites animation will go here</p>
+              <WinLose />
           </CardBody>
           <CardFooter>
               <PreBtn />
