@@ -1,4 +1,5 @@
 import React from "react";
+import "./DisplayGame.css";
 
 export const DisplayGameQAItem = props => (
     <li className="list-group">
@@ -8,6 +9,6 @@ export const DisplayGameQAItem = props => (
         <p>Dummy Incorrect Option</p>
         <p>Dummy Incorrect Option</p>
         <p>Dummy Incorrect Option</p>
-        <button type="submit" id="">Edit</button>
+        <button className="editbtn" type="submit" id="">Edit</button>
     </li>
 )

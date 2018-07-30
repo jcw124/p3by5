@@ -10,7 +10,7 @@ class App extends Component {
                 <DisplayGameQA>
                     <DisplayGameQAItem />
                 </DisplayGameQA>
-                <button type="submit">Done</button>
+                <button type="submit" type="submit" className="btn btn-primary">Done</button>
             </div>
         )
     }
