@@ -7,9 +7,13 @@ const saveAdmin = require('../controllers/admin').saveAdmin;
 const deleteAdmin = require('../controllers/admin').deleteAdmin;
 const getGame = require('../controllers/game').getGame;
 const saveGame = require('../controllers/game').saveGame;
+const updateGame = require('../controllers/game').updateGame;
 const deleteGame = require('../controllers/game').deleteGame;
+const getQuestionIDs = require('../controllers/game').getQuestionIDs;
+const getScoreIDs = require('../controllers/game').getQuestionIDs;
 const getQuestion = require('../controllers/question').getQuestion;
 const saveQuestion = require('../controllers/question').saveQuestion;
+const updateQuestion= require('../controllers/question').updateQuestion;
 const deleteQuestion = require('../controllers/question').deleteQuestion;
 const getScore = require('../controllers/score').getScore;
 const saveScore = require('../controllers/score').saveScore;
@@ -30,19 +34,27 @@ router.post("/delete/admin", deleteAdmin);
 
 router.get("/game", getGame);
 
-router.post("/game", saveGame);
+router.put("/game", saveGame);
+
+router.post("/game", updateGame);
 
 router.post("/delete/game", deleteGame);
 
+router.get("/game/questions",getQuestionIDs);
+
+router.get("/game/scores",getScoreIDs);
+
 router.get("/question", getQuestion);
 
-router.post("/question", saveQuestion);
+router.put("/question/:gameID", saveQuestion);
+
+router.post("/question/", updateQuestion);
 
 router.post("/delete/question", deleteQuestion);
 
 router.get("/score", getScore);
 
-router.post("/score", saveScore);
+router.put("/score/:gameID", saveScore);
 
 router.post("/delete/score", deleteScore);
 

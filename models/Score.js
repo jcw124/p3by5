@@ -19,7 +19,11 @@ const ScoreSchema = new Schema({
     game: {
         type: Schema.Types.ObjectId,
         ref: "Game"
-    }
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
 });
 
 // This creates our model from the above schema, using mongoose's model method
