@@ -24,11 +24,18 @@ exports.saveGame = function (req, res) {
         name: {name of game},
         numberWrongPermitted: {number of wrong answers before user loses},
         numberofQuestions: {number of total questions}
-    }*/
+        
+    }
+    req.params.adminID is the associated admin _id for this game
+        
+    */
     db.Game.create(req.body)
-        .then(function (dbArticle) {
-            // View the added result in the console
-            console.log(dbArticle);
+        .then(function (dbGame) {
+            return db.Admin.findOneAndUpdate({ _id: req.params.adminID }, { $push: { games: dbGame._id } }, { new: true });
+        })
+        .then(function (dbAdmin) {
+            // If we were able to successfully update a Game, send it back to the client
+            res.json("Updated Admin:", dbAdmin);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -46,11 +53,9 @@ exports.updateGame = function (req, res) {
     }*/
     db.Game.findOneAndUpdate({ _id: req.body.id },
         {
-            $set: {
                 question: req.body.question,
                 numberWrongPermitted: req.body.numberWrongPermitted,
                 numberofQuestions: req.body.numberofQuestions
-            }
         })
         .then(function (dbGame) {
             // If we were able to successfully update an Article, send it back to the client
@@ -137,13 +142,13 @@ exports.getScoreIDs = function (req, res) {
         id: {_id of game},
     }
     */
-   db.Game.findById(req.body.id)
-       .then(function (dbGame) {
-           console.log("Score IDs:", dbGame.scores);
-           res.json(dbGame.scores);
-       })
-       .catch(function (err) {
-           return res.json(err);
-       });
+    db.Game.findById(req.body.id)
+        .then(function (dbGame) {
+            console.log("Score IDs:", dbGame.scores);
+            res.json(dbGame.scores);
+        })
+        .catch(function (err) {
+            return res.json(err);
+        });
 
 }

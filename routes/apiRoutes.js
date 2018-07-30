@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const getUser = require('../controllers/user').getUser;
 const saveUser = require('../controllers/user').saveUser;
+const updateUser = require('../controllers/user').updateUser;
 const deleteUser = require('../controllers/user').deleteUser;
 const getAdmin = require('../controllers/admin').getAdmin;
 const saveAdmin = require('../controllers/admin').saveAdmin;
@@ -22,19 +23,21 @@ const deleteScore = require('../controllers/score').deleteScore;
 
 router.get("/user", getUser);
 
-router.post("/user", saveUser);
+router.put("/user", saveUser);
+
+router.post("/user", updateUser);
 
 router.post("/delete/user", deleteUser);
 
 router.get("/admin", getAdmin);
 
-router.post("/admin", saveAdmin);
+router.put("/admin", saveAdmin);
 
 router.post("/delete/admin", deleteAdmin);
 
 router.get("/game", getGame);
 
-router.put("/game", saveGame);
+router.put("/game/savegame/:adminID", saveGame);
 
 router.post("/game", updateGame);
 
