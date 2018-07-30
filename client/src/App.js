@@ -22,7 +22,6 @@ const App = () => (
       <NewGame />
       <Game />
       <Questions />
-      <Game />
 
   </div>
 );
