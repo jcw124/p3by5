@@ -54,7 +54,7 @@ exports.updateQuestion = function (req, res) {
             correctAnswers: {correct answer of all possible answers}
         }
         */
-    db.Question.findOneAndUpdate({ _id: req.body.id },
+    db.Question.findByIdAndUpdate(req.body.id,
         {
                 question: req.body.question,
                 possibleAnswers: req.body.possibleAnswers,

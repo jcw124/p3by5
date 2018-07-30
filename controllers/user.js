@@ -48,7 +48,7 @@ exports.updateUser = function (req, res) {
             password: {new password of user}
         }
         */
-    db.User.findOneAndUpdate({ _id: req.body.id },
+    db.User.findByIdAndUpdate(req.body.id,
         {
             username: req.body.username,
             password: req.body.password
