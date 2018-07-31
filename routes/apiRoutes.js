@@ -10,14 +10,15 @@ const saveAdmin = require('../controllers/admin').saveAdmin;
 const updateAdmin = require('../controllers/admin').updateAdmin;
 const deleteAdmin = require('../controllers/admin').deleteAdmin;
 const getAllAdmins = require('../controllers/admin').getAllAdmins;
-
+const getGamesbyAdminID = require('../controllers/admin').getGamesbyAdminID;
+const getUsersbyAdminID = require('../controllers/admin').getUsersbyAdminID;
 
 const getGame = require('../controllers/game').getGame;
 const saveGame = require('../controllers/game').saveGame;
 const updateGame = require('../controllers/game').updateGame;
 const deleteGame = require('../controllers/game').deleteGame;
-const getQuestionIDs = require('../controllers/game').getQuestionIDs;
-const getScoreIDs = require('../controllers/game').getQuestionIDs;
+const getQuestionsbyGameID = require('../controllers/game').getQuestionsbyGameID;
+const getScoresbyGameID = require('../controllers/game').getScoresbyGameID;
 
 const getQuestion = require('../controllers/question').getQuestion;
 const saveQuestion = require('../controllers/question').saveQuestion;
@@ -38,14 +39,16 @@ router.get("/get/admin/:id", getAdmin)
 router.put("/admin", saveAdmin);
 router.post("/admin", updateAdmin);
 router.delete("/delete/admin/:id", deleteAdmin);
-router.get("/get/admin", getAllAdmins)
+router.get("/get/admin", getAllAdmins);
+router.get("/admin/games/:id", getGamesbyAdminID);
+router.get("/admin/users/:id", getUsersbyAdminID);
 
 router.get("/get/game/:id", getGame);
 router.put("/game", saveGame);
 router.post("/game", updateGame);
 router.delete("/delete/game/:id", deleteGame);
-router.get("/game/questions/:id", getQuestionIDs);
-router.get("/game/scores/:id", getScoreIDs);
+router.get("/game/questions/:id", getQuestionsbyGameID);
+router.get("/game/scores/:id", getScoresbyGameID);
 
 router.get("/get/question/:id", getQuestion);
 router.put("/question", saveQuestion);
