@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import API from "../../utils/API";
+import {gameAPI} from "../../utils/API";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
 import { Input, FormBtn } from "../../components/Form";
@@ -24,7 +24,7 @@ class Admin extends Component {
     }
 
     loadGames = () => {
-        API.getGames()
+        gameAPI.getGames()
             .then(res =>
                 this.setState({ 
                     games: res.data,
@@ -47,7 +47,7 @@ class Admin extends Component {
     HandleFormSubmit = event => {
         event.preventDefault();
         if(this.state.name) {
-            API.saveGameName({
+            gameAPI.saveGameName({
                 name: this.state.name
             }).then(res => this.loadGames()
             ).catch(err=> console.log(err));
