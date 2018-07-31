@@ -24,13 +24,45 @@ exports.saveQuestion = function (req, res) {
             question: {question to be asked by the opponent}
             possibleAnswers: {array of possible answers to be displayed},
             correctAnswers: {correct answer of all possible answers}
-            game: {_id of associated game}
         }
+            req.params.gameID is the associated game _id for this question
         */
+    req.body.game = req.params.gameID;
     db.Question.create(req.body)
         .then(function (dbQuestion) {
-            // View the added result in the console
-            console.log("New Question:", dbQuestion);
+            // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+            // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
+            // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
+            return db.Game.findOneAndUpdate({ _id: req.params.gameID }, { $push: { questions: dbQuestion._id } }, { new: true });
+        })
+        .then(function (dbGame) {
+            // If we were able to successfully update an Article, send it back to the client
+            res.json("Updated Game:", dbGame);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
+        });
+}
+
+exports.updateQuestion = function (req, res) {
+    /*req.body syntax:
+        {
+            id: {_id of question to be updated}
+            question: {question to be asked by the opponent}
+            possibleAnswers: {array of possible answers to be displayed},
+            correctAnswers: {correct answer of all possible answers}
+        }
+        */
+    db.Question.findByIdAndUpdate(req.body.id,
+        {
+                question: req.body.question,
+                possibleAnswers: req.body.possibleAnswers,
+                correctAnswers: req.body.correctAnswers
+        })
+        .then(function (dbQuestion) {
+            // If we were able to successfully update an Article, send it back to the client
+            res.json("Updated Question:", dbQuestion);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -51,7 +83,7 @@ exports.deleteQuestion = function (req, res) {
         .then(function (result) {
             const newQuestions = [];
             console.log("target questions:", result);
-            result.highScores.forEach(id => {
+            result.questions.forEach(id => {
                 if (id == question) {
                     db.Question.findByIdAndRemove(id)
                         .then(function (removed) {
@@ -79,77 +111,4 @@ exports.deleteQuestion = function (req, res) {
             // If an error occurred, send it to the client
             return res.json(err);
         });;
-}
-
-const db = require('../models');
-
-exports.getScore = function (req, res) {
-    /*req.body syntax:
-    {
-        gameID: {mongoose schema id of associated game},
-        name: {name of user associated with given score}
-    }
-    */
-    console.log(req.body);
-    db.Score.find({
-        game: req.body.gameID,
-        name: req.body.name
-    })
-        .sort({ score: -1 })
-        .then(function (dbScores) {
-            // If we were able to successfully find an Headline with the given id, send it back to the client
-            console.log("Scores:", dbScores);
-            res.json(dbScores);
-        })
-        .catch(function (err) {
-            // If an error occurred, send it to the client
-            res.json(err);
-        });
-}
-
-exports.saveScore = function (req, res) {
-    /*req.body syntax:
-    {
-        score: {score of game just completed}
-        name: {name of user associated with given score},
-        game: {mongoose schema id of associated game}
-    }
-    */
-    db.Score.create(req.body)
-        .then(function (dbScore) {
-            // View the added result in the console
-            console.log(dbScore);
-        })
-        .catch(function (err) {
-            // If an error occurred, send it to the client
-            return res.json(err);
-        });
-}
-
-exports.deleteScore = function (req, res) {
-    /*req.body syntax:
-    {
-        score: {_id of score we want to delete},
-        game: {_id of associated game}
-    }
-    */
-    const score = req.body.score, game = req.body.game;
-
-    db.Game.findById(game, "highScores").then(function (result) {
-        const newScores = [];
-        console.log("target scores:", result);
-        result.highScores.forEach(id => {
-            if (id == score) {
-                db.Score.findByIdAndRemove(id).then(function (removed) {
-                    console.log("Removed:", removed);
-                });
-            }
-            else newScores.push(id);
-        });
-        console.log("New Scores Array:", newScores);
-        db.Games.findByIdAndUpdate(game, { highScores: newScores }).then(function (result) {
-            console.log("Updated Game:", result);
-            res.json(result);
-        })
-    });
 }

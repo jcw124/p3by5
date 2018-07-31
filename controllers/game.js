@@ -1,13 +1,172 @@
 const db = require('../models');
 
 exports.getGame = function (req, res) {
-    
+    /*req.body syntax:
+    {
+        id: {_id of game},
+    }
+    */
+    db.Game.findById(req.body.id)
+        .populate("questions")
+        .populate("scores")
+        .then(function (dbGame) {
+            console.log("Game:", dbGame);
+            res.json(dbGame);
+        })
+        .catch(function (err) {
+            return res.json(err);
+        });
 }
 
 exports.saveGame = function (req, res) {
-    
+    /*req.body syntax:
+    {
+        name: {name of game},
+        numberWrongPermitted: {number of wrong answers before user loses},
+        numberofQuestions: {number of total questions}
+        
+    }
+    req.params.adminID is the associated admin _id for this game
+        
+    */
+    db.Game.create(req.body)
+        .then(function (dbGame) {
+            return db.Admin.findOneAndUpdate({ _id: req.params.adminID }, { $push: { games: dbGame._id } }, { new: true });
+        })
+        .then(function (dbAdmin) {
+            // If we were able to successfully update a Game, send it back to the client
+            res.json("Updated Admin:", dbAdmin);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
+        });
+}
+
+exports.updateGame = function (req, res) {
+    /*req.body syntax:
+    {
+        id: {id of game to be updated}
+        name: {name of game},
+        numberWrongPermitted: {number of wrong answers before user loses},
+        numberofQuestions: {number of total questions}
+    }*/
+    db.Game.findByIdAndUpdate(req.body.id,
+        {
+            question: req.body.question,
+            numberWrongPermitted: req.body.numberWrongPermitted,
+            numberofQuestions: req.body.numberofQuestions
+        })
+        .then(function (dbGame) {
+            // If we were able to successfully update an Article, send it back to the client
+            res.json("Updated Game:", dbGame);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
+        });
 }
 
 exports.deleteGame = function (req, res) {
-    
+    /*req.body syntax:
+    {
+        game: {_id of game to be updated}
+        admin: {_id of admin associated with game}
+    }*/
+    db.Game.findById(req.body.game, "questions scores")
+        .then(function (dbGame) {
+            console.log("target questions:", dbGame);
+            dbGame.questions.forEach(id => {
+                db.Question.findByIdAndRemove(id)
+                    .then(function (removed) {
+                        console.log("removed question when deleting game:", removed);
+                    })
+                    .catch(function (err) {
+                        // If an error occurred, send it to the client
+                        return res.json(err);
+                    });
+            });
+            dbGame.scores.forEach(id => {
+                db.Score.findByIdAndRemove(id)
+                    .then(function (removed) {
+                        console.log("removed score when deleting game:", removed);
+                    })
+                    .catch(function (err) {
+                        // If an error occurred, send it to the client
+                        return res.json(err);
+                    });
+            });
+        })
+        .then(function () {
+            db.Admin.findById(admin, "games")
+                .then(function (dbAdmin) {
+                    const newGames = [];
+                    console.log("target users:", dbAdmin);
+                    dbAdmin.users.forEach(id => {
+                        if (id == admin) {
+                            db.Game.findByIdAndRemove(id)
+                                .then(function (removed) {
+                                    console.log("Removed:", removed);
+                                })
+                                .catch(function (err) {
+                                    // If an error occurred, send it to the client
+                                    return res.json(err);
+                                });;
+                        }
+                        else newGames.push(id);
+                    });
+                    db.Admin.findByIdAndUpdate(admin, { games: newGames })
+                        .then(function (dbAdmin) {
+                            console.log("Updated Admin:", dbAdmin);
+                            res.json(dbAdmin);
+                        })
+                        .catch(function (err) {
+                            // If an error occurred, send it to the client
+                            return res.json(err);
+                        });
+                })
+                .catch(function (err) {
+                    // If an error occurred, send it to the client
+                    return res.json(err);
+                });
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            return res.json(err);
+        });
+}
+
+
+exports.getQuestionIDs = function (req, res) {
+    /*req.body syntax:
+    {
+        id: {_id of game},
+    }
+    */
+    db.Game.findById(req.body.id)
+        .then(function (dbGame) {
+            console.log("Question IDs:", dbGame.questions);
+            res.json(dbGame.questions);
+        })
+        .catch(function (err) {
+            return res.json(err);
+        });
+}
+
+
+exports.getScoreIDs = function (req, res) {
+    /*req.body syntax:
+    {
+        id: {_id of game},
+    }
+    */
+    db.Game.findById(req.body.id)
+        .then(function (dbGame) {
+            console.log("Score IDs:", dbGame.scores);
+            res.json(dbGame.scores);
+        })
+        .catch(function (err) {
+            return res.json(err);
+        });
+
 }
