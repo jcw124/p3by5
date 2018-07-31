@@ -31,10 +31,15 @@ const GameSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Score"
         }
-    ]
+    ],
+    admin: {
+        type: Schema.Types.ObjectId,
+        ref: "Admin"
+    }
+
 });
 
 // This creates our model from the above schema, using mongoose's model method
 const Game = mongoose.model("Game", GameSchema);
 
-module.exports= Game;
+module.exports = Game;

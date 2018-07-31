@@ -1,12 +1,10 @@
 const db = require('../models');
 
 exports.getGame = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of game},
-    }
-    */
-    db.Game.findById(req.body.id)
+    /*
+       req.params gives _id of user
+   */
+    db.Game.findById(req.params.id)
         .populate("questions")
         .populate("scores")
         .then(function (dbGame) {
@@ -24,14 +22,13 @@ exports.saveGame = function (req, res) {
         name: {name of game},
         numberWrongPermitted: {number of wrong answers before user loses},
         numberofQuestions: {number of total questions}
+        admin: {_id of associated admin}
         
     }
-    req.params.adminID is the associated admin _id for this game
-        
     */
     db.Game.create(req.body)
         .then(function (dbGame) {
-            return db.Admin.findOneAndUpdate({ _id: req.params.adminID }, { $push: { games: dbGame._id } }, { new: true });
+            return db.Admin.findOneAndUpdate({ _id: req.body.admin }, { $push: { games: dbGame._id } }, { new: true });
         })
         .then(function (dbAdmin) {
             // If we were able to successfully update a Game, send it back to the client
@@ -68,13 +65,13 @@ exports.updateGame = function (req, res) {
 }
 
 exports.deleteGame = function (req, res) {
-    /*req.body syntax:
-    {
-        game: {_id of game to be updated}
-        admin: {_id of admin associated with game}
-    }*/
-    db.Game.findById(req.body.game, "questions scores")
+    /*
+        req.params gives _id of game to be removed
+    */
+    let admin;
+    db.Game.findById(req.params.id, "questions scores")
         .then(function (dbGame) {
+            admin = dbGame.admin;
             console.log("target questions:", dbGame);
             dbGame.questions.forEach(id => {
                 db.Question.findByIdAndRemove(id)

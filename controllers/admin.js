@@ -2,12 +2,10 @@ const db = require('../models');
 const deleteGame = require("./game").deleteGame;
 
 exports.getAdmin = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of admin},
-    }
+    /*
+        req.params gives _id of admin
     */
-    db.Admin.findById(req.body.id)
+    db.Admin.findById(req.params.id)
         .populate("users")
         .populate("games")
         .then(function (dbAdmin) {
@@ -29,7 +27,7 @@ exports.saveAdmin = function (req, res) {
     db.Admin.create(req.body)
         .then(function (dbAdmin) {
             // If we were able to successfully update a Game, send it back to the client
-            res.json("New Admin:", dbAdmin);
+            res.json(dbAdmin);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -53,7 +51,7 @@ exports.updateAdmin = function (req, res) {
         })
         .then(function (dbAdmin) {
             // If we were able to successfully update an Article, send it back to the client
-            res.json("Updated Admin:", dbAdmin);
+            res.json(dbAdmin);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -63,11 +61,10 @@ exports.updateAdmin = function (req, res) {
 
 
 exports.deleteAdmin = function (req, res) {
-    /*req.body syntax:
-     {
-         id: {_id of admin associated with game}
-     }*/
-    db.Admin.findById(req.body.id, "users games")
+    /*
+        req.params gives _id of admin
+    */
+    db.Admin.findById(req.params.id, "users games")
         .then(function (dbAdmin) {
             console.log("target admin:", dbAdmin);
             dbAdmin.users.forEach(id => {
@@ -83,12 +80,12 @@ exports.deleteAdmin = function (req, res) {
             dbGame.games.forEach(id => {
                 deleteGame({
                     game: id,
-                    admin: req.body.id
+                    admin: req.params.id
                 }, res);
             });
         })
         .then(function () {
-            db.Admin.findByIdAndRemove(req.body.id)
+            db.Admin.findByIdAndRemove(req.params.id)
                 .then(function (removed) {
                     console.log("Removed Admin:", removed);
                     res.json(removed);
