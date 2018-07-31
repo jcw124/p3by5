@@ -1,7 +1,7 @@
 const db = require('../models');
 
 exports.getScores = function (req, res) {
-    /*req.params.ids syntax:
+    /*req.query syntax:
     {
         game: {_id of associated game},
         user: {_id of associated user}
@@ -9,9 +9,9 @@ exports.getScores = function (req, res) {
     */
     console.log(req.body);
     db.Score.find({
-        game: req.params.ids.game,
-        user: req.params.ids.user
-    })
+        game: req.query.game,
+        user: req.query.user
+    }, "score name")
         .sort({ score: -1 })
         .then(function (dbScores) {
             // If we were able to successfully find an Headline with the given id, send it back to the client
@@ -63,7 +63,7 @@ exports.deleteScore = function (req, res) {
                     const newScores = [];
                     console.log("target scores:", result);
                     result.scores.forEach(id => {
-                        if (id == score) {
+                        if (id == req.params.id) {
                             db.Score.findByIdAndRemove(id)
                                 .then(function (removed) {
                                     console.log("Removed:", removed);

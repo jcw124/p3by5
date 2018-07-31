@@ -5,7 +5,6 @@ exports.getAdmin = function (req, res) {
     /*
         req.params gives _id of admin
     */
-    console.log("asdfasdfasdf");
     db.Admin.findById(req.params.id)
         .populate("users")
         .populate("games")
@@ -79,8 +78,31 @@ exports.deleteAdmin = function (req, res) {
                     });
             });
             dbAdmin.games.forEach(id => {
-                deleteGame({ params: { id: id } }, res);
-            });
+                db.Game.findByIdAndRemove(id)
+                    .then(function (dbGame) {
+                        console.log("target game:", dbGame);
+                        dbGame.questions.forEach(id => {
+                            db.Question.findByIdAndRemove(id)
+                                .then(function (removed) {
+                                    console.log("removed question when deleting game:", removed);
+                                })
+                                .catch(function (err) {
+                                    // If an error occurred, send it to the client
+                                    return res.json(err);
+                                });
+                        });
+                        dbGame.scores.forEach(id => {
+                            db.Score.findByIdAndRemove(id)
+                                .then(function (removed) {
+                                    console.log("removed score when deleting game:", removed);
+                                })
+                                .catch(function (err) {
+                                    // If an error occurred, send it to the client
+                                    return res.json(err);
+                                });
+                        });
+                    });
+            })
         })
         .then(function () {
             db.Admin.findByIdAndRemove(req.params.id)
@@ -95,6 +117,18 @@ exports.deleteAdmin = function (req, res) {
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
+            return res.json(err);
+        });
+}
+
+exports.getAllAdmins = function (req, res) {
+    db.Admin.find({})
+        .populate("users")
+        .populate("games")
+        .then(function (dbAdmins) {
+            res.json(dbAdmins);
+        })
+        .catch(function (err) {
             return res.json(err);
         });
 }

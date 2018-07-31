@@ -135,12 +135,10 @@ exports.deleteGame = function (req, res) {
 
 
 exports.getQuestionIDs = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of game},
-    }
+    /*
+        req.params gives _id of associated game
     */
-    db.Game.findById(req.body.id)
+    db.Game.findById(req.params.id, "questions")
         .then(function (dbGame) {
             console.log("Question IDs:", dbGame.questions);
             res.json(dbGame.questions);
@@ -152,12 +150,10 @@ exports.getQuestionIDs = function (req, res) {
 
 
 exports.getScoreIDs = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of game},
-    }
+    /*
+        req.params gives _id of associated game
     */
-    db.Game.findById(req.body.id)
+    db.Game.findById(req.body.id, "scores")
         .then(function (dbGame) {
             console.log("Score IDs:", dbGame.scores);
             res.json(dbGame.scores);
