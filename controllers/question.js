@@ -21,7 +21,7 @@ exports.saveQuestion = function (req, res) {
         {
             question: {question to be asked by the opponent}
             possibleAnswers: {array of possible answers to be displayed},
-            correctAnswers: {correct answer of all possible answers}
+            correctAnswer: {correct answer of all possible answers}
             game: {associated game _id for this question}
         }
         */
@@ -34,7 +34,7 @@ exports.saveQuestion = function (req, res) {
         })
         .then(function (dbGame) {
             // If we were able to successfully update an Article, send it back to the client
-            res.json("Updated Game:", dbGame);
+            res.json(dbGame);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -55,11 +55,11 @@ exports.updateQuestion = function (req, res) {
         {
             question: req.body.question,
             possibleAnswers: req.body.possibleAnswers,
-            correctAnswers: req.body.correctAnswers
+            correctAnswer: req.body.correctAnswer
         })
         .then(function (dbQuestion) {
             // If we were able to successfully update an Article, send it back to the client
-            res.json("Updated Question:", dbQuestion);
+            res.json(dbQuestion);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -71,15 +71,17 @@ exports.deleteQuestion = function (req, res) {
     /*
         req.params gives _id of question to be removed
     */
+    let game;
 
     db.Question.findById(req.params.id)
         .then(function (dbQuestion) {
+            game = dbQuestion.game;
             db.Game.findById(dbQuestion.game, "questions")
                 .then(function (result) {
                     const newQuestions = [];
                     console.log("target questions:", result);
                     result.questions.forEach(id => {
-                        if (id == question) {
+                        if (id == req.params.id) {
                             db.Question.findByIdAndRemove(id)
                                 .then(function (removed) {
                                     console.log("Removed:", removed);
@@ -91,8 +93,8 @@ exports.deleteQuestion = function (req, res) {
                         }
                         else newQuestions.push(id);
                     });
-                    console.log("New Questions Array:", newQuestions);
-                    db.Games.findByIdAndUpdate(game, { questions: newQuestions })
+                    console.log("New Questions Array:", newQuestions,"game",game);
+                    db.Game.findByIdAndUpdate(game, { questions: newQuestions }, { new: true })
                         .then(function (result) {
                             console.log("Updated Game:", result);
                             res.json(result);

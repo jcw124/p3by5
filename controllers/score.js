@@ -42,7 +42,7 @@ exports.saveScore = function (req, res) {
         })
         .then(function (dbGame) {
             // If we were able to successfully update a Game, send it back to the client
-            res.json("Updated Game:", dbGame);
+            res.json(dbGame);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -54,10 +54,11 @@ exports.deleteScore = function (req, res) {
     /*
         req.params gives _id of score to be removed
     */
-
+    let game;
     db.Score.findById(req.params.id)
         .then(function (dbScore) {
-            db.Game.findById(dbScore.game, "scores")
+            game = dbScore.game;
+            db.Game.findById(game, "scores")
                 .then(function (result) {
                     const newScores = [];
                     console.log("target scores:", result);
@@ -75,7 +76,7 @@ exports.deleteScore = function (req, res) {
                         else newScores.push(id);
                     });
                     console.log("New Scores Array:", newScores);
-                    db.Games.findByIdAndUpdate(game, { scores: newScores })
+                    db.Game.findByIdAndUpdate(game, { scores: newScores }, { new: true })
                         .then(function (result) {
                             console.log("Updated Game:", result);
                             res.json(result);

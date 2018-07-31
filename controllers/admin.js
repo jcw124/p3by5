@@ -5,6 +5,7 @@ exports.getAdmin = function (req, res) {
     /*
         req.params gives _id of admin
     */
+    console.log("asdfasdfasdf");
     db.Admin.findById(req.params.id)
         .populate("users")
         .populate("games")
@@ -39,7 +40,7 @@ exports.saveAdmin = function (req, res) {
 exports.updateAdmin = function (req, res) {
     /*req.body syntax:
     {
-        id: {id of game to be updated}
+        id: {_id of game to be updated}
         username: {username of admin},
         password: {password of admin}
         
@@ -48,7 +49,7 @@ exports.updateAdmin = function (req, res) {
         {
             username: req.body.username,
             password: req.body.password
-        })
+        }, { new: true })
         .then(function (dbAdmin) {
             // If we were able to successfully update an Article, send it back to the client
             res.json(dbAdmin);
@@ -68,20 +69,17 @@ exports.deleteAdmin = function (req, res) {
         .then(function (dbAdmin) {
             console.log("target admin:", dbAdmin);
             dbAdmin.users.forEach(id => {
-                db.Users.findByIdAndRemove(id)
-                    .then(function (removed) {
-                        console.log("removed user when deleting admin:", removed);
+                db.User.findByIdAndRemove(id)
+                    .then(function () {
+                        console.log("removed user:", id);
                     })
                     .catch(function (err) {
                         // If an error occurred, send it to the client
                         return res.json(err);
                     });
             });
-            dbGame.games.forEach(id => {
-                deleteGame({
-                    game: id,
-                    admin: req.params.id
-                }, res);
+            dbAdmin.games.forEach(id => {
+                deleteGame({ params: { id: id } }, res);
             });
         })
         .then(function () {
