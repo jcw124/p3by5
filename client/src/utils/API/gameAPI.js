@@ -1,15 +1,38 @@
 import axios from "axios";
 
 export default {
-    //get all games 
-    getGames: function() {
-        return axios.get("/api/games");
+    getGame: function (gameID) {
+        return axios.get(`/api/get/game/${gameID}`);
     },
-    //get game with id - to edit 
-    editGame: function(id) {
-        return axios.get("/api/games/" + id);
+
+    saveGame: function (name, numberWrongPermitted, numberofQuestions, adminID) {
+        return axios.put('/api/game', {
+            name: name,
+            numberWrongPermitted: numberWrongPermitted,
+            numberofQuestions: numberofQuestions,
+            admin: adminID
+        });
     },
-    saveGameName: function(gameName) {
-        return axios.post("/api/books", gameName);
+
+    updateGame: function (gameID, name, numberWrongPermitted, numberofQuestions) {
+        return axios.post('/api/game',{
+            id: gameID,
+            name: name,
+            numberWrongPermitted: numberWrongPermitted,
+            numberofQuestions: numberofQuestions
+        });
+    },
+
+    deleteGame: function (gameID) {
+        return axios.delete(`/api/delete/game/${gameID}`);
+    },
+    
+    getQuestionsbyGameID: function (gameID) {
+        return axios.get(`/api/game/questions/${gameID}`);
+    },
+
+    getScoresbyGameID: function (gameID) {
+        return axios.get(`/api/game/scores/${gameID}`);
     }
-}
+};
+

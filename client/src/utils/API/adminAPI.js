@@ -26,6 +26,14 @@ export default {
 
     getAllAdmins: function () {
         return axios.get('/api/get/admin');
+    },
+
+    getGamesbyAdminID: function (adminID) {
+        return axios.get(`/api/admin/games/${adminID}`);
+    },
+
+    getUsersbyAdminID: function (adminID) {
+        return axios.get(`/api/game/users/${adminID}`);
     }
 };
 

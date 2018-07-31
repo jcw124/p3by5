@@ -134,14 +134,14 @@ exports.deleteGame = function (req, res) {
 }
 
 
-exports.getQuestionIDs = function (req, res) {
+exports.getQuestionsbyGameID = function (req, res) {
     /*
         req.params gives _id of associated game
     */
-    db.Game.findById(req.params.id, "questions")
-        .then(function (dbGame) {
-            console.log("Question IDs:", dbGame.questions);
-            res.json(dbGame.questions);
+    db.Question.find({ game: req.params.id })
+        .then(function (dbQuestions) {
+            console.log("Questions:", dbQuestions);
+            res.json(dbQuestions);
         })
         .catch(function (err) {
             return res.json(err);
@@ -149,14 +149,14 @@ exports.getQuestionIDs = function (req, res) {
 }
 
 
-exports.getScoreIDs = function (req, res) {
+exports.getScoresbyGameID = function (req, res) {
     /*
         req.params gives _id of associated game
     */
-    db.Game.findById(req.body.id, "scores")
-        .then(function (dbGame) {
-            console.log("Score IDs:", dbGame.scores);
-            res.json(dbGame.scores);
+    db.Score.find({ game: req.params.id })
+        .then(function (dbScores) {
+            console.log("Scores:", dbScores);
+            res.json(dbScores);
         })
         .catch(function (err) {
             return res.json(err);

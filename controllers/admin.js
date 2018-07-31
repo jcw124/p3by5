@@ -1,5 +1,4 @@
 const db = require('../models');
-const deleteGame = require("./game").deleteGame;
 
 exports.getAdmin = function (req, res) {
     /*
@@ -131,4 +130,36 @@ exports.getAllAdmins = function (req, res) {
         .catch(function (err) {
             return res.json(err);
         });
+}
+
+
+
+exports.getGamesbyAdminID = function (req, res) {
+    /*
+        req.params gives _id of associated admin
+    */
+    db.Game.find({ admin: req.params.id })
+        .then(function (dbGames) {
+            console.log("Games:", dbGames);
+            res.json(dbGames);
+        })
+        .catch(function (err) {
+            return res.json(err);
+        });
+}
+
+
+exports.getUsersbyAdminID = function (req, res) {
+    /*
+        req.params gives _id of associated admin
+    */
+    db.User.find({ admin: req.params.id })
+        .then(function (dbUsers) {
+            console.log("Users:", dbUsers);
+            res.json(dbUsers);
+        })
+        .catch(function (err) {
+            return res.json(err);
+        });
+
 }
