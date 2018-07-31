@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Score from "./Score";
 import Questions from "./Questions";
-import Answers from "./Answers";
+// import Answers from "./Answers";
 import PreBtn from "./PreBtn";
 import PostBtn from "./PostBtn";
 import WinLose from "./WinLose";
@@ -16,12 +16,6 @@ import {
 import "./Game.css"; 
 
 
-<<<<<<< HEAD
-const Game = props => (
-    <div>
-      <div>
-      This is Game Component
-=======
 class App extends Component {
   render() {
     return(
@@ -33,7 +27,7 @@ class App extends Component {
           <CardBody>
               <p>This is where the game will go</p>
               <Questions />
-              <Answers />
+              {/* <Answers /> */}
               <p>The sprites animation will go here</p>
               <WinLose />
           </CardBody>
@@ -42,7 +36,6 @@ class App extends Component {
               <PostBtn />
           </CardFooter>
         </Card>
->>>>>>> master
       </div>
     )
   }
