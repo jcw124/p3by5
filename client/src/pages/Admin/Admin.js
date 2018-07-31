@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import API from "../../utils/API";
 import { List, ListItem } from "../../components/List";
-import EditBtn from "../../components/EditBtn";
+import BtnEdit from "../../components/BtnEdit";
 import { Input, FormBtn } from "../../components/Form";
 
 
@@ -68,7 +68,7 @@ class Admin extends Component {
                                             <a href={"/games/" + game._id}>
                                                 <h3>{game.name}</h3> 
                                             </a>
-                                            <EditBtn onClick={() => this.editGame(game._id)} />
+                                            <BtnEdit onClick={() => this.editGame(game._id)} />
                                         </ListItem>   
                                     );
                                 })}

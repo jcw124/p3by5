@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const getUser = require('../controllers/user').getUser;
 const saveUser = require('../controllers/user').saveUser;
 const updateUser = require('../controllers/user').updateUser;
@@ -37,7 +38,7 @@ router.get("/get/admin/:id", getAdmin)
 router.put("/admin", saveAdmin);
 router.post("/admin", updateAdmin);
 router.delete("/delete/admin/:id", deleteAdmin);
-router.get("/get/admin/", getAllAdmins)
+router.get("/get/admin", getAllAdmins)
 
 router.get("/get/game/:id", getGame);
 router.put("/game", saveGame);
