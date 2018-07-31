@@ -1,7 +1,7 @@
 const db = require('../models');
 
 exports.getScores = function (req, res) {
-    /*req.params.ids syntax:
+    /*req.query syntax:
     {
         game: {_id of associated game},
         user: {_id of associated user}
@@ -9,9 +9,9 @@ exports.getScores = function (req, res) {
     */
     console.log(req.body);
     db.Score.find({
-        game: req.params.ids.game,
-        user: req.params.ids.user
-    })
+        game: req.query.game,
+        user: req.query.user
+    }, "score name")
         .sort({ score: -1 })
         .then(function (dbScores) {
             // If we were able to successfully find an Headline with the given id, send it back to the client
@@ -42,7 +42,7 @@ exports.saveScore = function (req, res) {
         })
         .then(function (dbGame) {
             // If we were able to successfully update a Game, send it back to the client
-            res.json("Updated Game:", dbGame);
+            res.json(dbGame);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -54,15 +54,16 @@ exports.deleteScore = function (req, res) {
     /*
         req.params gives _id of score to be removed
     */
-
+    let game;
     db.Score.findById(req.params.id)
         .then(function (dbScore) {
-            db.Game.findById(dbScore.game, "scores")
+            game = dbScore.game;
+            db.Game.findById(game, "scores")
                 .then(function (result) {
                     const newScores = [];
                     console.log("target scores:", result);
                     result.scores.forEach(id => {
-                        if (id == score) {
+                        if (id == req.params.id) {
                             db.Score.findByIdAndRemove(id)
                                 .then(function (removed) {
                                     console.log("Removed:", removed);
@@ -75,7 +76,7 @@ exports.deleteScore = function (req, res) {
                         else newScores.push(id);
                     });
                     console.log("New Scores Array:", newScores);
-                    db.Games.findByIdAndUpdate(game, { scores: newScores })
+                    db.Game.findByIdAndUpdate(game, { scores: newScores }, { new: true })
                         .then(function (result) {
                             console.log("Updated Game:", result);
                             res.json(result);

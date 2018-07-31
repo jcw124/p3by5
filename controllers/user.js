@@ -25,9 +25,9 @@ exports.saveUser = function (req, res) {
     */
     db.User.create(req.body)
         .then(function (dbUser) {
-            return db.Admin.findOneAndUpdate({ _id: req.params.admin }, { $push: { scores: dbUser._id } }, { new: true });
+            console.log(dbUser);
+            return db.Admin.findByIdAndUpdate(req.body.admin, { $push: { users: dbUser._id } }, { new: true });
         })
-
         .then(function (dbAdmin) {
             // If we were able to successfully update an Admin, send it back to the client
             res.json(dbAdmin);
@@ -50,9 +50,8 @@ exports.updateUser = function (req, res) {
         {
             username: req.body.username,
             password: req.body.password
-        })
+        }, { new: true })
         .then(function (dbUser) {
-            // If we were able to successfully update an Article, send it back to the client
             res.json(dbUser);
         })
         .catch(function (err) {
@@ -68,12 +67,12 @@ exports.deleteUser = function (req, res) {
 
     db.User.findById(req.params.id)
         .then(function (dbUser) {
-            db.Admin.findById(dbUser.admin, "users")
+            db.Admin.findById(dbUser.admin)
                 .then(function (result) {
                     const newUsers = [];
                     console.log("target users:", result);
                     result.users.forEach(id => {
-                        if (id == user) {
+                        if (id == req.params.id) {
                             db.User.findByIdAndRemove(id)
                                 .then(function (removed) {
                                     console.log("Removed:", removed);
@@ -85,7 +84,8 @@ exports.deleteUser = function (req, res) {
                         }
                         else newUsers.push(id);
                     });
-                    db.Admin.findByIdAndUpdate(admin, { users: newUsers })
+                    console.log("new users:",newUsers);
+                    db.Admin.findByIdAndUpdate(result._id, { users: newUsers },{ new: true })
                         .then(function (dbAdmin) {
                             console.log("Updated Admin:", dbAdmin);
                             res.json(dbAdmin);

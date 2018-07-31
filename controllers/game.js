@@ -32,7 +32,7 @@ exports.saveGame = function (req, res) {
         })
         .then(function (dbAdmin) {
             // If we were able to successfully update a Game, send it back to the client
-            res.json("Updated Admin:", dbAdmin);
+            res.json(dbAdmin);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -53,10 +53,10 @@ exports.updateGame = function (req, res) {
             question: req.body.question,
             numberWrongPermitted: req.body.numberWrongPermitted,
             numberofQuestions: req.body.numberofQuestions
-        })
+        }, { new: true })
         .then(function (dbGame) {
             // If we were able to successfully update an Article, send it back to the client
-            res.json("Updated Game:", dbGame);
+            res.json(dbGame);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -69,10 +69,10 @@ exports.deleteGame = function (req, res) {
         req.params gives _id of game to be removed
     */
     let admin;
-    db.Game.findById(req.params.id, "questions scores")
+    db.Game.findById(req.params.id)
         .then(function (dbGame) {
             admin = dbGame.admin;
-            console.log("target questions:", dbGame);
+            console.log("target game:", dbGame);
             dbGame.questions.forEach(id => {
                 db.Question.findByIdAndRemove(id)
                     .then(function (removed) {
@@ -98,9 +98,9 @@ exports.deleteGame = function (req, res) {
             db.Admin.findById(admin, "games")
                 .then(function (dbAdmin) {
                     const newGames = [];
-                    console.log("target users:", dbAdmin);
-                    dbAdmin.users.forEach(id => {
-                        if (id == admin) {
+                    console.log("target games:", dbAdmin);
+                    dbAdmin.games.forEach(id => {
+                        if (id == req.params.id) {
                             db.Game.findByIdAndRemove(id)
                                 .then(function (removed) {
                                     console.log("Removed:", removed);
@@ -112,7 +112,7 @@ exports.deleteGame = function (req, res) {
                         }
                         else newGames.push(id);
                     });
-                    db.Admin.findByIdAndUpdate(admin, { games: newGames })
+                    db.Admin.findByIdAndUpdate(admin, { games: newGames }, { new: true })
                         .then(function (dbAdmin) {
                             console.log("Updated Admin:", dbAdmin);
                             res.json(dbAdmin);
@@ -135,12 +135,10 @@ exports.deleteGame = function (req, res) {
 
 
 exports.getQuestionIDs = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of game},
-    }
+    /*
+        req.params gives _id of associated game
     */
-    db.Game.findById(req.body.id)
+    db.Game.findById(req.params.id, "questions")
         .then(function (dbGame) {
             console.log("Question IDs:", dbGame.questions);
             res.json(dbGame.questions);
@@ -152,12 +150,10 @@ exports.getQuestionIDs = function (req, res) {
 
 
 exports.getScoreIDs = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of game},
-    }
+    /*
+        req.params gives _id of associated game
     */
-    db.Game.findById(req.body.id)
+    db.Game.findById(req.body.id, "scores")
         .then(function (dbGame) {
             console.log("Score IDs:", dbGame.scores);
             res.json(dbGame.scores);
