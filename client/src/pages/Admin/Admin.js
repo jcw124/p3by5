@@ -24,7 +24,7 @@ class Admin extends Component {
     }
 
     loadGames = () => {
-        gameAPI.getGames()
+        gameAPI.getGame()
             .then(res =>
                 this.setState({ 
                     games: res.data,
@@ -44,10 +44,10 @@ class Admin extends Component {
 
     //submit new game name 
     //render new game name on page in game container 
-    HandleFormSubmit = event => {
+    handleFormSubmit = event => {
         event.preventDefault();
         if(this.state.name) {
-            gameAPI.saveGameName({
+            gameAPI.saveGame({
                 name: this.state.name
             }).then(res => this.loadGames()
             ).catch(err=> console.log(err));
