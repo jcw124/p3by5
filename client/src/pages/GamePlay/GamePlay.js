@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Questions from "../../components/Questions";
 import Answers from "../../components/Answers";
-import { Again, Play, Home } from "../../components/Btn";
+import ButtonBtn from "../../components/ButtonBtn";
 
 class GamePlay extends Component {
     render() {
@@ -13,19 +13,19 @@ class GamePlay extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-4">
-                        <Again>
+                        <ButtonBtn>
                             Play Again
-                        </Again>
+                        </ButtonBtn>
                     </div>
                     <div className="col-md-4">
-                        <Play>
+                        <ButtonBtn>
                             Play
-                        </Play>
+                        </ButtonBtn>
                     </div>
                     <div className="col-md-4">
-                        <Home>
+                        <ButtonBtn>
                             Home
-                        </Home>
+                        </ButtonBtn>
                     </div>
 
                 </div>

@@ -1,1 +1,1 @@
-export { default } from "./GamePlay.js";
+export { default } from "./GamePlay";
