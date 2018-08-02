@@ -28,11 +28,8 @@ exports.saveGame = function (req, res) {
     */
     db.Game.create(req.body)
         .then(function (dbGame) {
-            return db.Admin.findOneAndUpdate({ _id: req.body.admin }, { $push: { games: dbGame._id } }, { new: true });
-        })
-        .then(function (dbAdmin) {
-            // If we were able to successfully update a Game, send it back to the client
-            res.json(dbAdmin);
+            res.json(dbGame);
+            db.Admin.findOneAndUpdate({ _id: req.body.admin }, { $push: { games: dbGame._id } }, { new: true });
         })
         .catch(function (err) {
             // If an error occurred, send it to the client

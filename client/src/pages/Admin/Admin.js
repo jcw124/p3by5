@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { adminAPI, gameAPI, scoreAPI } from "../../utils/API";
+import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
 import ButtonBtn from "../../components/ButtonBtn";
@@ -21,6 +21,7 @@ class Admin extends Component {
         games: [],
         selectedGameID: "",
         scores: [],
+        questions: [],
         newGameName: "",
         newGameWrong: 3,
         newGameQuestions: 10,
@@ -62,25 +63,17 @@ class Admin extends Component {
             .catch(err => console.log(err));
     };
 
+    addQuestion = () => {
+        questionAPI.saveQuestion(this.state.currentQuestion, this.state.currentAnswers, this.state.currentCorrect, this.state.selectedGameID)
+            .then(res => {
+
+            })
+    };
+
     loadScores = () => {
         scoreAPI.getScore(this.state.selectedGameID)
             .then(res => this.setState({ scores: res.data }))
             .catch(err => console.log(err));
-    }
-
-    editGame = event => {
-        let targetGame;
-        for (let i = 0; i < this.state.games.length; i++) {
-            if(this.state.games[i]._id===event.target.getAttribute("id")){
-                targetGame=this.state.games[i];
-            }
-        }
-        this.setState({
-            currentGame: targetGame,
-            selectedGameID: event.target.getAttribute("id")
-        });
-
-        this.toggle();
     }
     //Entering a new game name
     handleInputChange = event => {
@@ -97,14 +90,32 @@ class Admin extends Component {
         console.log("creating game...");
         gameAPI.saveGame(this.state.newGameName, this.state.newGameWrong, this.state.newGameQuestions, this.state.adminID)
             .then(res => {
-                this.loadGames();
                 this.setState({
-                    selectedGameID: res._id
+                    questions: [],
+                    currentGame: res.data,
+                    selectedGameID: res.data._id
                 });
+                this.loadGames();
                 this.toggle();
             })
             .catch(err => console.log(err));
     };
+
+    editGame = event => {
+        console.log(event.target.getAttribute("id"));
+        this.setState({ selectedGameID: event.target.getAttribute("id") })
+        gameAPI.getGame(event.target.getAttribute("id"))
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    questions: res.data.questions,
+                    currentGame: res.data
+                })
+            }
+            )
+            .catch(err => console.log(err));
+        this.toggle();
+    }
 
     render() {
         return (
@@ -112,15 +123,11 @@ class Admin extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
                     <ModalBody>
-                        <GameCreate gameID={this.state.selectedGameID} game={this.state.currentGame} />
+                        <GameCreate questions={this.state.questions} gameID={this.state.selectedGameID} game={this.state.currentGame} />
                     </ModalBody>
                     <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
                 </Modal>
                 <div className="row">
-                    <p>username: {this.state.username}</p>
-                    <p>password: {this.state.password}</p>
-                    <p>id: {this.state.adminID}</p>
-                    <p>scores: {this.state.scores}</p>
                     <div className="col-md-6">
                         <h2>Current EduGames</h2>
                         {this.state.games.length ? (
@@ -131,7 +138,7 @@ class Admin extends Component {
                                             <a href={"/games/" + game._id}>
                                                 <h3>{game.name}</h3>
                                             </a>
-                                            <BtnEdit id={game._id} click={this.editGame}/>
+                                            <BtnEdit id={game._id} click={this.editGame} />
                                         </ListItem>
                                     );
                                 })}

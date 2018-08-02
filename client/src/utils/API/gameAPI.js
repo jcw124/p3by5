@@ -2,6 +2,7 @@ import axios from "axios";
 
 export default {
     getGame: function (gameID) {
+        console.log(gameID);
         return axios.get(`/api/get/game/${gameID}`);
     },
 
