@@ -1,118 +1,134 @@
 //import React from "react";
 import React, { Component } from "react";
 import "./Questions.css";
-import data from "./Questions.json";
+import gameQuestions from "./Questions.json";
+import update from 'immutability-helper';
 import {
   ButtonGroup,
   Button
 } from "reactstrap";
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import QuestionCount from '../components/QuestionCount';
+import Answers from '../components/Answers';
 
 class Questions extends Component {
-  // constructor(props) {
-  //   super(props);
-    state = {
-      data: [{}]
-    };
-  // }
 
-  componentDidMount() {
-    this.setState({ data: data });
-  }
+constructor(props) {
+  super(props);
 
-  handleclick = (answerid, questionid) => {
-    if (
-      data[questionid].correctAnswer ===
-      data[questionid].possibleAnswers[answerid]
-    ) {
-      console.log("You are Correct");
-    } else {
-      console.log("You are Incorrect");
-    }
+  this.state={
+    counter: 0,
+    questionNum: 1,
+    question: '',
+    answerChoices: [],
+    answer: '',
+    answersTotals: {
+      correct: 0,
+      incorrect: 0
+    },
+    result: ''
   };
 
-  render() {
-    return (
-      <div>
-        <div className="questions" />
-    
-        {this.state.data.map(item => {
-          return (
-            <div className="questiondisplay">
-              <p>{item.question}</p>
-              
-                <div>
-                 {/* {this.state.data.possibleAnswers.map((subitem, i) => {
-        return ( */}
-                  <ul>
-                 
-                    {
-                      item &&
-                    item.possibleAnswers &&
-                    item.possibleAnswers.map((e, i)=>(<button color="primary" onClick="{this.handleclick()}" key={i}>{e}</button>))
-                    }
-
-                  {/* {JSON.stringify (item.possibleAnswers, null, 2)} */}
-                    {/* <li onclick={this.handleclick(0, 0)}>
-                      {item.possibleAnswers[0]}
-                    </li>
-                    <li onclick={this.handleclick(1, 0)}>
-                      {item.possibleAnswers[1]}
-                    </li>
-                    <li onclick={this.handleclick(2, 0)}>
-                      {item.possibleAnswers[2]}
-                    </li>
-                    <li onclick={this.handleclick(3, 0)}>
-                      {item.possibleAnswers[3]}
-                    </li> */}
-                  </ul>
-                     {/* }) */}
-                  
-                </div>
-              
-            </div>
-          );
-        })}
-        {/* correct */}
-      </div>
-    );
-  }
+  this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
 }
 
-const Answers = props => (
-  <div className="answers">
-      <h5>Select Answer</h5>
-      <ButtonGroup>
-          <Button color="primary" onClick="" active="">One</Button>
-          <Button color="primary" onClick="" active="">Two</Button>
-          <Button color="primary" onClick="" active="">Three</Button>
-          <Button color="primary" onClick="" active="">Four</Button>
-          <Button color="primary" onClick="" active="">Four</Button>
-      </ButtonGroup>
-      <p>Selected: {}</p>
+componentWillMount() {
+ const shuffledanswerChoices = gameQuestions.map((question) => this.shuffleArray(question.answers));
+ this.setState({
+   question: gameQuestions[0].question,
+   answerChoices: shuffledanswerChoices[0]
+ });
+}
 
-  </div>
+shuffleArray(array) {
+ var currentIndex = array.length, temporaryValue, randomIndex;
 
-);
+ // While there remain elements to shuffle...
+ while (0 !== currentIndex) {
+
+   // Pick a remaining element...
+   randomIndex = Math.floor(Math.random() * currentIndex);
+   currentIndex -= 1;
+
+   // And swap it with the current element.
+   temporaryValue = array[currentIndex];
+   array[currentIndex] = array[randomIndex];
+   array[randomIndex] = temporaryValue;
+ }
+
+ return array;
+};
+
+handleAnswerSelected(event) {
+ this.setUserAnswer(event.currentTarget.value);
+
+ if (this.state.questionId < gameQuestions.length) {
+     setTimeout(() => this.setNextQuestion(), 300);
+ } else {
+     setTimeout(() => this.setResults(this.getResults()), 300);
+ }
+}
+
+setUserAnswer(answer) {
+ const updatedanswersTotal = update(this.state.answersTotal, {
+   [answer]: {$apply: (currentValue) => currentValue + 1}
+ });
+
+ this.setState({
+     answersTotal: updatedanswersTotal,
+     answer: answer
+ });
+}
+
+setNextQuestion() {
+ const counter = this.state.counter + 1;
+ const questionId = this.state.questionId + 1;
+
+ this.setState({
+     counter: counter,
+     questionId: questionId,
+     question: gameQuestions[counter].question,
+     answerChoices: gameQuestions[counter].answers,
+     answer: ''
+ });
+}
+
+getResults() {
+ const answersTotal = this.state.answersTotal;
+ const answersTotalKeys = Object.keys(answersTotal);
+ const answersTotalValues = answersTotalKeys.map((key) => answersTotal[key]);
+ const maxAnswerCount = Math.max.apply(null, answersTotalValues);
+
+ return answersTotalKeys.filter((key) => answersTotal[key] === maxAnswerCount);
+}
+
+setResults(result) {
+ if (result.length === 1) {
+   this.setState({ result: result[0] });
+ } else {
+   this.setState({ result: 'Undetermined' });
+ }
+}
+
+renderQuiz() {
+ return (
+   <Quiz
+     answer={this.state.answer}
+     answerChoices={this.state.answerChoices}
+     questionId={this.state.questionId}
+     question={this.state.question}
+     questionTotal={gameQuestions.length}
+     onAnswerSelected={this.handleAnswerSelected}
+   />
+ );
+}
+
+renderResult() {
+ return (
+   <Result quizResult={this.state.result} />
+ );
+}
+
+}
 
 export default Questions;
-
-//pull 10 questions and answers from the quiz db
-
-// randomize questions selected if more than the number required exist in the db.
-
-//this.question, this.choices, this.answer
-
-// list.map((item, index) => {
-//   return (
-//     <div key={index}>
-//       <ul >{item.value}</ul>
-//      {
-//       item.list.map((subitem, i) => {
-//         return (
-//            <ul ><li>{subitem.value}</li></ul>
-//         )
-//       })
-//      }
-//     </div>
-//   )
-// }
