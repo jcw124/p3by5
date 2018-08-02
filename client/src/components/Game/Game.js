@@ -16,6 +16,28 @@ import {
 import "./Game.css"; 
 
 
+
+constructor(props) {
+  super(props);
+
+  //set states
+  this.state={
+    counter: 0,
+    questionNum: 1,
+    question: '',
+    answerChoices: [],
+    answer: '',
+    answersTotals: {
+      correct: 0,
+      incorrect: 0
+    },
+    result: ''
+  };
+
+  
+}
+
+
 class App extends Component {
   render() {
     return(
