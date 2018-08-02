@@ -2,9 +2,10 @@ import React, { Component } from "react"
 import { adminAPI, gameAPI, scoreAPI } from "../../utils/API";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
+import ButtonBtn from "../../components/ButtonBtn";
 import { Input, FormBtn } from "../../components/Form";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { GameCreate } from "../GameCreate";
 
 //Admin page contains 
 //new game button to create a new game 
@@ -23,8 +24,12 @@ class Admin extends Component {
         newGameName: "",
         newGameWrong: 3,
         newGameQuestions: 10,
-        modal: false
+        currentGame: {},
+        currentQuestion: "",
+        currentAnswers: [],
+        currentCorrect: "",
 
+        modal: false
     };
 
     //load into gamelist container existing games 
@@ -32,7 +37,7 @@ class Admin extends Component {
         this.getAdminId();
     }
 
-    toggle() {
+    toggle = () => {
         this.setState({
             modal: !this.state.modal
         });
@@ -63,6 +68,20 @@ class Admin extends Component {
             .catch(err => console.log(err));
     }
 
+    editGame = event => {
+        let targetGame;
+        for (let i = 0; i < this.state.games.length; i++) {
+            if(this.state.games[i]._id===event.target.getAttribute("id")){
+                targetGame=this.state.games[i];
+            }
+        }
+        this.setState({
+            currentGame: targetGame,
+            selectedGameID: event.target.getAttribute("id")
+        });
+
+        this.toggle();
+    }
     //Entering a new game name
     handleInputChange = event => {
         const { name, value } = event.target;
@@ -77,26 +96,26 @@ class Admin extends Component {
         event.preventDefault();
         console.log("creating game...");
         gameAPI.saveGame(this.state.newGameName, this.state.newGameWrong, this.state.newGameQuestions, this.state.adminID)
-            .then(res => this.loadGames())
+            .then(res => {
+                this.loadGames();
+                this.setState({
+                    selectedGameID: res._id
+                });
+                this.toggle();
+            })
             .catch(err => console.log(err));
     };
 
     render() {
         return (
             <div className="container">
-                <div>
-                    <Button color="danger" onClick={this.toggle}>Modal Button</Button>
-                    <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                        <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-                        <ModalBody>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </ModalBody>
-                        <ModalFooter>
-                            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                        </ModalFooter>
-                    </Modal>
-                </div>
+                <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
+                    <ModalBody>
+                        <GameCreate gameID={this.state.selectedGameID} game={this.state.currentGame} />
+                    </ModalBody>
+                    <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
+                </Modal>
                 <div className="row">
                     <p>username: {this.state.username}</p>
                     <p>password: {this.state.password}</p>
@@ -112,7 +131,7 @@ class Admin extends Component {
                                             <a href={"/games/" + game._id}>
                                                 <h3>{game.name}</h3>
                                             </a>
-                                            <BtnEdit onClick={() => this.editGame(game._id)}>Edit</BtnEdit>
+                                            <BtnEdit id={game._id} click={this.editGame}/>
                                         </ListItem>
                                     );
                                 })}

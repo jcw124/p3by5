@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Input, FormBtn } from "../../components/Form";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
 
-class GameCreate extends Component {
+export const GameCreate = ({ gameID, game }) =>
     // state = {
     //     Question: [],
     //     game.name: "",
@@ -17,55 +17,55 @@ class GameCreate extends Component {
     // }
 
     // loadQA =() =>
-
-    render() {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6">
-                        <h3>Create Questions and Answers for: </h3>
-                        <h5>Dummy</h5>
-                        <form>
+    (
+        <div className="container">
+            <div className="row">
+                <div className="col-md-6">
+                    <p>{gameID}</p>
+                    <p>{game.name}</p>
+                    <h3>Create Questions and Answers for: </h3>
+                    <h5>{game.name}</h5>
+                    <form>
                             <Input
                                 // value={this.state.question}
                                 // onChange={this.handleInputChange}
                                 name="question"
                                 placeholder="Question"
                             />
-                            <Input 
+                            <Input
                                 // value={this.state.possibleAnswers}
                                 // onChange={this.handleInputChange}
                                 name="possibleAnswers"
                                 placeholder="Possible Answer"
                             />
-                            <Input 
+                            <Input
                                 // value={this.state.possibleAnswers}
                                 // onChange={this.handleInputChange}
                                 name="possibleAnswers"
                                 placeholder="Possible Answer"
                             />
-                            <Input 
+                            <Input
                                 // value={this.state.possibleAnswers}
                                 // onChange={this.handleInputChange}
                                 name="possibleAnswers"
                                 placeholder="Possible Answer"
                             />
-                            <Input 
+                            <Input
                                 // value={this.state.correctAnswer}
                                 // onChange={this.handleInputChange}
                                 name="correctAnswers"
                                 placeholder="Correct Answer"
                             />
-                            <FormBtn 
-                                // disabled={!(
-                                //     this.state.question && this.state.possibleAnswers && this.state.correctAnswer
-                                // )}
-                                // onClick={this.handleFormSubmit}
-                            > 
+                            <FormBtn
+                            // disabled={!(
+                            //     this.state.question && this.state.possibleAnswers && this.state.correctAnswer
+                            // )}
+                            // onClick={this.handleFormSubmit}
+                            >
                                 Add Question
                             </FormBtn>
-                        </form>    
-                    </div>
+                        </form>
+                </div>
 
                     <div className="col-md-6">
                         <h3>Current Questions/Answers</h3>
@@ -77,12 +77,8 @@ class GameCreate extends Component {
                                 </BtnEdit>
                             </ListItem>
                         </List>
-                            
+
                     </div>
                 </div>
             </div>
-        )
-    }
-}
-
-export default GameCreate;
+            )
