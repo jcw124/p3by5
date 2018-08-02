@@ -7,11 +7,11 @@ exports.getScores = function (req, res) {
         user: {_id of associated user}
     }
     */
+    let query = {};
+    if (req.query.game) { query.game = req.query.game };
+    if (req.query.user) { query.user = req.query.user };
     console.log(req.body);
-    db.Score.find({
-        game: req.query.game,
-        user: req.query.user
-    }, "score name")
+    db.Score.find(query, "score name")
         .sort({ score: -1 })
         .then(function (dbScores) {
             // If we were able to successfully find an Headline with the given id, send it back to the client

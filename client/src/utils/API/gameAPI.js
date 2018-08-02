@@ -6,6 +6,7 @@ export default {
     },
 
     saveGame: function (name, numberWrongPermitted, numberofQuestions, adminID) {
+        console.log("saving game");
         return axios.put('/api/game', {
             name: name,
             numberWrongPermitted: numberWrongPermitted,

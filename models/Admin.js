@@ -9,7 +9,8 @@ const AdminSchema = new Schema({
     // `title` is required and of type String
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     // `link` is required and of type String
     password: {

@@ -1,10 +1,12 @@
 const router = require("express").Router();
 
+const getUserbyUsernamePass = require('../controllers/user').getUserbyUsernamePass;
 const getUser = require('../controllers/user').getUser;
 const saveUser = require('../controllers/user').saveUser;
 const updateUser = require('../controllers/user').updateUser;
 const deleteUser = require('../controllers/user').deleteUser;
 
+const getAdminbyUsernamePass = require('../controllers/admin').getAdminbyUsernamePass;
 const getAdmin = require('../controllers/admin').getAdmin;
 const saveAdmin = require('../controllers/admin').saveAdmin;
 const updateAdmin = require('../controllers/admin').updateAdmin;
@@ -29,13 +31,14 @@ const getScores = require('../controllers/score').getScores;
 const saveScore = require('../controllers/score').saveScore;
 const deleteScore = require('../controllers/score').deleteScore;
 
-
+router.get("/get/user/login", getUserbyUsernamePass);
 router.get("/get/user/:id", getUser);
 router.put("/user", saveUser);
 router.post("/user", updateUser);
 router.delete("/delete/user/:id", deleteUser);
 
-router.get("/get/admin/:id", getAdmin)
+router.get("/get/admin/login", getAdminbyUsernamePass);
+router.get("/get/admin/:id", getAdmin);
 router.put("/admin", saveAdmin);
 router.post("/admin", updateAdmin);
 router.delete("/delete/admin/:id", deleteAdmin);

@@ -1,5 +1,25 @@
 const db = require('../models');
 
+exports.getAdminbyUsernamePass = function (req, res) {
+    /*req.query syntax:
+    {
+        username: {username of admin},
+        password: {password of admin}
+    }
+    */
+   console.log(req.query);
+    db.Admin.findOne(req.query)
+        .populate("users")
+        .populate("games")
+        .then(function (dbAdmin) {
+            console.log("Admin:", dbAdmin);
+            res.json(dbAdmin);
+        })
+        .catch(function (err) {
+            return res.json(err);
+        });
+}
+
 exports.getAdmin = function (req, res) {
     /*
         req.params gives _id of admin

@@ -1,6 +1,10 @@
 import axios from "axios";
 
 export default {
+    getAdminbyUsernamePass: function (username, password){
+        return axios.get(`/api/get/admin/login?username=${username}&password=${password}`);
+    },
+
     getAdmin: function (adminID) {
         return axios.get(`/api/get/admin/${adminID}`);
     },
