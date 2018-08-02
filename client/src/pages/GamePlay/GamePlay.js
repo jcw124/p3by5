@@ -2,11 +2,48 @@ import React, { Component } from "react";
 import Questions from "../../components/Questions";
 import Answers from "../../components/Answers";
 import ButtonBtn from "../../components/ButtonBtn";
+import Score from "../../components/Score";
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+
+function GamePlay(props) {
+
+    function renderAnswers(key) {
+      return (
+        <Answers
+          key={key.content}
+          answerContent={key.content}
+          answerType={key.type}
+          answer={props.answer}
+          questionId={props.questionId}
+          onAnswerSelected={props.onAnswerSelected}
+        />
+      );
+    }
+    return (
+        <CSSTransitionGroup
+          className="container"
+          component="div"
+          transitionName="fade"
+          transitionEnterTimeout={800}
+          transitionLeaveTimeout={500}
+          transitionAppear
+          transitionAppearTimeout={500}
+        >
+          <div key={props.questionId}>
+            {/* <QuestionNumber
+              counter={props.questionId}
+              total={props.questionTotal}
+            /> */}
+            <Questions content={props.question} />
+            <ul className="answers">
+              {props.Answers.map(renderAnswerOptions)}
+            </ul>
+          </div>
+        </CSSTransitionGroup>
+      );
 
 
-
-
-
+}
 
 
 
