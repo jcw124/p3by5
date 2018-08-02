@@ -1,12 +1,10 @@
 const db = require('../models');
 
 exports.getGame = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of game},
-    }
-    */
-    db.Game.findById(req.body.id)
+    /*
+       req.params gives _id of user
+   */
+    db.Game.findById(req.params.id)
         .populate("questions")
         .populate("scores")
         .then(function (dbGame) {
@@ -24,18 +22,17 @@ exports.saveGame = function (req, res) {
         name: {name of game},
         numberWrongPermitted: {number of wrong answers before user loses},
         numberofQuestions: {number of total questions}
+        admin: {_id of associated admin}
         
     }
-    req.params.adminID is the associated admin _id for this game
-        
     */
     db.Game.create(req.body)
         .then(function (dbGame) {
-            return db.Admin.findOneAndUpdate({ _id: req.params.adminID }, { $push: { games: dbGame._id } }, { new: true });
+            return db.Admin.findOneAndUpdate({ _id: req.body.admin }, { $push: { games: dbGame._id } }, { new: true });
         })
         .then(function (dbAdmin) {
             // If we were able to successfully update a Game, send it back to the client
-            res.json("Updated Admin:", dbAdmin);
+            res.json(dbAdmin);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -56,10 +53,10 @@ exports.updateGame = function (req, res) {
             question: req.body.question,
             numberWrongPermitted: req.body.numberWrongPermitted,
             numberofQuestions: req.body.numberofQuestions
-        })
+        }, { new: true })
         .then(function (dbGame) {
             // If we were able to successfully update an Article, send it back to the client
-            res.json("Updated Game:", dbGame);
+            res.json(dbGame);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -68,14 +65,14 @@ exports.updateGame = function (req, res) {
 }
 
 exports.deleteGame = function (req, res) {
-    /*req.body syntax:
-    {
-        game: {_id of game to be updated}
-        admin: {_id of admin associated with game}
-    }*/
-    db.Game.findById(req.body.game, "questions scores")
+    /*
+        req.params gives _id of game to be removed
+    */
+    let admin;
+    db.Game.findById(req.params.id)
         .then(function (dbGame) {
-            console.log("target questions:", dbGame);
+            admin = dbGame.admin;
+            console.log("target game:", dbGame);
             dbGame.questions.forEach(id => {
                 db.Question.findByIdAndRemove(id)
                     .then(function (removed) {
@@ -101,9 +98,9 @@ exports.deleteGame = function (req, res) {
             db.Admin.findById(admin, "games")
                 .then(function (dbAdmin) {
                     const newGames = [];
-                    console.log("target users:", dbAdmin);
-                    dbAdmin.users.forEach(id => {
-                        if (id == admin) {
+                    console.log("target games:", dbAdmin);
+                    dbAdmin.games.forEach(id => {
+                        if (id == req.params.id) {
                             db.Game.findByIdAndRemove(id)
                                 .then(function (removed) {
                                     console.log("Removed:", removed);
@@ -115,7 +112,7 @@ exports.deleteGame = function (req, res) {
                         }
                         else newGames.push(id);
                     });
-                    db.Admin.findByIdAndUpdate(admin, { games: newGames })
+                    db.Admin.findByIdAndUpdate(admin, { games: newGames }, { new: true })
                         .then(function (dbAdmin) {
                             console.log("Updated Admin:", dbAdmin);
                             res.json(dbAdmin);
@@ -137,16 +134,14 @@ exports.deleteGame = function (req, res) {
 }
 
 
-exports.getQuestionIDs = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of game},
-    }
+exports.getQuestionsbyGameID = function (req, res) {
+    /*
+        req.params gives _id of associated game
     */
-    db.Game.findById(req.body.id)
-        .then(function (dbGame) {
-            console.log("Question IDs:", dbGame.questions);
-            res.json(dbGame.questions);
+    db.Question.find({ game: req.params.id })
+        .then(function (dbQuestions) {
+            console.log("Questions:", dbQuestions);
+            res.json(dbQuestions);
         })
         .catch(function (err) {
             return res.json(err);
@@ -154,16 +149,14 @@ exports.getQuestionIDs = function (req, res) {
 }
 
 
-exports.getScoreIDs = function (req, res) {
-    /*req.body syntax:
-    {
-        id: {_id of game},
-    }
+exports.getScoresbyGameID = function (req, res) {
+    /*
+        req.params gives _id of associated game
     */
-    db.Game.findById(req.body.id)
-        .then(function (dbGame) {
-            console.log("Score IDs:", dbGame.scores);
-            res.json(dbGame.scores);
+    db.Score.find({ game: req.params.id })
+        .then(function (dbScores) {
+            console.log("Scores:", dbScores);
+            res.json(dbScores);
         })
         .catch(function (err) {
             return res.json(err);

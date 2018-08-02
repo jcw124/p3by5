@@ -15,7 +15,7 @@ const Navigation = () => (
       <NavbarBrand href="/">
       </NavbarBrand>
       <div className="logosm">
-        <img src={logosm} />
+        <img alt="logo" src={logosm} />
       </div>
       <Nav navbar>
         {/* <NavItem >
