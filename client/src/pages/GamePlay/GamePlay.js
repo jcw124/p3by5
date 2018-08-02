@@ -3,6 +3,15 @@ import Questions from "../../components/Questions";
 import Answers from "../../components/Answers";
 import ButtonBtn from "../../components/ButtonBtn";
 
+
+
+
+
+
+
+
+
+
 class GamePlay extends Component {
     render() {
         return (

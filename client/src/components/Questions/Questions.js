@@ -5,7 +5,7 @@ import "./Questions.css";
 const Questions = props => (
     <div>
       <div className="questions">
-        This is a place holder for a question
+        What is the meaning of life?
       </div>
     </div>
   );
