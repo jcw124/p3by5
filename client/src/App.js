@@ -98,7 +98,7 @@ export default class App extends Component {
                   authenticate={this.authenticate}
                   deAuthenticate={this.deAuthenticate}
                   authenticated={this.state.authenticated}
-                />}
+                />} 
               />
             </Switch>
           </div>
