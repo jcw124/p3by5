@@ -5,7 +5,7 @@ import ButtonBtn from "../../components/ButtonBtn";
 import Score from "../../components/Score";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-function GamePlay(props) {
+function Game(props) {
 
     function renderAnswers(key) {
       return (
@@ -36,7 +36,7 @@ function GamePlay(props) {
             /> */}
             <Questions content={props.question} />
             <ul className="answers">
-              {props.Answers.map(renderAnswerOptions)}
+              {props.Answers.map(renderAnswers)}
             </ul>
           </div>
         </CSSTransitionGroup>
