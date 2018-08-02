@@ -1,35 +1,35 @@
 const router = require("express").Router();
 
-const getUserbyUsernamePass = require('../controllers/user').getUserbyUsernamePass;
-const getUser = require('../controllers/user').getUser;
-const saveUser = require('../controllers/user').saveUser;
-const updateUser = require('../controllers/user').updateUser;
-const deleteUser = require('../controllers/user').deleteUser;
+const getUserbyUsernamePass = require('../serverAPI/user').getUserbyUsernamePass;
+const getUser = require('../serverAPI/user').getUser;
+const saveUser = require('../serverAPI/user').saveUser;
+const updateUser = require('../serverAPI/user').updateUser;
+const deleteUser = require('../serverAPI/user').deleteUser;
 
-const getAdminbyUsernamePass = require('../controllers/admin').getAdminbyUsernamePass;
-const getAdmin = require('../controllers/admin').getAdmin;
-const saveAdmin = require('../controllers/admin').saveAdmin;
-const updateAdmin = require('../controllers/admin').updateAdmin;
-const deleteAdmin = require('../controllers/admin').deleteAdmin;
-const getAllAdmins = require('../controllers/admin').getAllAdmins;
-const getGamesbyAdminID = require('../controllers/admin').getGamesbyAdminID;
-const getUsersbyAdminID = require('../controllers/admin').getUsersbyAdminID;
+const getAdminbyUsernamePass = require('../serverAPI/admin').getAdminbyUsernamePass;
+const getAdmin = require('../serverAPI/admin').getAdmin;
+const saveAdmin = require('../serverAPI/admin').saveAdmin;
+const updateAdmin = require('../serverAPI/admin').updateAdmin;
+const deleteAdmin = require('../serverAPI/admin').deleteAdmin;
+const getAllAdmins = require('../serverAPI/admin').getAllAdmins;
+const getGamesbyAdminID = require('../serverAPI/admin').getGamesbyAdminID;
+const getUsersbyAdminID = require('../serverAPI/admin').getUsersbyAdminID;
 
-const getGame = require('../controllers/game').getGame;
-const saveGame = require('../controllers/game').saveGame;
-const updateGame = require('../controllers/game').updateGame;
-const deleteGame = require('../controllers/game').deleteGame;
-const getQuestionsbyGameID = require('../controllers/game').getQuestionsbyGameID;
-const getScoresbyGameID = require('../controllers/game').getScoresbyGameID;
+const getGame = require('../serverAPI/game').getGame;
+const saveGame = require('../serverAPI/game').saveGame;
+const updateGame = require('../serverAPI/game').updateGame;
+const deleteGame = require('../serverAPI/game').deleteGame;
+const getQuestionsbyGameID = require('../serverAPI/game').getQuestionsbyGameID;
+const getScoresbyGameID = require('../serverAPI/game').getScoresbyGameID;
 
-const getQuestion = require('../controllers/question').getQuestion;
-const saveQuestion = require('../controllers/question').saveQuestion;
-const updateQuestion = require('../controllers/question').updateQuestion;
-const deleteQuestion = require('../controllers/question').deleteQuestion;
+const getQuestion = require('../serverAPI/question').getQuestion;
+const saveQuestion = require('../serverAPI/question').saveQuestion;
+const updateQuestion = require('../serverAPI/question').updateQuestion;
+const deleteQuestion = require('../serverAPI/question').deleteQuestion;
 
-const getScores = require('../controllers/score').getScores;
-const saveScore = require('../controllers/score').saveScore;
-const deleteScore = require('../controllers/score').deleteScore;
+const getScores = require('../serverAPI/score').getScores;
+const saveScore = require('../serverAPI/score').saveScore;
+const deleteScore = require('../serverAPI/score').deleteScore;
 
 router.get("/get/user/login", getUserbyUsernamePass);
 router.get("/get/user/:id", getUser);
