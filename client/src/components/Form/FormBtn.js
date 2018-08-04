@@ -1,7 +1,6 @@
 import React from "react";
 
-export const FormBtn = ({ addQuestion }) => (
-  <button style={{ float: "right", marginBottom: 10 }} onClick={addQuestion} className="btn btn-success">
-    Add Question
+export const FormBtn = ({ click }) => (
+  <button style={{ float: "right", marginBottom: 10 }} onClick={click} className="btn btn-success">
   </button>
 );

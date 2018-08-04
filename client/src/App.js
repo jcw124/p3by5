@@ -13,20 +13,6 @@ import "./App.css";
 
 
 
-<<<<<<< HEAD
-const App = () => (
-  
-  <div className="App">
-    <Navigation />
-    <Router>
-      <div>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/admin" component={Admin} />
-        {/* <Route path="/create" component={GameCreate} /> */}
-        <Route path="/user" component={User} />
-        <Route path="/play" component={GamePlay} />
-=======
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -90,14 +76,14 @@ export default class App extends Component {
                   authenticated={this.state.authenticated}
                 />}
               />
-              <Route exact path="/create" render={props =>
+              {/* <Route exact path="/create" render={props =>
                 <GameCreate
                   {...props}
                   authenticate={this.authenticate}
                   deAuthenticate={this.deAuthenticate}
                   authenticated={this.state.authenticated}
                 />}
-              />
+              /> */}
               <Route exact path="/user" render={props =>
                 <User
                   {...props}
@@ -117,7 +103,6 @@ export default class App extends Component {
             </Switch>
           </div>
         </Router>
->>>>>>> origin
       </div>
     )
   };
