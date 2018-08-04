@@ -27,7 +27,9 @@ class Admin extends Component {
         newGameQuestions: 10,
         currentGame: {},
         currentQuestion: "",
-        currentAnswers: [],
+        currentAnswer1: "",
+        currentAnswer2: "",
+        currentAnswer3: "",
         currentCorrect: "",
 
         modal: false
@@ -64,7 +66,13 @@ class Admin extends Component {
     };
 
     addQuestion = () => {
-        questionAPI.saveQuestion(this.state.currentQuestion, this.state.currentAnswers, this.state.currentCorrect, this.state.selectedGameID)
+        let questionArray = [];
+        if (this.state.currentQuestion1 !== "") questionArray.push(this.state.currentQuestion1);
+        if (this.state.currentQuestion2 !== "") questionArray.push(this.state.currentQuestion2);
+        if (this.state.currentQuestion3 !== "") questionArray.push(this.state.currentQuestion3);
+        console.log("saving",this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
+        questionArray.push(this.state.currentCorrect);
+        questionAPI.saveQuestion(this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
             .then(res => {
 
             })
@@ -123,7 +131,16 @@ class Admin extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
                     <ModalBody>
-                        <GameCreate questions={this.state.questions} gameID={this.state.selectedGameID} game={this.state.currentGame} />
+                        <GameCreate questions={this.state.questions}
+                            gameID={this.state.selectedGameID}
+                            game={this.state.currentGame}
+                            currentQuestion={this.state.currentQuestion}
+                            currentAnswer1={this.state.currentAnswer1}
+                            currentAnswer2={this.state.currentAnswer2}
+                            currentAnswer3={this.state.currentAnswer3}
+                            currentCorrect={this.state.currentCorrect}
+                            handleInputChange={this.handleInputChange}
+                            addQuestion={this.addQuestion} />
                     </ModalBody>
                     <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
                 </Modal>
