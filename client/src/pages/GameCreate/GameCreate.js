@@ -9,7 +9,6 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
             <div className="col-md-6">
                 <p>{gameID}</p>
                 <p>{game.name}</p>
-                <p>{questions}</p>
                 <h3>Create Questions and Answers for: </h3>
                 <h5>{game.name}</h5>
                 <p>{currentQuestion}</p>
@@ -50,6 +49,7 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                     <FormBtn
                         disabled={!(currentQuestion !== "" && (currentAnswer1 !== "" || currentAnswer2 !== "" || currentAnswer3 !== "") && currentCorrect !== "")}
                         click={addQuestion}
+                        text="Add Question"
                     />
                 </form>
             </div>
@@ -63,8 +63,11 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                                 <ListItem key={question._id}>
                                     <h3>{question.question}</h3>
                                     <h4>Possible Answers</h4>
-                                    {question.possibleAnswers.forEach(answer =>
-                                        <p>{answer}</p>
+                                    {let count=0;
+                                        question.possibleAnswers.map(answer =>
+                
+                                        <p key={count}>{answer}</p>
+                                        count++;
                                     )}
                                     <BtnEdit id={game._id} />
                                 </ListItem>

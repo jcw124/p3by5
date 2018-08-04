@@ -178,9 +178,8 @@ class Admin extends Component {
                                 <FormBtn
                                     disabled={!(this.state.newGameName)}
                                     click={this.createGame}
-                                >
-                                    Create
-                                </FormBtn>
+                                    text="Create New Game"
+                                />
                             </form>
                         </div>
 

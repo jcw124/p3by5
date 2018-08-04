@@ -1,6 +1,7 @@
 import React from "react";
 
-export const FormBtn = ({ click }) => (
-  <button style={{ float: "right", marginBottom: 10 }} onClick={click} className="btn btn-success">
+export const FormBtn = ({ click, text, disabled }) => (
+  <button style={{ float: "right", marginBottom: 10 }} onClick={click} disabled={disabled} className="btn btn-success">
+    {text}
   </button>
 );
