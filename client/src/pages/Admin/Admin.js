@@ -59,7 +59,7 @@ class Admin extends Component {
     loadGames = () => {
         adminAPI.getGamesbyAdminID(this.state.adminID)
             .then(res => {
-                console.log("loading games", res);
+                console.log("loading games",typeof res.data);
                 this.setState({ games: res.data })
             })
             .catch(err => console.log(err));
@@ -76,8 +76,10 @@ class Admin extends Component {
         questionArray.push(this.state.currentCorrect);
         questionAPI.saveQuestion(this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
             .then(res => {
-                console.log(res.data);
-                this.state.questions.push(res.data);
+                let questionsArray=this.state.questions;
+                console.log("NEW QUESTION",res.data);
+                questionsArray.push(res.data);
+                this.setState({ questions: questionsArray })
             })
     };
 
@@ -87,6 +89,7 @@ class Admin extends Component {
         questionAPI.deleteQuestion(event.target.getAttribute("id"))
             .catch(err => console.log(err));
     }
+
     loadScores = () => {
         scoreAPI.getScore(this.state.selectedGameID)
             .then(res => this.setState({ scores: res.data }))

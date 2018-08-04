@@ -25,12 +25,14 @@ exports.saveQuestion = function (req, res) {
             game: {associated game _id for this question}
         }
         */
+    let newQuestion;
     db.Question.create(req.body)
         .then(function (dbQuestion) {
+            newQuestion = dbQuestion;
             return db.Game.findOneAndUpdate({ _id: req.body.game }, { $push: { questions: dbQuestion._id } }, { new: true });
         })
-        .then(function (dbGame) {
-            res.json(dbGame);
+        .then(function () {
+            res.json(newQuestion);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client

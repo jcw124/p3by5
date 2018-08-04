@@ -155,7 +155,6 @@ exports.getGamesbyAdminID = function (req, res) {
             res.json(dbGames);
         })
         .catch(function (err) {
-            return res.json(err);
         });
 }
 
