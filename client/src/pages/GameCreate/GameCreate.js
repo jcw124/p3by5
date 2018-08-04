@@ -3,7 +3,7 @@ import { Input, FormBtn } from "../../components/Form";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
 
-export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAnswer1, currentAnswer2, currentAnswer3, currentCorrect, handleInputChange, addQuestion }) =>
+export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAnswer1, currentAnswer2, currentAnswer3, currentCorrect, handleInputChange, addQuestion, removeQuestion }) =>
     <div className="container">
         <div className="row">
             <div className="col-md-6">
@@ -61,15 +61,16 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                         {questions.map(question => {
                             return (
                                 <ListItem key={question._id}>
-                                    <h3>{question.question}</h3>
+                                    <h3>{question.question}?</h3>
                                     <h4>Possible Answers</h4>
-                                    {let count=0;
-                                        question.possibleAnswers.map(answer =>
-                
-                                        <p key={count}>{answer}</p>
-                                        count++;
-                                    )}
-                                    <BtnEdit id={game._id} />
+                                    {
+                                        question.possibleAnswers.map((answer, i) =>
+                                            <p key={i}>Choice {i + 1}: {answer}</p>
+                                        )}
+                                    <h4>Correct Answer</h4>
+                                    <p>{question.correctAnswer}</p>
+                                    <BtnEdit id={question._id} />
+                                    <button className="btn btn-danger" id={question._id} onClick={removeQuestion}>Remove Question</button>
                                 </ListItem>
                             );
                         })}

@@ -65,19 +65,28 @@ class Admin extends Component {
             .catch(err => console.log(err));
     };
 
-    addQuestion = () => {
+    addQuestion = event => {
+        event.preventDefault();
+        console.log("ADDING QUESTION");
         let questionArray = [];
-        if (this.state.currentQuestion1 !== "") questionArray.push(this.state.currentQuestion1);
-        if (this.state.currentQuestion2 !== "") questionArray.push(this.state.currentQuestion2);
-        if (this.state.currentQuestion3 !== "") questionArray.push(this.state.currentQuestion3);
-        console.log("saving",this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
+        if (this.state.currentAnswer1 !== "") { questionArray.push(this.state.currentAnswer1); }
+        if (this.state.currentAnswer2 !== "") { questionArray.push(this.state.currentAnswer2); }
+        if (this.state.currentAnswer3 !== "") { questionArray.push(this.state.currentAnswer3); }
+        console.log("saving", this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
         questionArray.push(this.state.currentCorrect);
         questionAPI.saveQuestion(this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
             .then(res => {
-
+                console.log(res.data);
+                this.state.questions.push(res.data);
             })
     };
 
+    removeQuestion = event => {
+        event.preventDefault();
+        console.log("removing question");
+        questionAPI.deleteQuestion(event.target.getAttribute("id"))
+            .catch(err => console.log(err));
+    }
     loadScores = () => {
         scoreAPI.getScore(this.state.selectedGameID)
             .then(res => this.setState({ scores: res.data }))
@@ -140,7 +149,8 @@ class Admin extends Component {
                             currentAnswer3={this.state.currentAnswer3}
                             currentCorrect={this.state.currentCorrect}
                             handleInputChange={this.handleInputChange}
-                            addQuestion={this.addQuestion} />
+                            addQuestion={this.addQuestion}
+                            removeQuestion={this.removeQuestion} />
                     </ModalBody>
                     <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
                 </Modal>
