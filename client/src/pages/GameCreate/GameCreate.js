@@ -49,10 +49,8 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                     />
                     <FormBtn
                         disabled={!(currentQuestion !== "" && (currentAnswer1 !== "" || currentAnswer2 !== "" || currentAnswer3 !== "") && currentCorrect !== "")}
-                        click={addQuestion}
-                    >
-                        Add Question
-                            </FormBtn>
+                        addQuestion={addQuestion}
+                    />
                 </form>
             </div>
 
