@@ -31,10 +31,9 @@
 body {
   font-family: 'Assistant', sans-serif !important;
   background: url('images/bg.jpg');
-  width: 100vw;
-  background-position: bottom center;
-  background-size: cover;
+  overflow: hidden;
   height: 100vh;
+  background-position: bottom;
 }
 
 .master{
