@@ -20,6 +20,7 @@ class Admin extends Component {
         password: "password1",
         games: [],
         selectedGameID: "",
+        gameForScores: "",
         scores: [],
         questions: [],
         newGameName: "",
@@ -44,6 +45,13 @@ class Admin extends Component {
     componentDidMount() {
         this.getAdminId();
     }
+
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        });
+    };
 
     toggle = () => {
         this.setState({
@@ -91,13 +99,19 @@ class Admin extends Component {
             .then(res => {
                 console.log("NEW UPDATED QUESTION:", res.data);
                 questionArray = this.state.questions;
-                let newArray=[];
+                let newArray = [];
                 questionArray.forEach(question => {
                     if (question._id === res.data._id) newArray.push(res.data);
                     else newArray.push(question);
                 })
                 this.setState({
-                    questions: newArray
+                    questions: newArray,
+                    updateQuestion: "",
+                    updateAnswer1: "",
+                    updateAnswer2: "",
+                    updateAnswer3: "",
+                    updateCorrect: "",
+                    updateID: ""
                 });
             })
             .catch(err => console.log(err));
@@ -163,12 +177,7 @@ class Admin extends Component {
             .catch(err => console.log(err));
     }
     //Entering a new game name
-    handleInputChange = event => {
-        const { name, value } = event.target;
-        this.setState({
-            [name]: value
-        });
-    };
+
 
     //submit new game name 
     //render new game name on page in game container 
@@ -189,6 +198,7 @@ class Admin extends Component {
     };
 
     editGame = event => {
+        event.preventDefault();
         console.log(event.target.getAttribute("id"));
         this.setState({ selectedGameID: event.target.getAttribute("id") })
         gameAPI.getGame(event.target.getAttribute("id"))
@@ -202,6 +212,15 @@ class Admin extends Component {
             )
             .catch(err => console.log(err));
         this.toggle();
+    }
+
+    getScores = event => {
+        event.preventDefault();
+        this.setState({gameForScores: event.target.name});
+        scoreAPI.getScore(event.target.getAttribute("id"))
+            .then(res => this.setState({scores: res.data}))
+            .catch(err => console.log(err));
+
     }
 
     render() {
@@ -240,9 +259,8 @@ class Admin extends Component {
                                 {this.state.games.map(game => {
                                     return (
                                         <ListItem key={game._id}>
-                                            <a href={"/games/" + game._id}>
-                                                <h3>{game.name}</h3>
-                                            </a>
+                                            <h3>{game.name}</h3>
+                                            <button className="btn btn-secondary" id={game._id} name={game.name} onClick={this.getScores}>View Scores</button>
                                             <BtnEdit id={game._id} click={this.editGame} />
                                         </ListItem>
                                     );
@@ -270,12 +288,22 @@ class Admin extends Component {
                                 />
                             </form>
                         </div>
-
+                        <br/>
                         <div className="container highScore">
-                            <h2>Student Progress</h2>
-
-                            {/* show each student's high score depending on the game selected */}
-                            <p> all student results will go in this container </p>
+                            <h2>High Scores</h2>
+                            <h4>{this.state.gameForScores}</h4> 
+                            {this.state.scores.length ? (
+                                <List>
+                                    {this.state.scores.map(score =>
+                                        <ListItem key={score._id}>
+                                            <p>{score.user.username}:</p>
+                                            <p>{score.name} {score.score}</p>
+                                        </ListItem>
+                                    )}
+                                </List>
+                            ) : (
+                                    <h3>No Scores for this Game Yet</h3>
+                                )}
                         </div>
                     </div>
                 </div>

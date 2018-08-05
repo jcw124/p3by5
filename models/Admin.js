@@ -28,7 +28,7 @@ const AdminSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Game"
         }
-    ],
+    ]
 });
 
 // This creates our model from the above schema, using mongoose's model method
