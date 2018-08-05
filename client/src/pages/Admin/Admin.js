@@ -31,7 +31,12 @@ class Admin extends Component {
         currentAnswer2: "",
         currentAnswer3: "",
         currentCorrect: "",
-
+        updateQuestion: "",
+        updateAnswer1: "",
+        updateAnswer2: "",
+        updateAnswer3: "",
+        updateCorrect: "",
+        updateID: "",
         modal: false
     };
 
@@ -42,8 +47,60 @@ class Admin extends Component {
 
     toggle = () => {
         this.setState({
-            modal: !this.state.modal
+            modal: !this.state.modal,
+            currentQuestion: "",
+            currentAnswer1: "",
+            currentAnswer2: "",
+            currentAnswer3: "",
+            currentCorrect: "",
+            updateQuestion: "",
+            updateAnswer1: "",
+            updateAnswer2: "",
+            updateAnswer3: "",
+            updateCorrect: "",
+            updateID: ""
         });
+    }
+
+    loadEdit = event => {
+        event.preventDefault();
+        console.log("loading edit");
+        questionAPI.getQuestion(event.target.getAttribute("id"))
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    updateQuestion: res.data.question,
+                    updateAnswer1: res.data.possibleAnswers[0],
+                    updateAnswer2: res.data.possibleAnswers[1],
+                    updateAnswer3: res.data.possibleAnswers[2],
+                    updateCorrect: res.data.correctAnswer,
+                    updateID: res.data._id
+                })
+            })
+            .catch(err => console.log(err));
+    }
+
+    editQuestion = event => {
+        event.preventDefault();
+        let questionArray = [];
+        if (this.state.updateAnswer1 !== "") { questionArray.push(this.state.updateAnswer1); }
+        if (this.state.updateAnswer2 !== "") { questionArray.push(this.state.updateAnswer2); }
+        if (this.state.updateAnswer3 !== "") { questionArray.push(this.state.updateAnswer3); }
+        questionArray.push(this.state.updateCorrect);
+        questionAPI.updateQuestion(this.state.updateID, this.state.updateQuestion, questionArray, this.state.updateCorrect)
+            .then(res => {
+                console.log("NEW UPDATED QUESTION:", res.data);
+                questionArray = this.state.questions;
+                let newArray=[];
+                questionArray.forEach(question => {
+                    if (question._id === res.data._id) newArray.push(res.data);
+                    else newArray.push(question);
+                })
+                this.setState({
+                    questions: newArray
+                });
+            })
+            .catch(err => console.log(err));
     }
 
     getAdminId = () => {
@@ -59,7 +116,7 @@ class Admin extends Component {
     loadGames = () => {
         adminAPI.getGamesbyAdminID(this.state.adminID)
             .then(res => {
-                console.log("loading games",typeof res.data);
+                console.log("loading games", typeof res.data);
                 this.setState({ games: res.data })
             })
             .catch(err => console.log(err));
@@ -76,16 +133,26 @@ class Admin extends Component {
         questionArray.push(this.state.currentCorrect);
         questionAPI.saveQuestion(this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
             .then(res => {
-                let questionsArray=this.state.questions;
-                console.log("NEW QUESTION",res.data);
-                questionsArray.push(res.data);
-                this.setState({ questions: questionsArray })
+                questionArray = this.state.questions;
+                console.log("NEW QUESTION", res.data);
+                questionArray.push(res.data);
+                this.setState({
+                    questions: questionArray,
+                    currentQuestion: "",
+                    currentAnswer1: "",
+                    currentAnswer2: "",
+                    currentAnswer3: "",
+                    currentCorrect: ""
+                })
             })
     };
 
     removeQuestion = event => {
         event.preventDefault();
         console.log("removing question");
+        let questionArray = this.state.questions;
+        questionArray = questionArray.filter(question => question._id !== event.target.getAttribute("id"));
+        this.setState({ questions: questionArray })
         questionAPI.deleteQuestion(event.target.getAttribute("id"))
             .catch(err => console.log(err));
     }
@@ -153,7 +220,15 @@ class Admin extends Component {
                             currentCorrect={this.state.currentCorrect}
                             handleInputChange={this.handleInputChange}
                             addQuestion={this.addQuestion}
-                            removeQuestion={this.removeQuestion} />
+                            removeQuestion={this.removeQuestion}
+                            updateQuestion={this.state.updateQuestion}
+                            updateAnswer1={this.state.updateAnswer1}
+                            updateAnswer2={this.state.updateAnswer2}
+                            updateAnswer3={this.state.updateAnswer3}
+                            updateCorrect={this.state.updateCorrect}
+                            updateID={this.state.updateID}
+                            loadEdit={this.loadEdit}
+                            editQuestion={this.editQuestion} />
                     </ModalBody>
                     <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
                 </Modal>

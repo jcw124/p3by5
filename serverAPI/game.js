@@ -30,7 +30,7 @@ exports.saveGame = function (req, res) {
     db.Game.create(req.body)
         .then(function (dbGame) {
             newGame=dbGame;
-            db.Admin.findOneAndUpdate({ _id: req.body.admin }, { $push: { games: dbGame._id } }, { new: true });
+            return db.Admin.findOneAndUpdate({ _id: req.body.admin }, { $push: { games: dbGame._id } }, { new: true });
         })
         .then(function(){
             res.json(newGame);

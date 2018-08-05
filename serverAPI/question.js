@@ -4,7 +4,6 @@ exports.getQuestion = function (req, res) {
     /*DELETE_ON_PRODUCTION
         req.params gives _id of user
     */
-    console.log(req.body);
     db.Question.findById(req.params.id)
         .then(function (dbQuestion) {
             res.json(dbQuestion);
@@ -55,7 +54,7 @@ exports.updateQuestion = function (req, res) {
             question: req.body.question,
             possibleAnswers: req.body.possibleAnswers,
             correctAnswer: req.body.correctAnswer
-        })
+        }, { new: true })
         .then(function (dbQuestion) {
             res.json(dbQuestion);
         })

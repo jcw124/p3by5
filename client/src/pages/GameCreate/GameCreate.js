@@ -3,7 +3,9 @@ import { Input, FormBtn } from "../../components/Form";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
 
-export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAnswer1, currentAnswer2, currentAnswer3, currentCorrect, handleInputChange, addQuestion, removeQuestion }) =>
+export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAnswer1, currentAnswer2, currentAnswer3,
+    currentCorrect, handleInputChange, addQuestion, removeQuestion, loadEdit, editQuestion,
+    updateQuestion, updateAnswer1, updateAnswer2, updateAnswer3, updateCorrect, updateID }) =>
     <div className="container">
         <div className="row">
             <div className="col-md-6">
@@ -11,11 +13,6 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                 <p>{game.name}</p>
                 <h3>Create Questions and Answers for: </h3>
                 <h5>{game.name}</h5>
-                <p>{currentQuestion}</p>
-                <p>{currentAnswer1}</p>
-                <p>{currentAnswer2}</p>
-                <p>{currentAnswer3}</p>
-                <p>{currentCorrect}</p>
                 <form>
                     <Input
                         value={currentQuestion}
@@ -52,6 +49,45 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                         text="Add Question"
                     />
                 </form>
+                <h3>Edit Question: </h3>
+                <form>
+                    <Input
+                        value={updateQuestion}
+                        onChange={handleInputChange}
+                        name="updateQuestion"
+                        placeholder="Question"
+                    />
+                    <Input
+                        value={updateAnswer1}
+                        onChange={handleInputChange}
+                        name="updateAnswer1"
+                        placeholder="Possible Answer"
+                    />
+                    <Input
+                        value={updateAnswer2}
+                        onChange={handleInputChange}
+                        name="updateAnswer2"
+                        placeholder="Possible Answer"
+                    />
+                    <Input
+                        value={updateAnswer3}
+                        onChange={handleInputChange}
+                        name="updateAnswer3"
+                        placeholder="Possible Answer" />
+                    <Input
+                        value={updateCorrect}
+                        onChange={handleInputChange}
+                        name="updateCorrect"
+                        placeholder="Correct Answer"
+                    />
+                    <button
+                        className="edit-btn btn-primary"
+                        id={updateID}
+                        disabled={!(updateQuestion !== "" && (updateAnswer1 !== "" || updateAnswer2 !== "" || updateAnswer3 !== "") && updateCorrect !== "")}
+                        onClick={editQuestion}>
+                        Submit Edit
+                    </button>
+                </form>
             </div>
 
             <div className="col-md-6">
@@ -67,9 +103,8 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                                         question.possibleAnswers.map((answer, i) =>
                                             <p key={i}>Choice {i + 1}: {answer}</p>
                                         )}
-                                    <h4>Correct Answer</h4>
-                                    <p>{question.correctAnswer}</p>
-                                    <BtnEdit id={question._id} />
+                                    <p>Correct Answer: {question.correctAnswer}</p>
+                                    <button className="edit-btn btn-primary" id={question._id} onClick={loadEdit}>Edit</button>
                                     <button className="btn btn-danger" id={question._id} onClick={removeQuestion}>Remove Question</button>
                                 </ListItem>
                             );

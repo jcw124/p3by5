@@ -14,10 +14,10 @@ export default {
         });
     },
 
-    updateQuestion: function (questionID, name, possibleAnswers, correctAnswer) {
-        return axios.post('/api/question',{
+    updateQuestion: function (questionID, question, possibleAnswers, correctAnswer) {
+        return axios.post('/api/question', {
             id: questionID,
-            name: name,
+            question: question,
             possibleAnswers: possibleAnswers,
             correctAnswer: correctAnswer
         });
