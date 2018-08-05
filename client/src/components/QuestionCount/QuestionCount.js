@@ -8,7 +8,7 @@ function QuestionCount(props) {
     </div>
   );
 
-  console.log("question count line 11" + props.counter);
+
 
 }
 

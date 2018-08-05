@@ -103,9 +103,9 @@ class GamePlay extends Component {
         return (
             <div className="container">
                 <div className="game">
-                {/* <Game />> */}
-                    <Questions /> 
-                     <Answers/>
+                <Game />
+                    {/* <Questions /> 
+                     <Answers/> */}
                 </div>
                 <div className="row">
                     <div className="col-md-4">
