@@ -38,7 +38,9 @@ class Admin extends Component {
         updateAnswer3: "",
         updateCorrect: "",
         updateID: "",
-        modal: false
+        deleteGameID: "",
+        modal: false,
+        confirmDelete: false
     };
 
     //load into gamelist container existing games 
@@ -67,6 +69,13 @@ class Admin extends Component {
             updateAnswer3: "",
             updateCorrect: "",
             updateID: ""
+        });
+    }
+
+    toggleDeleteMessage = event => {
+        this.setState({
+            deleteGameID: event.target.getAttribute("id"),
+            confirmDelete: !this.state.confirmDelete,
         });
     }
 
@@ -130,7 +139,6 @@ class Admin extends Component {
     loadGames = () => {
         adminAPI.getGamesbyAdminID(this.state.adminID)
             .then(res => {
-                console.log("loading games", typeof res.data);
                 this.setState({ games: res.data })
             })
             .catch(err => console.log(err));
@@ -214,11 +222,21 @@ class Admin extends Component {
         this.toggle();
     }
 
+    removeGame = event => {
+        event.preventDefault();
+        gameAPI.deleteGame(event.target.getAttribute("id"))
+            .then(() => {
+                this.setState({ confirmDelete: !this.state.confirmDelete });
+                this.loadGames();
+            })
+            .catch(err => console.log(err));
+    }
+
     getScores = event => {
         event.preventDefault();
-        this.setState({gameForScores: event.target.name});
+        this.setState({ gameForScores: event.target.name });
         scoreAPI.getScore(event.target.getAttribute("id"))
-            .then(res => this.setState({scores: res.data}))
+            .then(res => this.setState({ scores: res.data }))
             .catch(err => console.log(err));
 
     }
@@ -251,6 +269,16 @@ class Admin extends Component {
                     </ModalBody>
                     <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
                 </Modal>
+                <Modal isOpen={this.state.confirmDelete} toggle={this.toggleDeleteMessage}>
+                    <ModalHeader toggle={this.toggleDeleteMessage}>Are You Sure You Want to Delete This Game?</ModalHeader>
+                    <ModalBody>
+                        <p>This will permanently delete the game you have selected. All game data, including scores, will be removed.</p>
+                    </ModalBody>
+                    <ModalFooter>
+                        <ButtonBtn onClick={this.toggleDeleteMessage}>Cancel</ButtonBtn>
+                        <button className="btn btn-danger" id={this.state.deleteGameID} onClick={this.removeGame}>DELETE</button>
+                    </ModalFooter>
+                </Modal>
                 <div className="row">
                     <div className="col-md-6">
                         <h2>Current EduGames</h2>
@@ -262,6 +290,7 @@ class Admin extends Component {
                                             <h3>{game.name}</h3>
                                             <button className="btn btn-secondary" id={game._id} name={game.name} onClick={this.getScores}>View Scores</button>
                                             <BtnEdit id={game._id} click={this.editGame} />
+                                            <button className="btn btn-danger" id={game._id} onClick={this.toggleDeleteMessage}>Delete Game</button>
                                         </ListItem>
                                     );
                                 })}
@@ -288,10 +317,10 @@ class Admin extends Component {
                                 />
                             </form>
                         </div>
-                        <br/>
+                        <br />
                         <div className="container highScore">
                             <h2>High Scores</h2>
-                            <h4>{this.state.gameForScores}</h4> 
+                            <h4>{this.state.gameForScores}</h4>
                             {this.state.scores.length ? (
                                 <List>
                                     {this.state.scores.map(score =>

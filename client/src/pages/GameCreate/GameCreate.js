@@ -9,8 +9,6 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
     <div className="container">
         <div className="row">
             <div className="col-md-6">
-                <p>{gameID}</p>
-                <p>{game.name}</p>
                 <h3>Create Questions and Answers for: </h3>
                 <h5>{game.name}</h5>
                 <form>
