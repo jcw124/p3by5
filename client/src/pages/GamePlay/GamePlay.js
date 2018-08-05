@@ -84,18 +84,18 @@ class GamePlay extends Component {
       }
     }
   
-    renderGame() {
-      return (
-        <Game
-          answer={this.state.answer}
-          answers={this.state.answers}
-          questionId={this.state.questionId}
-          question={this.state.question}
-          questionTotal={tempQuestions.length}
-          onAnswerSelected={this.handleAnswerSelected}
-        />
-      );
-    }
+    // renderGame() {
+    //   return (
+    //     <Game
+    //       answer={this.state.answer}
+    //       answers={this.state.answers}
+    //       questionId={this.state.questionId}
+    //       question={this.state.question}
+    //       questionTotal={tempQuestions.length}
+    //       onAnswerSelected={this.handleAnswerSelected}
+    //     />
+    //   );
+    // }
 
     
 

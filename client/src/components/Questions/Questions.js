@@ -5,7 +5,7 @@ import tempQuestions from './../../utils/API/tempQuestions';
 
 function Questions(props) {
    return ( 
-   <div className="questions">question: 
+   <div className="questions">question: {props.question}
    </div>
   
   );
