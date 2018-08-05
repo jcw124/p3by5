@@ -1,4 +1,5 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
+import Navigation from "../../components/Navigation";
 import {gameAPI} from "../../utils/API";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
@@ -56,6 +57,8 @@ class Admin extends Component {
 
     render() {
         return(
+            <div>
+            <Navigation />
             <div className="container">
                 <div className="row">
                     <div className="col-md-6">
@@ -105,6 +108,7 @@ class Admin extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }
