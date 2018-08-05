@@ -5,19 +5,19 @@ export default {
         return axios.get(`/api/get/question/${questionID}`);
     },
 
-    saveQuestion: function (name, possibleAnswers, correctAnswer, gameID) {
+    saveQuestion: function (question, possibleAnswers, correctAnswer, gameID) {
         return axios.put('/api/question', {
-            name: name,
+            question: question,
             possibleAnswers: possibleAnswers,
             correctAnswer: correctAnswer,
             game: gameID
         });
     },
 
-    updateQuestion: function (questionID, name, possibleAnswers, correctAnswer) {
-        return axios.post('/api/question',{
+    updateQuestion: function (questionID, question, possibleAnswers, correctAnswer) {
+        return axios.post('/api/question', {
             id: questionID,
-            name: name,
+            question: question,
             possibleAnswers: possibleAnswers,
             correctAnswer: correctAnswer
         });

@@ -2,7 +2,9 @@ import axios from "axios";
 
 export default {
     getScore: function (gameID, userID) {
-        return axios.get(`/api/get/score?game=${gameID}&user=${userID}`);
+        let url = `/api/get/score?game=${gameID}`;
+        if (userID) { url += `&user=${userID}` }
+        return axios.get(url);
     },
 
     saveScore: function (score, name, gameID, userID) {

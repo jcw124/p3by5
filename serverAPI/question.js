@@ -1,13 +1,11 @@
 const db = require('../models');
 
 exports.getQuestion = function (req, res) {
-    /*
+    /*DELETE_ON_PRODUCTION
         req.params gives _id of user
     */
-    console.log(req.body);
     db.Question.findById(req.params.id)
         .then(function (dbQuestion) {
-            console.log("Question:", dbQuestion);
             res.json(dbQuestion);
         })
         .catch(function (err) {
@@ -17,7 +15,8 @@ exports.getQuestion = function (req, res) {
 }
 
 exports.saveQuestion = function (req, res) {
-    /*req.body syntax:
+    /*DELETE_ON_PRODUCTION
+      req.body syntax:
         {
             question: {question to be asked by the opponent}
             possibleAnswers: {array of possible answers to be displayed},
@@ -25,16 +24,14 @@ exports.saveQuestion = function (req, res) {
             game: {associated game _id for this question}
         }
         */
+    let newQuestion;
     db.Question.create(req.body)
         .then(function (dbQuestion) {
-            // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-            // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-            // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
+            newQuestion = dbQuestion;
             return db.Game.findOneAndUpdate({ _id: req.body.game }, { $push: { questions: dbQuestion._id } }, { new: true });
         })
-        .then(function (dbGame) {
-            // If we were able to successfully update an Article, send it back to the client
-            res.json(dbGame);
+        .then(function () {
+            res.json(newQuestion);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
@@ -43,7 +40,8 @@ exports.saveQuestion = function (req, res) {
 }
 
 exports.updateQuestion = function (req, res) {
-    /*req.body syntax:
+    /*DELETE_ON_PRODUCTION
+      req.body syntax:
         {
             id: {_id of question to be updated}
             question: {question to be asked by the opponent}
@@ -56,9 +54,8 @@ exports.updateQuestion = function (req, res) {
             question: req.body.question,
             possibleAnswers: req.body.possibleAnswers,
             correctAnswer: req.body.correctAnswer
-        })
+        }, { new: true })
         .then(function (dbQuestion) {
-            // If we were able to successfully update an Article, send it back to the client
             res.json(dbQuestion);
         })
         .catch(function (err) {
@@ -68,7 +65,7 @@ exports.updateQuestion = function (req, res) {
 }
 
 exports.deleteQuestion = function (req, res) {
-    /*
+    /*DELETE_ON_PRODUCTION
         req.params gives _id of question to be removed
     */
     let game;
@@ -79,13 +76,9 @@ exports.deleteQuestion = function (req, res) {
             db.Game.findById(dbQuestion.game, "questions")
                 .then(function (result) {
                     const newQuestions = [];
-                    console.log("target questions:", result);
                     result.questions.forEach(id => {
                         if (id == req.params.id) {
                             db.Question.findByIdAndRemove(id)
-                                .then(function (removed) {
-                                    console.log("Removed:", removed);
-                                })
                                 .catch(function (err) {
                                     // If an error occurred, send it to the client
                                     return res.json(err);
@@ -93,10 +86,8 @@ exports.deleteQuestion = function (req, res) {
                         }
                         else newQuestions.push(id);
                     });
-                    console.log("New Questions Array:", newQuestions,"game",game);
                     db.Game.findByIdAndUpdate(game, { questions: newQuestions }, { new: true })
                         .then(function (result) {
-                            console.log("Updated Game:", result);
                             res.json(result);
                         })
                         .catch(function (err) {
