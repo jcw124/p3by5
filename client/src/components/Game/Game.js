@@ -10,14 +10,14 @@ function Game(props) {
     return (
       <Answers
         key={key.content}
-        answerContent={key.content}
+        answerContent={key.question}
         answerType={key.type}
-        answer={props.answer}
+        answer={props.answers}
         questionId={props.questionId}
         onAnswerSelected={props.onAnswerSelected}
       />
     );
-    console.log("Questions line 20: " + Answers);
+
   }
 
   return (
@@ -37,11 +37,12 @@ function Game(props) {
         />
         <Questions content={props.questions} />
         <ul className="answers">
-          {props.answers.map(renderAnswers)}
+         {props.answers}
         </ul>
       </div>
     </CSSTransitionGroup>
   );
+
 }
 
 

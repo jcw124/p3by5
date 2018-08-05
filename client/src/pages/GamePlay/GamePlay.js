@@ -3,12 +3,12 @@ import update from 'immutability-helper';
 import Game from './../../components/Game';
 import Answers from './../../components/Answers';
 import Questions from './../../components/Questions';
+import QuestionCount from './../../components/QuestionCount';
 import tempQuestions from './../../utils/API/tempQuestions';
 import ButtonBtn from "../../components/ButtonBtn";
 
 
 class GamePlay extends Component {
-
 
     constructor(props) {
         super(props);
@@ -26,7 +26,8 @@ class GamePlay extends Component {
           result: ''
          
         };
-    console.log(this.state);     
+    console.log("gameplay line 29" , this.state);    
+    console.log("tempQuesitons", tempQuestions);
        this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
       }
     
@@ -38,6 +39,7 @@ class GamePlay extends Component {
             setTimeout(() => this.setNextQuestion(), 300);
         } else {
             setTimeout(() => this.setResults(this.getResults()), 300);
+            console.log("event", event);
         }
       }
      
@@ -63,7 +65,7 @@ class GamePlay extends Component {
           answers: tempQuestions[counter].answers,
           answer: ''
       });
-      console.log("GamePlay state 93: " + this.setState);
+      console.log("GamePlay state 93: " , this.setState);
     }
     getResults() {
       const answersCount = this.state.answersCount;
@@ -95,12 +97,15 @@ class GamePlay extends Component {
       );
     }
 
+    
+
     render() {
         return (
             <div className="container">
                 <div className="game">
-                    <Questions />
-                    <Answers/>
+                {/* <Game />> */}
+                    <Questions /> 
+                     <Answers/>
                 </div>
                 <div className="row">
                     <div className="col-md-4">
@@ -122,7 +127,7 @@ class GamePlay extends Component {
                 </div>
             </div>
         )
-    }
+    }  
 }
 
 export default GamePlay;

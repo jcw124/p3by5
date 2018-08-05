@@ -3,16 +3,19 @@ import "./Questions.css";
 import tempQuestions from './../../utils/API/tempQuestions';
 
 
+
+
 function Questions(props) {
    return ( 
-    <div className="questions"> {props.content}</div>
+    <div className="questions">{props.questions}</div>
   );
 }
 
-console.log("questions line 12 " + Questions);
-console.log("line 13 questions: " + tempQuestions[0]);
+
+console.log("line 15 questions: " , tempQuestions[0]);
+console.log("line 16 questions: " , Questions);
   
 
 
 
-export default Questions;
+export default Questions; 
