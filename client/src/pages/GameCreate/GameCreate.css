@@ -1,0 +1,71 @@
+.gameCreateWrap .list-group-item {
+    background: transparent !important;
+    border:none !important;
+}
+.gameCreateWrap {
+    padding-top: 130px;
+}
+
+.gameCreateWrap input.form-control{
+    margin-bottom: 20px;
+}
+.gameCreateWrap input.form-control {
+    border-radius: 90px !important;
+    background-color: rgba(255, 255, 255, 0.863) !important; 
+    border: none;
+    padding: 7px;
+    width: 100%;
+}
+.gameCreateWrap .form-group {
+    max-width: 400px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.gameCreateWrap .col-lg-6 {
+    padding-right: 0px !important;
+}
+.gameCreateWrap .btn-success {
+    float: none !important;
+    margin-bottom: 40px !important;
+}
+.gameCreateWrap h1{
+    text-transform: uppercase;
+    padding: 7px;
+    background: rgba(255, 255, 255, 0.781);
+    color: rgba(25, 149, 251, .80);
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 auto 26px;
+}
+.gameCreateWrap .currQuest.col-lg-6 {
+    padding-left: 0px !important;
+}
+.gameCreateWrap h5 {
+    color: #fff;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+
+
+/* media query */
+
+@media (max-width: 1199.98px) {
+
+}
+@media (max-width: 991.98px) {
+    .gameCreateWrap h1{
+        font-size: 20px;
+    }
+    .gameCreateWrap .currQuest.col-lg-6 {
+        padding-left: 15px !important;
+    }
+}
+@media (max-width: 767.98px) {
+
+}
+@media (max-width: 575.98px) {
+    .gameCreateWrap {
+        padding-top: 80px;
+    }
+}

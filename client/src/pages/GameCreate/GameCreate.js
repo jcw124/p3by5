@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import Navigation from "../../components/Navigation";
 import { Input, FormBtn } from "../../components/Form";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
+
+require('./GameCreate.css');
 
 class GameCreate extends Component {
     // state = {
@@ -20,12 +23,14 @@ class GameCreate extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div>
+                <Navigation />
+            <div className="gameCreateWrap">
                 <div className="row">
-                    <div className="col-md-6">
-                        <h3>Create Questions and Answers for: </h3>
-                        <h5>Dummy</h5>
-                        <form>
+                    <div className="col-lg-6">
+                        <h1>Create Questions and Answers for: </h1>
+                        <h5>Current Game Title</h5>
+                        <form className="container">
                             <Input
                                 // value={this.state.question}
                                 // onChange={this.handleInputChange}
@@ -67,8 +72,8 @@ class GameCreate extends Component {
                         </form>    
                     </div>
 
-                    <div className="col-md-6">
-                        <h3>Current Questions/Answers</h3>
+                    <div className="currQuest col-lg-6">
+                        <h1>Current Questions/Answers</h1>
                         <List>
                             <ListItem>
                                 {/* MAP */}
@@ -80,6 +85,7 @@ class GameCreate extends Component {
                             
                     </div>
                 </div>
+            </div>
             </div>
         )
     }
