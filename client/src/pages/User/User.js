@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { gameAPI } from "../../utils/API";
 import ButtonBtn from "../../components/ButtonBtn";
 import { List, ListItem } from "../../components/List";
+import Navigation from "../../components/Navigation";
 
 class User extends Component {
 
@@ -30,6 +31,8 @@ class User extends Component {
 
     render() {
         return(
+            <div>
+            <Navigation />
             <div className="container">
                 <div className="row">
                     <div className="col-md-6">
@@ -63,6 +66,7 @@ class User extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }
