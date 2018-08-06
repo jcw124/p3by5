@@ -6,13 +6,19 @@
     text-align: left;
 }
 .answerbtn:hover {
-
+    color: #fff;
 }
 .answerList {
     position: relative;
     display: grid;
     grid-template-columns: 1fr;
     text-align: left;
+}
+.opt1:hover::before,
+.opt2:hover::before,
+.opt3:hover::before,
+.opt4:hover::before {
+    background: #23cf00;
 }
 .opt1:before {
     content: "1";
