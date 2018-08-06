@@ -20,6 +20,7 @@ function Game(props) {
 
   }
 
+  console.log("game.js 23: ", props);
   return (
     <CSSTransitionGroup
       className="container"
@@ -31,13 +32,16 @@ function Game(props) {
       transitionAppearTimeout={500}
     >
       <div key={props.questionId}>
-        <QuestionCount
+        {/* <QuestionCount
           counter={props.questionId}
           total={props.questionTotal}
-        />
-        <Questions content={props.questions} />
+        /> */}
+        <Questions content={props.question} />
         <ul className="answers">
-         {props.answers}
+       <Answers 
+        answers={props.answers}
+        onAnswerSelected={props.handleAnswerSelected}
+       />
         </ul>
       </div>
     </CSSTransitionGroup>
