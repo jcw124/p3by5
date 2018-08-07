@@ -24,16 +24,16 @@ const Answers = props => {
 
       <h5>Select Answer</h5>
       <ButtonGroup>
-        <Button color="primary" onClick={props.onAnswerSelected()} active="false">
+        <Button color="primary" onClick="" active="false">
           {props.answers[0]}
         </Button>
-        <Button color="primary" onClick={props.onAnswerSelected()} active="false">
+        <Button color="primary" onClick="" active="false">
         {props.answers[1]}
         </Button>
-        <Button color="primary" onClick={props.onAnswerSelected()} active="false">
+        <Button color="primary" onClick="" active="false">
         {props.answers[2]}
         </Button>
-        <Button color="primary" onClick={props.onAnswerSelected()} active="false">
+        <Button color="primary"onClick="" active="false">
         {props.answers[3]}
         </Button>
       </ButtonGroup>
