@@ -50,10 +50,6 @@ function Game(props) {
           counter={props.questionId}
           total={props.questionTotal}
         />
-        <Questions content={props.questions} />
-        <ul className="answers">
-         {props.answers}
-        </ul>
       </div>
     </CSSTransitionGroup>
   );

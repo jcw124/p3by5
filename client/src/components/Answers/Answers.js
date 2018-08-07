@@ -6,8 +6,8 @@ const Answers = props => {
   console.log("answers 5: ", props);
 
   return (
-    <div className="answers">
-       <li className="answers">
+    <div className="answerswrap">
+       {/* <li className="answers">
         <input
           type="radio"
           className="radioCustomButton"
@@ -21,8 +21,8 @@ const Answers = props => {
         <label className="radioCustomLabel" htmlFor={props.answerType}>
           {props.answerContent}
         </label>
-      </li> 
-        <h5>Select Answer</h5> 
+      </li>  */}
+        {/* <h5>Select Answer</h5>  */}
         <div className="answerList">
             <button className="answerbtn opt1" active="">one </button>
             <button className="answerbtn opt2" active="">two</button>
