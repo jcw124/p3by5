@@ -6,12 +6,7 @@
         padding: 30px;
         max-width: 350px;
         width: 100% !important;
-        background-color: #F7F7F7;
         margin: 0 auto;
-        border-radius: 2px;
-        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-        overflow: hidden;
-        margin-top: 11em;
       }
       
       .loginmodal-container h1 {
@@ -25,29 +20,36 @@
         margin-bottom: 10px;
         position: relative;
       }
-      
+      .loginmodal-container input[type=text] {
+        margin-bottom: 20px;
+      }
       .loginmodal-container input[type=text], input[type=password] {
-        height: 44px;
+        border-radius: 90px !important;
+        background-color: rgba(255, 255, 255, 0.863) !important; 
+        border: none;
+        padding: 7px;
+        width: 100%;
+        /* height: 44px;
         font-size: 16px;
         width: 100%;
         margin-bottom: 10px;
         -webkit-appearance: none;
         background: #fff;
         border: 1px solid #d9d9d9;
-        border-top: 1px solid #c0c0c0;
+        border-top: 1px solid #c0c0c0; */
         /* border-radius: 2px; */
-        padding: 0 8px;
+        /* padding: 0 8px;
         box-sizing: border-box;
-        -moz-box-sizing: border-box;
+        -moz-box-sizing: border-box; */
       }
       
-      .loginmodal-container input[type=text]:hover, input[type=password]:hover {
+      /* .loginmodal-container input[type=text]:hover, input[type=password]:hover {
         border: 1px solid #b9b9b9;
         border-top: 1px solid #a0a0a0;
         -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
         -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
         box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-      }
+      } */
       
       .loginmodal {
         text-align: center;
@@ -82,12 +84,17 @@
       
       .loginmodal-container a {
         text-decoration: none;
-        color: #666;
+        font-size: 17px;
+        color: #fff;
         font-weight: 400;
         text-align: center;
         display: inline-block;
-        opacity: 0.6;
-        transition: opacity ease 0.5s;
+        /* opacity: 0.6;
+        transition: opacity ease 0.5s; */
+      } 
+      .loginmodal-container a:hover {
+        color: #1a1a1a;
+        text-decoration: none;
       } 
       
       .login-help{
@@ -95,6 +102,67 @@
       }
       
       .content {
-          padding-top: 30px;
+        padding-top: 30px;
       }
+      .loginWrap h1 {
+        text-transform: uppercase;
+        padding: 7px;
+        background: rgba(255, 255, 255, 0.781);
+        color: rgba(25, 149, 251, .80);
+        font-weight: 700;
+        font-size: 40px;
+        margin: 0 auto 26px;
+      }
+      .loginWrap {
+        padding-top: 130px;
+      }
+
+      .loginmodal-submit {
+        color: #fff!important;
+        background: #1995fb; /* Old browsers */
+        background: -moz-linear-gradient(top, #1995fb 0%, #0079db 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #1995fb 0%,#0079db 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #1995fb 0%,#0079db 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1995fb', endColorstr='#0079db',GradientType=0 ); /* IE6-9 */
+        font-weight: 700!important;
+        text-transform: uppercase!important;
+        font-size: 30px!important;
+        border: solid 5px #fff!important;
+        padding: 0px 40px!important;
+        border-radius: 90px!important;
+        display: block!important;
+        margin: 23px auto 0px;
+      }
+      .loginmodal-submit:hover {
+        background: #0079db; /* Old browsers */
+        background: -moz-linear-gradient(top, #0079db 0%, #1995fb 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #0079db 0%,#1995fb 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #0079db 0%,#1995fb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0079db', endColorstr='#1995fb',GradientType=0 ); /* IE6-9 */
+      }
+
+
+      /* media query */
+
+      @media (max-width: 1199.98px) {
+
+      }
+      @media (max-width: 991.98px) {
+          
+      }
+      @media (max-width: 767.98px) {
+          
+      }
+      @media (max-width: 575.98px) {
+          .loginWrap h1 {
+              font-size: 30px;
+          }
+          .loginWrap {
+              padding-top: 80px;
+          }
+          .loginmodal-submit {
+              font-size: 24px!important;
+          }
+      }
+
       /* Login CSS End */
