@@ -6,8 +6,8 @@ import Game from './../../components/Game';
 import QuestionCount from './../../components/QuestionCount';
 import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
-import Questions from "../../components/Questions";
-import Answers from "../../components/Answers";
+// import Questions from "../../components/Questions";
+// import Answers from "../../components/Answers";
 import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
 import teacherProfile from "../../images/user1profile.svg";
@@ -154,7 +154,7 @@ class GamePlay extends Component {
           questionTotal={tempQuestions.length}
           onAnswerSelected={this.handleAnswerSelected}
         />
-                    <Questions /> 
+                    {/* <Questions /> 
                      <Answers/> 
                      <div className="QandA">
                          <Questions /> 
@@ -163,7 +163,7 @@ class GamePlay extends Component {
                             <img alt="teacher_icon" src={teacherProfile} />
                         </div> 
                          <Answers /> 
-                    </div> 
+                    </div>  */}
                     <Animation />
                 </div>
                 <div className="footer">
