@@ -61,6 +61,7 @@ class GamePlay extends Component {
 
       handleAnswerSelected(event) {
         this.setUserAnswer(event.currentTarget.value);
+        console.log("setuseranswer: ", this.setUserAnswer);
          console.log("game play line 61: " + this.state.questionId);
          console.log("game play line 62: " +this.setNextQuestion);
         if (this.state.questionId < tempQuestions.length) {
