@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
 import Game from './../../components/Game';
-//import Answers from './../../components/Answers';
-//import Questions from './../../components/Questions';
 import QuestionCount from './../../components/QuestionCount';
 import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
-// import Questions from "../../components/Questions";
-// import Answers from "../../components/Answers";
 import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
 import teacherProfile from "../../images/user1profile.svg";
@@ -124,6 +120,12 @@ class GamePlay extends Component {
       }
     }
   
+
+
+
+   
+
+
     // renderGame() {
     //   return (
     //     <Game

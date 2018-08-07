@@ -32,7 +32,7 @@ function Game(props) {
       transitionAppear
       transitionAppearTimeout={500}
     >
-      <div className="QandA"key={props.questionId}>
+      <div className="QandA" key={props.questionId}>
         {/* <QuestionCount
           counter={props.questionId}
           total={props.questionTotal}
@@ -41,7 +41,7 @@ function Game(props) {
         <div className="user">
             <img alt="teacher_icon" src={teacherProfile} />
         </div>
-        <ul className="answers"> </ul>
+        {/* <ul className="answers"> </ul> */}
        <Answers 
         answers={props.answers}
         onAnswerSelected={props.handleAnswerSelected}
