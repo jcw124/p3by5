@@ -6,6 +6,9 @@ import BtnEdit from "../../components/BtnEdit";
 import { Input, FormBtn } from "../../components/Form";
 
 
+require('./Admin.css');
+
+
 //Admin page contains 
 //new game button to create a new game 
 //list container listing all the games
@@ -59,31 +62,33 @@ class Admin extends Component {
         return(
             <div>
             <Navigation />
-            <div className="container">
+            <div className="AdminWrap">
                 <div className="row">
-                    <div className="col-md-6">
-                        <h2>Current EduGames</h2>
-                        {this.state.games.length ? (
-                            <List>
-                                {this.state.games.map (game => {
-                                    return (
-                                        <ListItem key={game._id}>
-                                            <a href={"/games/" + game._id}>
-                                                <h3>{game.name}</h3> 
-                                            </a>
-                                            <BtnEdit onClick={() => this.editGame(game._id)} />
-                                        </ListItem>   
-                                    );
-                                })}
-                            </List> 
-                        ): (
-                            <h3>Create a game to begin</h3>
-                        )}
+                    <div className="col-lg-6">
+                        <h1>Current EduGames</h1>
+                        <div className="container">
+                            {this.state.games.length ? (
+                                <List>
+                                    {this.state.games.map (game => {
+                                        return (
+                                            <ListItem key={game._id}>
+                                                <a href={"/games/" + game._id}>
+                                                    <h3>{game.name}</h3> 
+                                                </a>
+                                                <BtnEdit onClick={() => this.editGame(game._id)} />
+                                            </ListItem>   
+                                        );
+                                    })}
+                                </List> 
+                            ): (
+                                <h5>Create a game to begin</h5>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="col-md-6">
+                    <div className="createGame col-lg-6">
+                            <h1>Create a Game</h1>
                         <div className="container createNewGame">
-                            <h2>Create a Game</h2>
                             <form>
                                 <Input 
                                     value={this.state.name}
@@ -101,7 +106,7 @@ class Admin extends Component {
                         </div>
 
                         <div className="container highScore">
-                            <h2>Student Progress</h2>
+                            <h5>Student Progress</h5>
                             
                             {/* show each student's high score depending on the game selected */}
                             <p> all student results will go in this container </p>
