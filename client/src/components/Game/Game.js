@@ -4,7 +4,7 @@ import QuestionCount from './../QuestionCount';
 import Answers from './../Answers';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-function Game=(props)=> {
+function Game(props) {
 
   function renderAnswers(key) {
     return (
@@ -20,6 +20,7 @@ function Game=(props)=> {
 
   }
 
+  console.log("game.js 23: ", props);
   return (
     <CSSTransitionGroup
       className="container"
@@ -31,6 +32,16 @@ function Game=(props)=> {
       transitionAppearTimeout={500}
     >
       <div key={props.questionId}>
+        {/* <QuestionCount
+          counter={props.questionId}
+          total={props.questionTotal}
+        /> */}
+        <Questions content={props.question} />
+        <ul className="answers"> </ul>
+       <Answers 
+        answers={props.answers}
+        onAnswerSelected={props.handleAnswerSelected}
+       />
         <QuestionCount
           counter={props.questionId}
           total={props.questionTotal}
