@@ -1,0 +1,57 @@
+.footer {
+    background: rgba(25, 149, 251, 0.671);
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    left:0px;
+}
+.footer .btn {
+    font-weight: 200 !important;
+    font-size: 15px !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    padding: .5rem 1rem !important;
+    background: transparent !important;
+    border: none !important;
+    display: inline-block !important;
+    margin: 0px !important;
+}
+.footer .btn:hover {
+    background-color:transparent !important;
+    border-color: transparent !important;
+    color: #303030 !important;
+    background: transparent !important;
+    border: none !important;
+}
+.AnimationContainer {
+    position: fixed;
+    bottom: 15%;
+}
+.user img{
+    width: 130px;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.781);
+    margin-right: 10px;
+}
+
+/* media query */
+
+@media (max-width: 1199.98px) {
+
+}
+@media (max-width: 991.98px) {
+}
+@media (max-width: 767.98px) {
+    .user {
+        display: none;
+    }
+    .QandA {
+        grid-template-columns: 1fr;
+  } 
+    .answers {
+        padding-top: 30px;
+  }
+}
+@media (max-width: 575.98px) {
+  
+}

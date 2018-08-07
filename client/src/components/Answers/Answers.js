@@ -1,12 +1,13 @@
 import React from "react";
 import { ButtonGroup, Button } from "reactstrap";
+import "./Answers.css"; 
 
 const Answers = props => {
   console.log("answers 5: ", props);
 
   return (
     <div className="answers">
-      <li className="answers">
+       <li className="answers">
         <input
           type="radio"
           className="radioCustomButton"
@@ -20,10 +21,18 @@ const Answers = props => {
         <label className="radioCustomLabel" htmlFor={props.answerType}>
           {props.answerContent}
         </label>
-      </li>
+      </li> 
+        <h5>Select Answer</h5> 
+        <div className="answerList">
+            <button className="answerbtn opt1" active="">one </button>
+            <button className="answerbtn opt2" active="">two</button>
+            <button className="answerbtn opt3" active="">three</button>
+            <button className="answerbtn opt4" active="">four </button>
+        </div> 
+         <p>Selected: {}</p> 
 
-      <h5>Select Answer</h5>
-      <ButtonGroup>
+      {/* <h5>Select Answer</h5>
+       <ButtonGroup>
         <Button color="primary" onClick="" active="false">
           {props.answers[0]}
         </Button>
@@ -37,7 +46,7 @@ const Answers = props => {
         {props.answers[3]}
         </Button>
       </ButtonGroup>
-      <p>Selected: {}</p>
+      <p>Selected: {}</p>  */}
     </div>
   );
 };

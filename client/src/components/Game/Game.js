@@ -37,11 +37,18 @@ function Game(props) {
           total={props.questionTotal}
         /> */}
         <Questions content={props.question} />
-        <ul className="answers">
+        <ul className="answers"> </ul>
        <Answers 
         answers={props.answers}
         onAnswerSelected={props.handleAnswerSelected}
        />
+        <QuestionCount
+          counter={props.questionId}
+          total={props.questionTotal}
+        />
+        <Questions content={props.questions} />
+        <ul className="answers">
+         {props.answers}
         </ul>
       </div>
     </CSSTransitionGroup>
