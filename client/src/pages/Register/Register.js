@@ -1,7 +1,7 @@
 // Include React
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { userAPI } from "../../utils/API";
 
 require('./register.css');
 
@@ -15,7 +15,8 @@ export default class Register extends Component {
             password: '',
             passwordRepeat: '',
             email: '',
-            emailRepeat: ''
+            emailRepeat: '',
+            admin: ''
         };
 
         this.handleUsernameValidation = this.handleUsernameValidation.bind(this);
@@ -25,6 +26,7 @@ export default class Register extends Component {
         this.handleEmailRepeat = this.handleEmailRepeat.bind(this);
         this.signUpUser = this.signUpUser.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAdminValidation = this.handleAdminValidation.bind(this);
     }
 
     handleUsernameValidation(event) {
@@ -47,6 +49,29 @@ export default class Register extends Component {
 
             usernameForm.classList.add("has-success");
             usernameFeedback.textContent = "Username valid!";
+        }
+    }
+
+    handleAdminValidation(event) {
+        // username is passed in
+        const adminVal = this.refs.admin.value,
+            adminForm = this.refs.adminForm,
+            adminFeedback = this.refs.adminFeedback;
+        // admin is updated in state
+        this.setState({
+            'admin': adminVal
+        });
+
+        // admin is checked to see if it matches certain length. If not, the screen will indicate it as such.
+        if (adminVal.length < 6) {
+            adminForm.classList.remove("has-success");
+            adminForm.classList.add("has-error");
+            adminFeedback.textContent = "please enter only the teacher's lastname!";
+        } else {
+            adminForm.classList.remove("has-error");
+
+            adminForm.classList.add("has-success");
+            adminFeedback.textContent = "Username valid!";
         }
     }
 
@@ -151,16 +176,15 @@ export default class Register extends Component {
     }
 
     signUpUser(userData) {
-        axios.post("/apis/users/register", {
-            username: userData.username,
-            email: userData.email,
-            password: userData.password
-        }).then(function (data) {
-            console.log("data stuff", data.data);
-            if (data.duplicateUser) {
-                // Replace with Modal
+        
+        userAPI.saveUser(userData.username, userData.password, userData.email, userData.admin)
+        .then(function (data) {
+            console.log(data);
+            var message = data.data ? data.data.message : '';
+
+            if (message.includes("duplicate")) {
                 alert("Sorry, that username has been taken");
-            } else if (data.data.success) {
+            } else if (data.statusText === "OK") {
                 console.log("yay!")
                 this.props.authenticate();
                 this.setState({
@@ -178,14 +202,16 @@ export default class Register extends Component {
         const username = this.state.username;
         const email = this.state.email;
         const password = this.state.password;
+        const admin = this.state.admin;
 
         let userData = {
             username: username,
             email: email,
-            password: password
+            password: password,
+            admin: admin
         };
 
-        if (!userData.username || !userData.email || !userData.password) {
+        if (!userData.username || !userData.email || !userData.password || !userData.admin) {
             return alert("Please don't leave fields blank");
         }
 
@@ -199,6 +225,7 @@ export default class Register extends Component {
             passwordRepeat: '',
             email: '',
             emailRepeat: '',
+            admin: '',
             redirectToReferrer: false
         });
     }
@@ -252,6 +279,11 @@ export default class Register extends Component {
                                         <label>Repeat Email Address</label>
                                         <input type="email" name="" ref="emailRepeat" className="form-control" id="repeat-email-input" value={this.state.emailRepeat} onChange={this.handleEmailRepeat} />
                                         <small id="email-repeat-feedback" className="" ref="emailRepeatFeedback"></small>
+                                    </div>
+                                    <div id="admin-form" ref="adminForm" className="form-group col-lg-12">
+                                        <label>Teacher Name</label>
+                                        <input type="" name="" ref="admin" className="form-control" id="admin-input" value={this.state.admin} onChange={this.handleAdminValidation} />
+                                        <small id="admin-feedback" ref="adminFeedback" className=""></small>
                                     </div>
 
                                 </div>

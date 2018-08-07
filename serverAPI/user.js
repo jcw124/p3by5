@@ -9,9 +9,9 @@ exports.getUserbyUsernamePass = function (req, res) {
         password: {password of admin}
     }
     */
-    db.Admin.findOne(req.query)
+    db.User.findOne(req.query)
         .then(function (dbUser) {
-            res.json(dbUser);
+            return res.json(dbUser);
         })
         .catch(function (err) {
             return res.json(err);

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Register from "../Register";
+import { adminAPI, userAPI } from "../../utils/API";
 
 require('./login.css');
 
@@ -32,18 +33,23 @@ export default class Login extends Component {
     });
   }
 
-  loginUser(submitObject) {
-
-  	// axios.post('/apis/users/login', submitObject)
-	// 	.then(function(data) {
-    //   this.props.authenticate();
-    //   this.setState({
-    //     redirectToReferrer: true
-    //   });
-    //   console.log(data);
-    // }.bind(this)).catch(function(err) {
-    //   console.log(err);
-    // });
+  loginUser(user) {
+    userAPI.getUserbyUsernamePass(user.username, user.password)
+		.then(function(data) {
+      if(data.data)
+      {
+        this.props.authenticate();
+        this.setState({
+          redirectToReferrer: true
+        });
+      }
+      else{
+        alert("Username or password is Incorrect. ");
+      }
+    }.bind(this)).catch(function(err) {
+      console.log("NOT IN DATABASE");
+      console.log(err);
+    });
 
     this.setState({
       username: "",

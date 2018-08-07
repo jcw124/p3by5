@@ -9,11 +9,13 @@ export default {
         return axios.get(`/api/get/user/${userID}`);
     },
 
-    saveUser: function (adminID, username, password) {
+    saveUser: function (username, password, email, admin) {
+
         return axios.put('/api/user', {
             username: username,
             password: password,
-            admin: adminID
+            email: email,
+            adminName: admin
         });
     },
 
