@@ -1,34 +1,78 @@
 import React, {Component} from "react";
-import { gameAPI } from "../../utils/API";
+import PropTypes from "prop-types";
+import { adminAPI, gameAPI, userAPI, scoreAPI } from "../../utils/API";
 import ButtonBtn from "../../components/ButtonBtn";
 import { List, ListItem } from "../../components/List";
+import Play from "../GamePlay";
 
 class User extends Component {
-
-    // Setting inital state
     state = {
+        userID: "",
+        username: "username1",
+        password: "password1",
+        adminID: "5b66195f7e2cbc066fa39181",
         games: [],
-        name: "",
-        highScores: ""
+        selectedGameID: "",
+        gameScores:"",
+        scores: [],
+        selectedGame: {},
+        gameName: "",
+        gameQuestions: "",
+        gameAnswers:"",
     };
 
-    //load into gamelist container existing games 
+    static contextTypes = {
+        router: PropTypes.object,
+    }
+
     componentDidMount() {
-        this.loadGames();
+        // var data = sessionStorage.getItem('auth')
+        this.getUserId();
+    }
+
+    getUserId = () => {
+        userAPI.getUserbyUsernamePass(this.state.username, this.state.password)
+            .then(res => {
+                console.log("get username", res);
+                this.setState({ userID: res.data._id });
+                this.loadGames();
+            })
+            .catch(err => console.log(err));
     }
 
     loadGames = () => {
-        gameAPI.getGame()
-            .then(res =>
-                this.setState({ 
-                    games: res.data,
-                    name: "",
-                    highScores: ""
-                })
-            ).catch(err => console.log(err));
-    };
+        adminAPI.getGamesbyAdminID(this.state.adminID)
+            .then(res => {
+                console.log("game id", this.state.adminID);
+                this.setState({ games: res.data })
+            })
+            .catch (err => console.log (err));
+    }   
+
+    loadScores = event => {
+        event.preventDefault();
+        this.setState ({ gameScores: event.target.name });
+        scoreAPI.getScore(event.target.getAttribute("id"))
+            .then(res => this.setState({ scores: res.data}))
+            .catch(err => console.log(err));
+    }
+
+    playGame = event => {
+        event.preventDefault();
+        console.log ("Play game", event.target.getAttribute("id"));
+        this.setState ({ selectedGameID: event.target.getAttribute("id") })
+        sessionStorage.setItem("gameID", event.target.getAttribute("id"))
+        gameAPI.getGame(event.target.getAttribute("id"))
+            .then(res => {
+                console.log(res.data);        
+            })
+            .catch(err => console.log(err));
+            this.context.router.history.push("/Play");
+    }
 
     render() {
+
+        console.log("userrrr", this.props.gameName)
         return(
             <div className="container">
                 <div className="row">
@@ -39,10 +83,17 @@ class User extends Component {
                                 {this.state.games.map (game => {
                                     return (
                                         <ListItem key={game._id}>
-                                            <a href={"/games/" + game._id}>
                                                 <h3>{game.name}</h3> 
-                                            </a>
-                                            <ButtonBtn onClick=""> 
+                                            <ButtonBtn 
+                                                id={game._id}
+                                                name={game.name}
+                                                onClick={this.loadScores}>
+                                                    High Score
+                                            </ButtonBtn>
+                                            <ButtonBtn 
+                                                id={game._id}
+                                                name={game.name}
+                                                onClick={this.playGame}> 
                                                 Play
                                             </ButtonBtn>
                                         </ListItem>   
@@ -57,9 +108,18 @@ class User extends Component {
                     <div className="col-md-6">
                         <div className="container highScore">
                             <h2> Your Score</h2>
-                            {/* show each student's high score depending on the game selected */}
-                            <p> the student's score will go in this container </p>
-                            
+                            <h4>{this.state.gameScores}</h4>
+                            {this.state.scores.length ? (
+                                <List>
+                                    {this.state.scores.map(score =>
+                                        <ListItem key={score.id}>
+                                            <p>{score.score}</p>
+                                        </ListItem>
+                                    )}
+                                </List>
+                            ):(
+                                <h4>No Scores for this Game Yet</h4>
+                            )}                            
                         </div>
                     </div>
                 </div>
