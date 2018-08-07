@@ -4,6 +4,9 @@ import ButtonBtn from "../../components/ButtonBtn";
 import { List, ListItem } from "../../components/List";
 import Navigation from "../../components/Navigation";
 
+
+require('./User.css');
+
 class User extends Component {
 
     // Setting inital state
@@ -33,33 +36,35 @@ class User extends Component {
         return(
             <div>
             <Navigation />
-            <div className="container">
+            <div className="UserWrap">
                 <div className="row">
-                    <div className="col-md-6">
-                        <h2>Current EduGames</h2>
-                        {this.state.games.length ? (
-                            <List>
-                                {this.state.games.map (game => {
-                                    return (
-                                        <ListItem key={game._id}>
-                                            <a href={"/games/" + game._id}>
-                                                <h3>{game.name}</h3> 
-                                            </a>
-                                            <ButtonBtn onClick=""> 
-                                                Play
-                                            </ButtonBtn>
-                                        </ListItem>   
-                                    );
-                                })}
-                            </List> 
-                        ): (
-                            <h3>There are currently no games</h3>
-                        )}
+                    <div className="col-lg-6">
+                        <h1>Current EduGames</h1>
+                        <div className="container">
+                            {this.state.games.length ? (
+                                <List>
+                                    {this.state.games.map (game => {
+                                        return (
+                                            <ListItem key={game._id}>
+                                                <a href={"/games/" + game._id}>
+                                                    <h3>{game.name}</h3> 
+                                                </a>
+                                                <ButtonBtn onClick=""> 
+                                                    Play
+                                                </ButtonBtn>
+                                            </ListItem>   
+                                        );
+                                    })}
+                                </List> 
+                            ): (
+                                <h5>There are currently no games</h5>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="col-md-6">
+                    <div className="YourScore col-lg-6">
+                            <h1> Your Score</h1>
                         <div className="container highScore">
-                            <h2> Your Score</h2>
                             {/* show each student's high score depending on the game selected */}
                             <p> the student's score will go in this container </p>
                             
