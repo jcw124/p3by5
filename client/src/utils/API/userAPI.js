@@ -1,6 +1,10 @@
 import axios from "axios";
 
 export default {
+    getUserbyUsernamePass: function (username, password) {
+        return axios.get(`/api/get/user/login?username=${username}&password=${password}`);
+    },
+
     getUser: function (userID) {
         return axios.get(`/api/get/user/${userID}`);
     },
@@ -14,7 +18,7 @@ export default {
     },
 
     updateUser: function (id, username, password) {
-        return axios.post('/api/user',{
+        return axios.post('/api/user', {
             id: id,
             username: username,
             password: password

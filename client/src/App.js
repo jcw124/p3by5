@@ -5,7 +5,7 @@ import Navigation from "./components/Navigation";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Admin from "./pages/Admin";
-import GameCreate from "./pages/GameCreate";
+//import GameCreate from "./pages/GameCreate";
 import User from "./pages/User";
 import GamePlay from "./pages/GamePlay"
 import Home from "./pages/Home";
@@ -76,14 +76,14 @@ export default class App extends Component {
                   authenticated={this.state.authenticated}
                 />}
               />
-              <Route exact path="/create" render={props =>
+              {/* <Route exact path="/create" render={props =>
                 <GameCreate
                   {...props}
                   authenticate={this.authenticate}
                   deAuthenticate={this.deAuthenticate}
                   authenticated={this.state.authenticated}
                 />}
-              />
+              /> */}
               <Route exact path="/user" render={props =>
                 <User
                   {...props}

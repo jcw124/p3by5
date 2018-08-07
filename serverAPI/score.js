@@ -1,21 +1,21 @@
 const db = require('../models');
 
 exports.getScores = function (req, res) {
-    /*req.query syntax:
+    /*DELETE_ON_PRODUCTION
+      req.query syntax:
     {
         game: {_id of associated game},
         user: {_id of associated user}
     }
     */
-    console.log(req.body);
-    db.Score.find({
-        game: req.query.game,
-        user: req.query.user
-    }, "score name")
+    let query = {};
+    if (req.query.game) { query.game = req.query.game };
+    if (req.query.user) { query.user = req.query.user };
+    db.Score.find(query)
+        .populate("user")
         .sort({ score: -1 })
         .then(function (dbScores) {
             // If we were able to successfully find an Headline with the given id, send it back to the client
-            console.log("Scores:", dbScores);
             res.json(dbScores);
         })
         .catch(function (err) {
@@ -25,7 +25,8 @@ exports.getScores = function (req, res) {
 }
 
 exports.saveScore = function (req, res) {
-    /*req.body syntax:
+    /*DELETE_ON_PRODUCTION
+      req.body syntax:
     {
         score: {score of game just completed}
         name: {name of user associated with given score},
@@ -35,9 +36,6 @@ exports.saveScore = function (req, res) {
     */
     db.Score.create(req.body)
         .then(function (dbScore) {
-            // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-            // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-            // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
             return db.Game.findOneAndUpdate({ _id: req.body.game }, { $push: { scores: dbScore._id } }, { new: true });
         })
         .then(function (dbGame) {
@@ -51,7 +49,7 @@ exports.saveScore = function (req, res) {
 }
 
 exports.deleteScore = function (req, res) {
-    /*
+    /*DELETE_ON_PRODUCTION
         req.params gives _id of score to be removed
     */
     let game;
@@ -61,13 +59,9 @@ exports.deleteScore = function (req, res) {
             db.Game.findById(game, "scores")
                 .then(function (result) {
                     const newScores = [];
-                    console.log("target scores:", result);
                     result.scores.forEach(id => {
                         if (id == req.params.id) {
                             db.Score.findByIdAndRemove(id)
-                                .then(function (removed) {
-                                    console.log("Removed:", removed);
-                                })
                                 .catch(function (err) {
                                     // If an error occurred, send it to the client
                                     return res.json(err);
@@ -75,10 +69,8 @@ exports.deleteScore = function (req, res) {
                         }
                         else newScores.push(id);
                     });
-                    console.log("New Scores Array:", newScores);
                     db.Game.findByIdAndUpdate(game, { scores: newScores }, { new: true })
                         .then(function (result) {
-                            console.log("Updated Game:", result);
                             res.json(result);
                         })
                         .catch(function (err) {

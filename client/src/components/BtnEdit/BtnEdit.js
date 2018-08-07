@@ -1,8 +1,11 @@
 import React from "react";
 
-const BtnEdit = props => (
-        <button 
-            className="edit-btn btn-primary" {...props}>
+const BtnEdit = ({ click, id }) => (
+    <button
+        id={id}
+        onClick={click}
+        className="edit-btn btn-primary">
+        Edit
         </button>
 );
 
