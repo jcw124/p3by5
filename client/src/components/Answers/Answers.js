@@ -22,9 +22,16 @@ const Answers = props => {
         </label>
       </li>
 
+fucntion test() => {
+  console.log("button on click : " , props.answer)
+}
+
+
+
+
       <h5>Select Answer</h5>
       <ButtonGroup>
-        <Button color="primary" onClick="" active="false">
+        <Button color="primary" onClick={this.test} active="false">
           {props.answers[0]}
         </Button>
         <Button color="primary" onClick="" active="false">
@@ -38,6 +45,28 @@ const Answers = props => {
         </Button>
       </ButtonGroup>
       <p>Selected: {}</p>
+
+
+
+
+
+
+
+      {/* <ButtonGroup>
+        <Button color="primary" onClick={this.onAnswerSelected} active="false">
+          {props.answers[0]}
+        </Button>
+        <Button color="primary" onClick="" active="false">
+        {props.answers[1]}
+        </Button>
+        <Button color="primary" onClick="" active="false">
+        {props.answers[2]}
+        </Button>
+        <Button color="primary"onClick="" active="false">
+        {props.answers[3]}
+        </Button>
+      </ButtonGroup>
+      <p>Selected: {}</p> */}
     </div>
   );
 };
