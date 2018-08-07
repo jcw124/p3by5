@@ -2,10 +2,12 @@ import axios from "axios";
 
 export default {
     getGame: function (gameID) {
+        console.log(gameID);
         return axios.get(`/api/get/game/${gameID}`);
     },
 
     saveGame: function (name, numberWrongPermitted, numberofQuestions, adminID) {
+        console.log("saving game");
         return axios.put('/api/game', {
             name: name,
             numberWrongPermitted: numberWrongPermitted,
