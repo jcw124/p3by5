@@ -8,8 +8,15 @@ import teacherProfile from "../../images/teacherprofile.svg";
 function Questions(props) {
   console.log("line 7 props.questions:  ", props);
    return ( 
-   <div className="questions">{props.content}
-   </div>
+  <div className="questionContainer">
+    <div className="teacher">
+        <img alt="teacher_icon" src={teacherProfile} />
+    </div>
+    <div className="mainQuestion">
+    <div className="questions">{props.content}
+    </div>
+    </div>
+  </div>
   
 
 

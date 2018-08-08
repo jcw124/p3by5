@@ -2,6 +2,7 @@ import React from 'react';
 import Questions from './../Questions'
 import QuestionCount from './../QuestionCount';
 import Answers from './../Answers';
+import teacherProfile from "../../images/user1profile.svg";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 function Game(props) {
@@ -31,13 +32,16 @@ function Game(props) {
       transitionAppear
       transitionAppearTimeout={500}
     >
-      <div key={props.questionId}>
+      <div className="QandA" key={props.questionId}>
         {/* <QuestionCount
           counter={props.questionId}
           total={props.questionTotal}
         /> */}
         <Questions content={props.question} />
-        <ul className="answers"> </ul>
+        <div className="user">
+            <img alt="teacher_icon" src={teacherProfile} />
+        </div>
+        {/* <ul className="answers"> </ul> */}
        <Answers 
         answers={props.answers}
         onAnswerSelected={props.handleAnswerSelected}
@@ -46,10 +50,6 @@ function Game(props) {
           counter={props.questionId}
           total={props.questionTotal}
         />
-        <Questions content={props.questions} />
-        <ul className="answers">
-         {props.answers}
-        </ul>
       </div>
     </CSSTransitionGroup>
   );

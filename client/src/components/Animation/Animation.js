@@ -6,8 +6,10 @@ function walkright() {
 };
 
 const Animation = props => (
-    <div className="AnimationContainer">
-        <div style={{padding: 20 + 'px'}}> <button id="moveleft">Move Left</button>  <button  onClick={walkright} id="moveright">Move right</button> <button id="movedown">Move Down</button> <button id="moveup">Move Up</button></div>
+    // <div>
+    // <div style={{padding: 20 + 'px'}}> <button id="moveleft">Move Left</button>  <button  onClick={walkright} id="moveright">Move right</button> <button id="movedown">Move Down</button> <button id="moveup">Move Up</button></div>
+    // </div>
+    <div className="AnimationContainer">  
         <div className="teacherContainer">
             <div id="teacher" className="dont-walk"></div>
         </div>
