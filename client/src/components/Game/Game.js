@@ -32,17 +32,17 @@ function Game(props) {
       transitionAppearTimeout={500}
     >
       <div key={props.questionId}>
-        {/* <QuestionCount
+        <QuestionCount
           counter={props.questionId}
           total={props.questionTotal}
-        /> */}
+        />
         <Questions content={props.question} />
-        <ul className="answers">
+        <ul className="answers"> </ul>
        <Answers 
         answers={props.answers}
         onAnswerSelected={props.handleAnswerSelected}
        />
-        </ul>
+    
       </div>
     </CSSTransitionGroup>
   );

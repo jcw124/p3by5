@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
 import Game from './../../components/Game';
-import Answers from './../../components/Answers';
-import Questions from './../../components/Questions';
+//import Answers from './../../components/Answers';
+//import Questions from './../../components/Questions';
 import QuestionCount from './../../components/QuestionCount';
 import tempQuestions from './../../utils/API/tempQuestions';
+import Navigation from "../../components/Navigation";
+import Questions from "../../components/Questions";
+import Answers from "../../components/Answers";
 import ButtonBtn from "../../components/ButtonBtn";
+import Animation from "../../components/Animation";
+import teacherProfile from "../../images/user1profile.svg";
+import { walkright } from '../../components/Animation'
+
+require('./GamePlay.css');
+
+
+
+
 
 
 class GamePlay extends Component {
@@ -61,7 +73,7 @@ class GamePlay extends Component {
 
       handleAnswerSelected(event) {
         this.setUserAnswer(event.currentTarget.value);
-        console.log("setuseranswer: ", this.setUserAnswer);
+        console.log("GP 76 -setuseranswer: ", this.setUserAnswer);
          console.log("game play line 61: " + this.state.questionId);
          console.log("game play line 62: " +this.setNextQuestion);
         if (this.state.questionId < tempQuestions.length) {
@@ -131,7 +143,9 @@ class GamePlay extends Component {
     render() {
         console.log("gp 103: ", this.state);
         return (
-            <div className="container">
+            <div>
+            <Navigation />
+            <div className="container gameContainer">
                 <div className="game">
                 <Game
           answer={this.state.correctAnswer}
@@ -142,26 +156,30 @@ class GamePlay extends Component {
           onAnswerSelected={this.handleAnswerSelected}
         />
                     {/* <Questions /> 
-                     <Answers/> */}
+                     <Answers/>  */}
+                     {/* <div className="QandA"> */}
+                         {/* <Questions />  */}
+            
+                        {/* <div className="user">
+                            <img alt="teacher_icon" src={teacherProfile} />
+                        </div> 
+                         <Answers />  */}
+                    {/* </div>  */}
+                    <Animation />
                 </div>
-                <div className="row">
-                    <div className="col-md-4">
+                <div className="footer">
                         <ButtonBtn>
                             Play Again
                         </ButtonBtn>
-                    </div>
-                    <div className="col-md-4">
                         <ButtonBtn>
                             Play
                         </ButtonBtn>
-                    </div>
-                    <div className="col-md-4">
                         <ButtonBtn>
                             Home
                         </ButtonBtn>
-                    </div>
 
                 </div>
+            </div>
             </div>
         )
     }  
