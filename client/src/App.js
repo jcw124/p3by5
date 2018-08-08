@@ -18,12 +18,20 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      authenticated: false
+      authenticated: false,
+      // gameName: ""
     };
 
     this.authenticate = this.authenticate.bind(this);
     this.deAuthenticate = this.deAuthenticate.bind(this);
+    // this.updateGame = this.updateGame.bind(this);
   }
+
+  // updateGame = (name) => {
+  //   this.setState({
+  //       gameName: name
+  //   })
+  // }
 
   authenticate() {
     this.setState({
@@ -36,6 +44,7 @@ export default class App extends Component {
       authenticated: false
     })
   }
+
 
   render() {
     return (
@@ -90,6 +99,8 @@ export default class App extends Component {
                   authenticate={this.authenticate}
                   deAuthenticate={this.deAuthenticate}
                   authenticated={this.state.authenticated}
+                  // updateGamePlay={this.updateGame}
+                  // gameName={this.state.gameName}
                 />}
               />
               <Route exact path="/play" render={props =>
@@ -98,6 +109,7 @@ export default class App extends Component {
                   authenticate={this.authenticate}
                   deAuthenticate={this.deAuthenticate}
                   authenticated={this.state.authenticated}
+                  // gameName={this.state.gameName}
                 />} 
               />
             </Switch>

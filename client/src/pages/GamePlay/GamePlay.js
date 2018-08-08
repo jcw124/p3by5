@@ -11,12 +11,27 @@ import { walkright } from '../../components/Animation'
 
 require('./GamePlay.css');
 
-
-
-
-
-
 class GamePlay extends Component {
+    //Setting initial state
+    state = {
+        gameID:"",
+        gameName:"",
+    }
+
+    componentDidMount(){
+        // let session=sessionStorage.getItem("gameID");
+        this.setState({ gameID: sessionStorage.getItem("gameID")});
+        console.log("from session storage",sessionStorage.getItem("gameID")); 
+        console.log("load!!!", this.state.gameID);
+    }
+
+    render() {
+
+        console.log('game pla loaded')
+        return (
+            <div className="container">
+                <p>Clicked game: {this.state.gameID}</p>
+                </div>)}
 
     constructor(props) {
         super(props);
