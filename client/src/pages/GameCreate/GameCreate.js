@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from "../../components/Navigation";
 import { Input, FormBtn } from "../../components/Form";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
@@ -6,12 +7,12 @@ import BtnEdit from "../../components/BtnEdit";
 export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAnswer1, currentAnswer2, currentAnswer3,
     currentCorrect, handleInputChange, addQuestion, removeQuestion, loadEdit, editQuestion,
     updateQuestion, updateAnswer1, updateAnswer2, updateAnswer3, updateCorrect, updateID }) =>
-    <div className="container">
+    <div className="gameCreateWrap">
         <div className="row">
-            <div className="col-md-6">
+            <div className="col-lg-6">
                 <h3>Create Questions and Answers for: </h3>
                 <h5>{game.name}</h5>
-                <form>
+                <form className="container">
                     <Input
                         value={currentQuestion}
                         onChange={handleInputChange}
@@ -87,8 +88,7 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                     </button>
                 </form>
             </div>
-
-            <div className="col-md-6">
+            <div className="currQuest col-lg-6">
                 <h3>Current Questions/Answers</h3>
                 {questions.length ? (
                     <List>

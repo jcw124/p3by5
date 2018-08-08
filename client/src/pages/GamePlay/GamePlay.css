@@ -1,0 +1,278 @@
+.footer {
+    background: rgba(25, 149, 251, 0.671);
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    left:0px;
+}
+.footer .btn {
+    font-weight: 200 !important;
+    font-size: 15px !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    padding: .5rem 1rem !important;
+    background: transparent !important;
+    border: none !important;
+    display: inline-block !important;
+    margin: 0px !important;
+}
+.footer .btn:hover {
+    background-color:transparent !important;
+    border-color: transparent !important;
+    color: #303030 !important;
+    background: transparent !important;
+    border: none !important;
+}
+.AnimationContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.user img{
+    width: 130px;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 0.781);
+    margin-right: 10px;
+}
+
+
+#user {
+    position: absolute;
+    right: -52px;
+}
+#user.dont-walk {
+    background: url('../../images/teacherwalk.png');
+    background-position: 92px;
+    width: 91px;
+    height: 142px;
+}
+
+.userContainer .dont-walk.walk1 {
+    margin-right:20%;
+}
+.userContainer .dont-walk.walk2 {
+    margin-right:40%;
+}
+.userContainer .dont-walk.walk3 {
+    margin-right:60%;
+}
+.userContainer .dont-walk.walk4 {
+    margin-right:80%;
+}
+.userContainer .dont-walk.walk5 {
+    margin-right:100%;
+}
+.userContainer .walk1{
+    background: url('../../images/teacherwalk.png');
+    animation: walk .5s steps(6) 2;
+    -webkit-animation: walk .5s steps(6) 2;
+    -ms-animation: walk .5s steps(6) 2;
+    -moz-animation: walk .5s steps(6) 2;
+}
+.userContainer .walk2 {
+    animation: walk2 .5s steps(6) 2;
+    -webkit-animation: walk2 .5s steps(6) 2;
+    -ms-animation: walk2 .5s steps(6) 2;
+    -moz-animation: walk2 .5s steps(6) 2;
+}
+.userContainer .walk3 {
+    animation: walk3 .5s steps(6) 2;
+    -webkit-animation: walk3 .5s steps(6) 2;
+    -ms-animation: walk3 .5s steps(6) 2;
+    -moz-animation: walk3 .5s steps(6) 2;
+}
+.userContainer .walk4 {
+    animation: walk4 .5s steps(6) 2;
+    -webkit-animation: walk4 .5s steps(6) 2;
+    -ms-animation: walk4 .5s steps(6) 2;
+    -moz-animation: walk4 .5s steps(6) 2;
+}
+.userContainer .walk5 {
+    animation: walk5 .5s steps(6) 2;
+    -webkit-animation: walk5 .5s steps(6) 2;
+    -ms-animation: walk5 .5s steps(6) 2;
+    -moz-animation: walk5 .5s steps(6) 2;
+}
+.userContainer .dont-walk {
+    transition:1s;
+    -webkit-transition:1s;
+    -ms-transition:1s;
+    -moz-transition:1s;
+}
+
+/* teacher styling and animation --------------------------*/
+#teacher {
+    position: absolute;
+}
+.teacherContainer .dont-walk.walk1 {
+    margin-left:20%;
+}
+.teacherContainer .dont-walk.walk2 {
+    margin-left:40%;
+}
+.teacherContainer .dont-walk.walk3 {
+    margin-left:60%;
+}
+.teacherContainer .dont-walk.walk4 {
+    margin-left:80%;
+}
+.teacherContainer .dont-walk.walk5 {
+    margin-left:100%;
+}
+.teacherContainer .walk1{
+    background: url('../../images/teacherwalk.png');
+    width: 91px;
+    height: 142px;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    animation: walk .5s steps(6) 2;
+    -webkit-animation: walk .5s steps(6) 2;
+    -ms-animation: walk .5s steps(6) 2;
+    -moz-animation: walk .5s steps(6) 2;
+}
+.teacherContainer .walk2 {
+    animation: walk2 .5s steps(6) 2;
+    -webkit-animation: walk2 .5s steps(6) 2;
+    -ms-animation: walk2 .5s steps(6) 2;
+    -moz-animation: walk2 .5s steps(6) 2;
+}
+.teacherContainer .walk3 {
+    animation: walk3 .5s steps(6) 2;
+    -webkit-animation: walk3 .5s steps(6) 2;
+    -ms-animation: walk3 .5s steps(6) 2;
+    -moz-animation: walk3 .5s steps(6) 2;
+}
+.teacherContainer .walk4 {
+    animation: walk4 .5s steps(6) 2;
+    -webkit-animation: walk4 .5s steps(6) 2;
+    -ms-animation: walk4 .5s steps(6) 2;
+    -moz-animation: walk4 .5s steps(6) 2;
+}
+.teacherContainer .walk5 {
+    animation: walk5 .5s steps(6) 2;
+    -webkit-animation: walk5 .5s steps(6) 2;
+    -ms-animation: walk5 .5s steps(6) 2;
+    -moz-animation: walk5 .5s steps(6) 2;
+}
+.teacherContainer .dont-walk {
+    background: url('../../images/teacherwalk.png');
+    width: 91px;
+    height: 142px;
+    transition:1s;
+    -webkit-transition:1s;
+    -ms-transition:1s;
+    -moz-transition:1s;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+@keyframes walk {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+
+@keyframes walk2 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk2 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk2 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk2 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+
+@keyframes walk3 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk3 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk3 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk3 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+
+@keyframes walk4 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk4 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk4 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk4 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+
+@keyframes walk5 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk5 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk5 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk5 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+/* media query */
+
+@media (max-width: 1199.98px) {
+
+}
+@media (max-width: 991.98px) {
+}
+@media (max-width: 767.98px) {
+    .user {
+        display: none;
+    }
+    .QandA {
+        grid-template-columns: 1fr;
+  } 
+    .answers {
+        padding-top: 30px;
+  }
+}
+@media (max-width: 575.98px) {
+  
+}

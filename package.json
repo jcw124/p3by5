@@ -23,8 +23,12 @@
     "body-parser": "^1.18.2",
     "express": "^4.15.4",
     "if-env": "^1.0.4",
+    "immutability-helper": "^2.7.1",
     "mongoose": "^5.2.4",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-logger": "^1.1.0",
+    "react-transition-group": "1.x",
+    "winston": "^3.0.0"
   }
 }

@@ -49,7 +49,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navigation />
+        {/* <Navigation /> */}
         <Router>
           <div className="master">
             <Switch>

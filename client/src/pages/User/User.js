@@ -4,6 +4,10 @@ import { adminAPI, gameAPI, userAPI, scoreAPI } from "../../utils/API";
 import ButtonBtn from "../../components/ButtonBtn";
 import { List, ListItem } from "../../components/List";
 import Play from "../GamePlay";
+import Navigation from "../../components/Navigation";
+
+
+require('./User.css');
 
 class User extends Component {
     state = {
@@ -74,7 +78,9 @@ class User extends Component {
 
         console.log("userrrr", this.props.gameName)
         return(
-            <div className="container">
+            <div>
+            <Navigation />
+            <div className="UserWrap">
                 <div className="row">
                     <div className="col-md-6">
                         <h2>Current EduGames</h2>
@@ -105,7 +111,8 @@ class User extends Component {
                         )}
                     </div>
 
-                    <div className="col-md-6">
+                    <div className="YourScore col-lg-6">
+                            <h1> Your Score</h1>
                         <div className="container highScore">
                             <h2> Your Score</h2>
                             <h4>{this.state.gameScores}</h4>
@@ -123,6 +130,7 @@ class User extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }
