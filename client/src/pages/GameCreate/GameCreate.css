@@ -2,10 +2,30 @@
     background: transparent !important;
     border:none !important;
 }
-.gameCreateWrap {
-    padding-top: 130px;
+.gameCreateWrap h3{
+    text-transform: uppercase;
+    text-align: center;
+    padding: 7px;
+    background: rgba(255, 255, 255, 0.781);
+    color: rgba(25, 149, 251, .80);
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 auto 26px;
 }
+.gameCreateWrap h4{
 
+}
+.gameCreateWrap button{
+    font-size: 1.25rem!important;
+    margin: .25rem;
+}
+.gameCreateWrap h5{
+    font-weight: 700;
+    text-align: center;
+}
+.gameCreateWrap p{
+    font-weight: 300;
+}
 .gameCreateWrap input.form-control{
     margin-bottom: 20px;
 }
