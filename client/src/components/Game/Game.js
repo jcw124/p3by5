@@ -6,14 +6,14 @@ import teacherProfile from "../../images/user1profile.svg";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 function Game(props) {
-
+console.log("Game props: ", props);
   function renderAnswers(key) {
     return (
       <Answers
-        key={key.content}
-        answerContent={key.question}
-        answerType={key.type}
-        answer={props.answers}
+        // key={key.content}
+        // answerContent={key.content}
+        // answerType={key.type}
+        answer={props.answer}
         questionId={props.questionId}
         onAnswerSelected={props.onAnswerSelected}
       />
@@ -46,7 +46,7 @@ function Game(props) {
         {/* <ul className="answers"> </ul> */}
        <Answers 
         answers={props.answers}
-        onAnswerSelected={props.handleAnswerSelected}
+        onAnswerSelected={props.onAnswerSelected}
        />
     
         {/* <QuestionCount

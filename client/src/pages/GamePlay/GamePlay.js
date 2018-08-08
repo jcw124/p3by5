@@ -25,13 +25,15 @@ class GamePlay extends Component {
         console.log("load!!!", this.state.gameID);
     }
 
-    render() {
+    // render() {
 
-        console.log('game pla loaded')
-        return (
-            <div className="container">
-                <p>Clicked game: {this.state.gameID}</p>
-                </div>)}
+    //     console.log('game pla loaded')
+    //     return (
+    //         <div className="container">
+    //             <p>Clicked game: {this.state.gameID}</p>
+    //             </div>
+    //             )
+    // }
 
     constructor(props) {
         super(props);
@@ -82,7 +84,8 @@ class GamePlay extends Component {
         return array;
        };
 
-      handleAnswerSelected(event) {
+      handleAnswerSelected = (event) => {
+        console.log("answer selected event",  event.target.value);
         this.setUserAnswer(event.currentTarget.value);
         console.log("GP 76 -setuseranswer: ", this.setUserAnswer);
          console.log("game play line 61: " + this.state.questionId);
@@ -97,6 +100,7 @@ class GamePlay extends Component {
      
 
       setUserAnswer(answer) {
+          console.log("Answer 103: " + answer);
         const updatedAnswersCount = update(this.state.answersCount, {
           [answer]: {$apply: (currentValue) => currentValue + 1}
         });
@@ -160,6 +164,8 @@ class GamePlay extends Component {
     render() {
         console.log("gp 103: ", this.state);
         return (
+            <div className="container">
+                            <p>Clicked game: {this.state.gameID}</p>
             <div>
             <Navigation />
             <div className="container gameContainer">
@@ -196,6 +202,7 @@ class GamePlay extends Component {
                         </ButtonBtn>
 
                 </div>
+            </div>
             </div>
             </div>
         )

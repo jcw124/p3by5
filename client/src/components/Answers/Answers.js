@@ -3,33 +3,18 @@ import { ButtonGroup, Button } from "reactstrap";
 import "./Answers.css"; 
 import "./../../utils/API/tempQuestions"
 
-const Answers = props => {
-  console.log("game answers 5: ", props);
+const Answers = (props) => {
+  console.log("Answer props: ", props);
 
 
   return (
     <div className="answerswrap">
-       {/* <li className="answers">
-        <input
-          type="radio"
-          className="radioCustomButton"
-          name="radioGroup"
-          checked={props.answerType === props.answer}
-          id={props.answerType}
-          value={props.answerType}
-          disabled={props.answer}
-          onChange={props.onAnswerSelected}
-        />
-        <label className="radioCustomLabel" htmlFor={props.answerType}>
-          {props.answerContent}
-        </label>
-      </li>  */}
         {/* <h5>Select Answer</h5>  */}
-        <div className="answerList">
-            <button className="answerbtn opt1" active="" onClick={this.onAnswerSelected}>  {props.answers[0]} </button>
-            <button className="answerbtn opt2" active="" onClick={this.onAnswerSelected}>  {props.answers[1]}</button>
-            <button className="answerbtn opt3" active="" onClick={this.onAnswerSelected}>  {props.answers[2]}</button>
-            <button className="answerbtn opt4" active="" onClick={this.onAnswerSelected}>  {props.answers[3]} </button>
+        <div className="answerList"> 
+            <button className="answerbtn opt1"  onClick={props.onAnswerSelected} value={props.answers[0]}>{props.answers[0]} </button>
+            <button className="answerbtn opt2" active="" onClick={props.onAnswerSelected} value={props.answers[1]}>  {props.answers[1]}</button>
+            <button className="answerbtn opt3" active="" onClick={props.onAnswerSelected} value={props.answers[2]}>  {props.answers[2]}</button>
+            <button className="answerbtn opt4" active="" onClick={props.onAnswerSelected} value={props.answers[3]}>  {props.answers[3]} </button>
         </div>    
           {/* <p>Selected: {}</p>  */}
 
