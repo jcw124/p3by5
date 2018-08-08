@@ -1,8 +1,8 @@
 import React from "react";
-import "./Form.css"; 
+import "./Form.css";
 
-export const FormBtn = ({ click, text, disabled}) => (
-  <button style={{ float: "right", marginBottom: 10 }} onClick={click} disabled={disabled} className="btn btn-success">
-    {text}
+export const FormBtn = props => (
+  <button style={{ float: "right", marginBottom: 10 }} {...props} className="btn btn-success mx-auto">
+    {props.children}
   </button>
 );

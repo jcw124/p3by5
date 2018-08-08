@@ -8,8 +8,7 @@ import ButtonBtn from "../../components/ButtonBtn";
 import { Input, FormBtn } from "../../components/Form";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { GameCreate } from "../GameCreate";
-
-require('./Admin.css');
+import './Admin.css';
 
 
 //Admin page contains 
@@ -251,7 +250,7 @@ class Admin extends Component {
             <div>
                 <Navigation />
                 <div className="AdminWrap">
-                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
                         <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
                         <ModalBody>
                             <GameCreate questions={this.state.questions}
@@ -294,12 +293,19 @@ class Admin extends Component {
                                     <List>
                                         {this.state.games.map(game => {
                                             return (
-                                                <ListItem key={game._id}>
-                                                    <h3>{game.name}</h3>
-                                                    <button className="btn btn-primary" id={game._id} name={game.name} onClick={this.getScores}>View Scores</button>
-                                                    <BtnEdit id={game._id} click={this.editGame} />
-                                                    <button className="btn btn-danger" id={game._id} onClick={this.toggleDeleteMessage}>Delete Game</button>
-                                                </ListItem>
+                                                <div key={game._id} className="card">
+                                                    <div className="card-body">
+                                                        <ListItem>
+                                                            <h3>{game.name}</h3>
+                                                            <div className="btn-group" role="group" aria-label="Game Controls">
+                                                                <button type="button" className="btn btn-primary btn-small" id={game._id} name={game.name} onClick={this.getScores}>View Scores</button>
+                                                                <button type="button" className="btn btn-primary btn-small" id={game._id} onClick={this.editGame}>Edit</button>
+                                                                <button type="button" className="btn btn-danger btn-small" id={game._id} onClick={this.toggleDeleteMessage}>Delete Game</button>
+                                                            </div>
+                                                        </ListItem>
+                                                    </div>
+                                                </div>
+
                                             );
                                         })}
                                     </List>
@@ -308,7 +314,6 @@ class Admin extends Component {
                                     )}
                             </div>
                         </div>
-
                         <div className="createGame col-lg-6">
                             <h1>Create a Game</h1>
                             <div className="container createNewGame">
@@ -321,30 +326,44 @@ class Admin extends Component {
                                     />
                                     <FormBtn
                                         disabled={!(this.state.newGameName)}
-                                        click={this.createGame}
-                                        text="Create New Game"
-                                    />
+                                        onClick={this.createGame}>
+                                        Create New Game
+                                    </FormBtn>
                                 </form>
                             </div>
                             <br />
                             <div className="container highScore">
-                                <h5>Student Progress</h5>
-
-                                {/* show each student's high score depending on the game selected */}
-                                <p> all student results will go in this container </p>
-                                <h5>High Scores</h5>
+                                <h1>High Scores</h1>
                                 <h4>{this.state.gameForScores}</h4>
                                 {this.state.scores.length ? (
-                                    <List>
-                                        {this.state.scores.map(score =>
-                                            <ListItem key={score._id}>
-                                                <p>{score.user.username}:</p>
-                                                <p>{score.name} {score.score}</p>
-                                            </ListItem>
-                                        )}
-                                    </List>
+                                    <div className="row">
+                                        <div className="col-4">
+                                            <ul className="list-group list-group-flush">
+                                                <li className="list-group-item list-group-title">Username</li>
+                                                {this.state.scores.map(score =>
+                                                    <li key={score._id} className="list-group-item list-group-child">{score.user.username}</li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="col-4">
+                                            <ul className="list-group list-group-flush">
+                                                <li className="list-group-item list-group-title">Name</li>
+                                                {this.state.scores.map(score =>
+                                                    <li key={score._id} className="list-group-item list-group-child"> {score.name}</li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="col-4">
+                                            <ul className="list-group list-group-flush">
+                                                <li className="list-group-item list-group-title">Name</li>
+                                                {this.state.scores.map(score =>
+                                                    < li key={score._id} className="list-group-item list-group-child"> {score.score}</li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </div>
                                 ) : (
-                                        <h3>No Scores for this Game Yet</h3>
+                                        <h3>No Scores to Display</h3>
                                     )}
                             </div>
                         </div>

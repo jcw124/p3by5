@@ -1,11 +1,23 @@
+.AdminWrap h3{
+    font-weight: 700;
+}
+.AdminWrap p{
+    margin-bottom: 0;
+}
 .AdminWrap .list-group-item {
     background: transparent !important;
     border:none !important;
 }
+.modal-content{
+    background: url("../../images/bg.jpg");
+}
 .AdminWrap {
     padding-top: 130px;
 }
-
+.modal-content p, .modal-content h5{
+    font-weight: 700;
+    color: white;
+}
 .AdminWrap input.form-control{
     margin-bottom: 20px;
 }
@@ -36,6 +48,32 @@
     font-weight: 700;
     font-size: 20px;
     margin: 0 auto 26px;
+}
+.AdminWrap h1{
+    text-transform: uppercase;
+    padding: 7px;
+    background: rgba(255, 255, 255, 0.781);
+    color: rgba(25, 149, 251, .80);
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 auto 26px;
+}
+.AdminWrap h4{
+    padding: 7px;
+    color: rgba(255, 255, 255, 0.781);
+    margin: 0;
+    font-weight: 700;
+}
+.card{
+    padding: 7px;
+    color: white;
+    background-color: rgba(25, 149, 251)!important;
+    font-weight: 700;
+    font-size: 20px;
+    opacity: 0.5;
+}
+.card:hover{
+    opacity: 1;
 }
 .AdminWrap .createGame.col-lg-6 {
     padding-left: 0px !important;
@@ -94,6 +132,19 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0079db', endColorstr='#1995fb',GradientType=0 ); /* IE6-9 */
 }
 
+.btn-small{
+    font-weight: 400!important;
+    text-transform: uppercase!important;
+    font-size: 20px!important;
+    border: solid 2px #fff!important;
+    padding: 0px 20px!important;
+    border-radius: 90px!important;
+    display: block!important;
+    margin: 0;
+}
+.btn-group{
+    margin: auto;
+}
 @media (max-width: 575.98px) {
     .btn-primary {
         font-size: 24px!important;
