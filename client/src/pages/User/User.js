@@ -82,39 +82,41 @@ class User extends Component {
             <Navigation />
             <div className="UserWrap">
                 <div className="row">
-                    <div className="col-md-6">
-                        <h2>Current EduGames</h2>
-                        {this.state.games.length ? (
-                            <List>
-                                {this.state.games.map (game => {
-                                    return (
-                                        <ListItem key={game._id}>
-                                                <h3>{game.name}</h3> 
-                                            <ButtonBtn 
-                                                id={game._id}
-                                                name={game.name}
-                                                onClick={this.loadScores}>
-                                                    High Score
-                                            </ButtonBtn>
-                                            <ButtonBtn 
-                                                id={game._id}
-                                                name={game.name}
-                                                onClick={this.playGame}> 
-                                                Play
-                                            </ButtonBtn>
-                                        </ListItem>   
-                                    );
-                                })}
-                            </List> 
-                        ): (
-                            <h3>There are currently no games</h3>
-                        )}
+                    <div className="col-lg-6">
+                        <h1>Current EduGames</h1>
+                        <div className="container">
+                            {this.state.games.length ? (
+                                <List>
+                                    {this.state.games.map (game => {
+                                        return (
+                                            <ListItem key={game._id}>
+                                                    <h3>{game.name}</h3> 
+                                                <ButtonBtn 
+                                                    id={game._id}
+                                                    name={game.name}
+                                                    onClick={this.loadScores}>
+                                                        High Score
+                                                </ButtonBtn>
+                                                <ButtonBtn 
+                                                    id={game._id}
+                                                    name={game.name}
+                                                    onClick={this.playGame}> 
+                                                    Play
+                                                </ButtonBtn>
+                                            </ListItem>   
+                                        );
+                                    })}
+                                </List> 
+                            ): (
+                                <h3>There are currently no games</h3>
+                            )}
+                        </div>
                     </div>
 
                     <div className="YourScore col-lg-6">
                             <h1> Your Score</h1>
                         <div className="container highScore">
-                            <h2> Your Score</h2>
+                            <h3> Your Score</h3>
                             <h4>{this.state.gameScores}</h4>
                             {this.state.scores.length ? (
                                 <List>

@@ -5,9 +5,7 @@ import QuestionCount from './../../components/QuestionCount';
 import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
 import ButtonBtn from "../../components/ButtonBtn";
-import Animation from "../../components/Animation";
-import teacherProfile from "../../images/user1profile.svg";
-import { walkright } from '../../components/Animation'
+import Animation from "../../components/Animation"; 
 
 require('./GamePlay.css');
 
@@ -37,6 +35,8 @@ class GamePlay extends Component {
         super(props);
     
         this.state = {
+            teacherProgress: 0,
+            userProgress: 0,
           counter: 0,
           questionId: 1,
           question: '',
@@ -138,6 +138,74 @@ class GamePlay extends Component {
 
 
 
+
+    // animations
+
+    // state = {
+    //     };
+
+
+        walkleft = () => {
+    
+            let user = document.querySelector('#user');
+    
+            if (this.state.userProgress == 0) {
+                user.classList.add("walk1");
+                this.setState({
+                    userProgress: 1
+                });
+                console.log(this.state.userProgress);
+            } else if (this.state.userProgress == 1) {
+                user.classList.add("walk2");
+                this.setState({
+                    userProgress: 2
+                });
+                console.log(this.stateuuserProgress);
+            } else if (this.state.userProgress == 2) {
+                user.classList.add("walk3");
+                this.setState({
+                    userProgress: 3
+                });
+            } else if (this.state.userProgress == 3) {
+                user.classList.add("walk4");
+                this.setState({
+                    userProgress: 4
+                });
+            } else if (this.state.userProgress == 4) {
+                user.classList.add("walk5");
+            };
+        };
+    
+        walkright = () => {
+            // let teacher = document.getElementById('teacher');
+    
+            if (this.state.teacherProgress == 0) {
+                document.querySelector('#teacher').classList.add("walk1");
+                this.setState({
+                    teacherProgress: 1
+                });
+                console.log(this.state.teacherProgress);
+            } else if (this.state.teacherProgress == 1) {
+                document.querySelector('#teacher').classList.add("walk2");
+                this.setState({
+                    teacherProgress: 2
+                });
+                console.log(this.state.teacherProgress);
+            } else if (this.state.teacherProgress == 2) {
+                document.querySelector('#teacher').classList.add("walk3");
+                this.setState({
+                    teacherProgress: 3
+                });
+            } else if (this.state.teacherProgress == 3) {
+                document.querySelector('#teacher').classList.add("walk4");
+                this.setState({
+                    teacherProgress: 4
+                });
+            } else if (this.state.teacherProgress == 4) {
+                document.querySelector('#teacher').classList.add("walk5");
+            };
+        };
+
    
 
 
@@ -184,10 +252,10 @@ class GamePlay extends Component {
                     <Animation />
                 </div>
                 <div className="footer">
-                        <ButtonBtn>
+                        <ButtonBtn onClick={this.walkright}>
                             Play Again
                         </ButtonBtn>
-                        <ButtonBtn>
+                        <ButtonBtn onClick={this.walkleft}>
                             Play
                         </ButtonBtn>
                         <ButtonBtn>

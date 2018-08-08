@@ -16,6 +16,16 @@
     padding: 7px;
     width: 100%;
 }
+.UserWrap .highScore h3,
+.UserWrap .highScore h4,
+.UserWrap h3 {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 200;
+    max-width: 740px;
+    margin: 10px auto;
+    padding: 0 50px;
+}
 .UserWrap .form-group {
     max-width: 400px;
     margin-left:auto;

@@ -24,7 +24,7 @@ const Answers = props => {
       </li>  */}
         {/* <h5>Select Answer</h5>  */}
         <div className="answerList">
-            <button className="answerbtn opt1" active="">one </button>
+            <button className="answerbtn opt1" onClick={this.walkright} active="">one </button>
             <button className="answerbtn opt2" active="">two</button>
             <button className="answerbtn opt3" active="">three</button>
             <button className="answerbtn opt4" active="">four </button>
