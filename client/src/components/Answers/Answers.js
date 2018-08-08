@@ -8,24 +8,23 @@ const Answers = props => {
 
 
   return (
-     <div className="answers">
-      {/* <li className="answers">
-       <input
-         type="radio"
-           className="radioCustomButton"
-           name="radioGroup"
-           checked={props.answerType === props.correctAnswer}
-           id={props.answerType}
-           value={props.answerType}
-           disabled={props.answer}
-           onChange={props.onAnswerSelected}
-         />
+    <div className="answerswrap">
+       {/* <li className="answers">
+        <input
+          type="radio"
+          className="radioCustomButton"
+          name="radioGroup"
+          checked={props.answerType === props.answer}
+          id={props.answerType}
+          value={props.answerType}
+          disabled={props.answer}
+          onChange={props.onAnswerSelected}
+        />
         <label className="radioCustomLabel" htmlFor={props.answerType}>
-           {props.answerContent}
-         </label>
-     </li>  */}
-
-        <h5>Select Answer</h5> 
+          {props.answerContent}
+        </label>
+      </li>  */}
+        {/* <h5>Select Answer</h5>  */}
         <div className="answerList">
             <button className="answerbtn opt1" active="" onClick={this.onAnswerSelected}>  {props.answers[0]} </button>
             <button className="answerbtn opt2" active="" onClick={this.onAnswerSelected}>  {props.answers[1]}</button>

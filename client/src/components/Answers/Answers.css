@@ -60,6 +60,7 @@
     position: absolute;
     left: -25px;
 }
-.answers {
+.answerswrap {
+    padding-top: 20px;
     padding-left: 40px;
 }

@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
 import Game from './../../components/Game';
-//import Answers from './../../components/Answers';
-//import Questions from './../../components/Questions';
 import QuestionCount from './../../components/QuestionCount';
 import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
-import Questions from "../../components/Questions";
-import Answers from "../../components/Answers";
 import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
 import teacherProfile from "../../images/user1profile.svg";
@@ -15,12 +11,27 @@ import { walkright } from '../../components/Animation'
 
 require('./GamePlay.css');
 
-
-
-
-
-
 class GamePlay extends Component {
+    //Setting initial state
+    state = {
+        gameID:"",
+        gameName:"",
+    }
+
+    componentDidMount(){
+        // let session=sessionStorage.getItem("gameID");
+        this.setState({ gameID: sessionStorage.getItem("gameID")});
+        console.log("from session storage",sessionStorage.getItem("gameID")); 
+        console.log("load!!!", this.state.gameID);
+    }
+
+    render() {
+
+        console.log('game pla loaded')
+        return (
+            <div className="container">
+                <p>Clicked game: {this.state.gameID}</p>
+                </div>)}
 
     constructor(props) {
         super(props);
@@ -125,6 +136,12 @@ class GamePlay extends Component {
       }
     }
   
+
+
+
+   
+
+
     // renderGame() {
     //   return (
     //     <Game
@@ -156,15 +173,15 @@ class GamePlay extends Component {
           onAnswerSelected={this.handleAnswerSelected}
         />
                     {/* <Questions /> 
-                     <Answers/>  */}
-                     {/* <div className="QandA"> */}
-                         {/* <Questions />  */}
+                     <Answers/> 
+                     <div className="QandA">
+                         <Questions /> 
             
                         {/* <div className="user">
                             <img alt="teacher_icon" src={teacherProfile} />
                         </div> 
-                         <Answers />  */}
-                    {/* </div>  */}
+                         <Answers /> 
+                    </div>  */}
                     <Animation />
                 </div>
                 <div className="footer">
