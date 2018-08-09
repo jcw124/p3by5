@@ -5,10 +5,16 @@ import QuestionCount from './../../components/QuestionCount';
 import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
 import ButtonBtn from "../../components/ButtonBtn";
+<<<<<<< HEAD
 import Animation from "../../components/Animation";
 import teacherProfile from "../../images/user1profile.svg";
 import { walkright } from '../../components/Animation';
 import './GamePlay.css';
+=======
+import Animation from "../../components/Animation"; 
+
+require('./GamePlay.css');
+>>>>>>> 36fc4a096bdceba75293f68feb3f49525c1c2ea4
 
 class GamePlay extends Component {
     //Setting initial state
@@ -35,6 +41,7 @@ class GamePlay extends Component {
         super(props);
 
         this.state = {
+<<<<<<< HEAD
             counter: 0,
             questionId: 1,
             question: '',
@@ -47,6 +54,21 @@ class GamePlay extends Component {
             answer: '',
             result: ""
 
+=======
+            teacherProgress: 0,
+            userProgress: 0,
+          counter: 0,
+          questionId: 1,
+          question: '',
+          answers: [],
+          correctAnswer: '',
+          answersCount: {
+            correct: 0,
+            incorrect: 0,
+          },
+          result: ''
+         
+>>>>>>> 36fc4a096bdceba75293f68feb3f49525c1c2ea4
         };
         console.log("gameplay line 29", this.state);
         console.log("tempQuesitons", tempQuestions);
@@ -120,11 +142,89 @@ class GamePlay extends Component {
         }
     }
 
+<<<<<<< HEAD
     getResults = () => {
         const answersCount = this.state.answersCount;
         const answersCountKeys = Object.keys(answersCount);
         const answersCountValues = answersCountKeys.map((key) => answersCount[key]);
         const maxAnswerCount = Math.max.apply(null, answersCountValues);
+=======
+
+    // animations
+
+        // correctOrIncorrect = () => {
+        //     if () {
+
+        //     }else (){
+
+        //     };
+        // };
+
+
+
+        walkleft = () => {
+    
+            let user = document.querySelector('#user');
+    
+            if (this.state.userProgress == 0) {
+                user.classList.add("walk1");
+                this.setState({
+                    userProgress: 1
+                });
+                console.log(this.state.userProgress);
+            } else if (this.state.userProgress == 1) {
+                user.classList.add("walk2");
+                this.setState({
+                    userProgress: 2
+                });
+                console.log(this.stateuuserProgress);
+            } else if (this.state.userProgress == 2) {
+                user.classList.add("walk3");
+                this.setState({
+                    userProgress: 3
+                });
+            } else if (this.state.userProgress == 3) {
+                user.classList.add("walk4");
+                this.setState({
+                    userProgress: 4
+                });
+            } else if (this.state.userProgress == 4) {
+                user.classList.add("walk5");
+                this.setState({
+                    userProgress: 5
+                });
+            } else if (this.state.userProgress == 5) {
+                user.classList.add("walk6");
+                this.setState({
+                    userProgress: 6
+                });
+            } else if (this.state.userProgress == 6) {
+                user.classList.add("walk7");
+            };
+        };
+    
+        walkright = () => {
+            // let teacher = document.getElementById('teacher');
+    
+            if (this.state.teacherProgress == 0) {
+                document.querySelector('#teacher').classList.add("walk1");
+                this.setState({
+                    teacherProgress: 1
+                });
+                console.log(this.state.teacherProgress);
+            } else if (this.state.teacherProgress == 1) {
+                document.querySelector('#teacher').classList.add("walk2");
+                this.setState({
+                    teacherProgress: 2
+                });
+                console.log(this.state.teacherProgress);
+            } else if (this.state.teacherProgress == 2) {
+                document.querySelector('#teacher').classList.add("walk3");
+            };
+        };
+
+   
+>>>>>>> 36fc4a096bdceba75293f68feb3f49525c1c2ea4
 
         return answersCountKeys.filter((key) => answersCount[key] === maxAnswerCount);
     }

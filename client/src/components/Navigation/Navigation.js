@@ -22,10 +22,10 @@ const Navigation = () => (
           <NavLink href="">Games</NavLink>
         </NavItem> */}
         <NavItem>
-          <NavLink className="wrong" href="">0</NavLink>
+          <NavLink href="">0</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink className="correct" href="">0</NavLink>
+          <NavLink href="">0</NavLink>
         </NavItem>
       </Nav>
       </div>

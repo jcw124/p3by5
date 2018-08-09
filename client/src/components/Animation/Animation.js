@@ -1,9 +1,9 @@
 import React from "react";
 import "./Animation.css";
 
-function walkright() {
-    document.getElementById("#teacher").classList.toggle("walk");
-};
+// function walkright() {
+//     document.getElementById("#teacher").classList.toggle("walk");
+// };
 
 const Animation = props => (
     // <div>
@@ -14,7 +14,7 @@ const Animation = props => (
             <div id="teacher" className="dont-walk"></div>
         </div>
         <div className="userContainer">
-                <div id="user" className="dont-walk"></div>
+            <div id="user" className="dont-walk"></div>
         </div>
     </div>
 
