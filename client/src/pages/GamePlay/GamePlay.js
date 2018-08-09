@@ -6,39 +6,22 @@ import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
 import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
+import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
 import teacherProfile from "../../images/user1profile.svg";
 import { walkright } from '../../components/Animation';
 import './GamePlay.css';
 
 class GamePlay extends Component {
-    //Setting initial state
-    state = {
-        gameID: "",
-        gameName: "",
-    }
-
-    componentDidMount() {
-        this.setState({ gameID: sessionStorage.getItem("gameID") });
-        // the code in 23 is async and the console log lines in 27 -28 could run before its completed
-        // this.setState( state => ( { gameID: sessionStorage.getItem("gameID")}));
-        console.log("from session storage", sessionStorage.getItem("gameID"));
-        console.log("load!!!", this.state.gameID);
-        const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
-        this.setState(({ counter }) => ({
-            question: tempQuestions[counter].question,
-            answers: shuffledanswerChoices[counter],
-            correctAnswer: tempQuestions[counter].correctAnswer
-        }));
-    }
-
     constructor(props) {
         super(props);
 
         this.state = {
+            gameID: "",
+            gameName: "",
+            game: { questions: [null] },
             teacherProgress: 0,
             userProgress: 0,
             counter: 0,
-            questionId: 1,
             question: '',
             answers: [],
             correctAnswer: '',
@@ -48,16 +31,52 @@ class GamePlay extends Component {
             },
             answer: '',
             result: ''
-
         };
-        console.log("gameplay line 29", this.state);
-        console.log("tempQuesitons", tempQuestions);
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
+    }
+
+    componentDidMount() {
+        if (!sessionStorage.getItem("gameID")) { this.context.router.history.push("/login") };
+        this.setState({ gameID: sessionStorage.getItem("gameID") });
+        if (sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`)) {
+            this.setState({
+                counter: parseInt(sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`))
+            })
+        }
+        if (sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`)) {
+            this.setState({
+                answersCount: {
+                    correct: parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`)),
+                    incorrect: this.state.answersCount.incorrect
+                }
+            })
+        }
+        if (sessionStorage.getItem(`numWrong${sessionStorage.getItem("gameID")}`)) {
+            this.setState({
+                answersCount: {
+                    correct: this.state.answersCount.correct,
+                    incorrect: parseInt(sessionStorage.getItem(`numWrong${sessionStorage.getItem("gameID")}`))
+                }
+            })
+        }
+        gameAPI.getGame(sessionStorage.getItem("gameID"))
+            .then(res => {
+                console.log(res.data);
+                const shuffledanswerChoices = res.data.questions.map((question) => this.shuffleArray(question.possibleAnswers));
+                this.setState(({ counter }) => ({
+                    question: res.data.questions[counter].question,
+                    answers: shuffledanswerChoices[counter],
+                    correctAnswer: res.data.questions[counter].correctAnswer
+                }));
+                this.setState({
+                    game: res.data
+                })
+            })
+            .catch(err => console.log(err));
     }
 
     shuffleArray(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
-
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
 
@@ -76,22 +95,24 @@ class GamePlay extends Component {
 
     setNextQuestion = () => {
         const counter = this.state.counter + 1;
-        const questionId = this.state.questionId + 1;
+        sessionStorage.setItem(`gameCounter${this.state.gameID}`, counter);
         this.setState({
             counter: counter,
-            questionId: questionId,
-            question: tempQuestions[counter].question,
-            answers: tempQuestions[counter].possibleAnswers,
-            correctAnswer: tempQuestions[counter].correctAnswer,
+            question: this.state.game.questions[counter].question,
+            answers: this.state.game.questions[counter].possibleAnswers,
+            correctAnswer: this.state.game.questions[counter].correctAnswer,
             answer: ''
         });
     }
 
     handleAnswerSelected = event => {
         this.setUserAnswer(event.target.value);
-        if (this.state.questionId < tempQuestions.length) {
+        if ((this.state.counter + 1) < this.state.game.questions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
         } else {
+            sessionStorage.removeItem(`numCorrect${this.state.gameID}`);
+            sessionStorage.removeItem(`numWrong${this.state.gameID}`);
+            sessionStorage.removeItem(`gameCounter${this.state.gameID}`);
             console.log("GAME OVER!");
             console.log("right:", this.state.answersCount.correct);
             console.log("wrong:", this.state.answersCount.incorrect);
@@ -100,7 +121,8 @@ class GamePlay extends Component {
 
 
     setUserAnswer = answer => {
-        if (answer == this.state.correctAnswer) {
+        if (answer === this.state.correctAnswer) {
+            sessionStorage.setItem(`numCorrect${this.state.gameID}`, this.state.answersCount.correct + 1);
             console.log("THATS CORRECT");
             this.setState({
                 answersCount: {
@@ -111,6 +133,7 @@ class GamePlay extends Component {
             });
         }
         else {
+            sessionStorage.setItem(`numWrong${this.state.gameID}`, this.state.answersCount.incorrect + 1);
             console.log("THATS INCORRECT");
             this.setState({
                 answersCount: {
@@ -121,55 +144,44 @@ class GamePlay extends Component {
             });
         }
     }
-    // animations
-
-    // correctOrIncorrect = () => {
-    //     if () {
-
-    //     }else (){
-
-    //     };
-    // };
-
-
 
     walkleft = () => {
 
         let user = document.querySelector('#user');
 
-        if (this.state.userProgress == 0) {
+        if (this.state.userProgress === 0) {
             user.classList.add("walk1");
             this.setState({
                 userProgress: 1
             });
             console.log(this.state.userProgress);
-        } else if (this.state.userProgress == 1) {
+        } else if (this.state.userProgress === 1) {
             user.classList.add("walk2");
             this.setState({
                 userProgress: 2
             });
             console.log(this.stateuuserProgress);
-        } else if (this.state.userProgress == 2) {
+        } else if (this.state.userProgress === 2) {
             user.classList.add("walk3");
             this.setState({
                 userProgress: 3
             });
-        } else if (this.state.userProgress == 3) {
+        } else if (this.state.userProgress === 3) {
             user.classList.add("walk4");
             this.setState({
                 userProgress: 4
             });
-        } else if (this.state.userProgress == 4) {
+        } else if (this.state.userProgress === 4) {
             user.classList.add("walk5");
             this.setState({
                 userProgress: 5
             });
-        } else if (this.state.userProgress == 5) {
+        } else if (this.state.userProgress === 5) {
             user.classList.add("walk6");
             this.setState({
                 userProgress: 6
             });
-        } else if (this.state.userProgress == 6) {
+        } else if (this.state.userProgress === 6) {
             user.classList.add("walk7");
         };
     };
@@ -177,19 +189,19 @@ class GamePlay extends Component {
     walkright = () => {
         // let teacher = document.getElementById('teacher');
 
-        if (this.state.teacherProgress == 0) {
+        if (this.state.teacherProgress === 0) {
             document.querySelector('#teacher').classList.add("walk1");
             this.setState({
                 teacherProgress: 1
             });
             console.log(this.state.teacherProgress);
-        } else if (this.state.teacherProgress == 1) {
+        } else if (this.state.teacherProgress === 1) {
             document.querySelector('#teacher').classList.add("walk2");
             this.setState({
                 teacherProgress: 2
             });
             console.log(this.state.teacherProgress);
-        } else if (this.state.teacherProgress == 2) {
+        } else if (this.state.teacherProgress === 2) {
             document.querySelector('#teacher').classList.add("walk3");
         };
     };
@@ -223,9 +235,9 @@ class GamePlay extends Component {
                                 answer={this.state.answer}
                                 correctAnswer={this.state.correctAnswer}
                                 answers={this.state.answers}
-                                questionId={this.state.questionId}
+                                questionId={this.state.counter + 1}
                                 question={this.state.question}
-                                questionTotal={tempQuestions.length}
+                                questionTotal={this.state.game.questions.length}
                                 onAnswerSelected={this.handleAnswerSelected}
                             />
 
