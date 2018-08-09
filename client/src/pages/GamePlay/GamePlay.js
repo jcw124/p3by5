@@ -7,198 +7,174 @@ import Navigation from "../../components/Navigation";
 import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
 import teacherProfile from "../../images/user1profile.svg";
-import { walkright } from '../../components/Animation'
-
-require('./GamePlay.css');
+import { walkright } from '../../components/Animation';
+import './GamePlay.css';
 
 class GamePlay extends Component {
     //Setting initial state
     state = {
-        gameID:"",
-        gameName:"",
+        gameID: "",
+        gameName: "",
     }
 
-    componentDidMount(){
-        // let session=sessionStorage.getItem("gameID");
-        this.setState({ gameID: sessionStorage.getItem("gameID")});
-        console.log("from session storage",sessionStorage.getItem("gameID")); 
+    componentDidMount() {
+        this.setState({ gameID: sessionStorage.getItem("gameID") });
+        // the code in 23 is async and the console log lines in 27 -28 could run before its completed
+        // this.setState( state => ( { gameID: sessionStorage.getItem("gameID")}));
+        console.log("from session storage", sessionStorage.getItem("gameID"));
         console.log("load!!!", this.state.gameID);
+        const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
+        this.setState(({ counter }) => ({
+            question: tempQuestions[counter].question,
+            answers: shuffledanswerChoices[counter],
+            correctAnswer: tempQuestions[counter].correctAnswer
+        }));
     }
-
-    render() {
-
-        console.log('game pla loaded')
-        return (
-            <div className="container">
-                <p>Clicked game: {this.state.gameID}</p>
-                </div>)}
 
     constructor(props) {
         super(props);
-    
+
         this.state = {
-          counter: 0,
-          questionId: 1,
-          question: '',
-          answers: [],
-          correctAnswer: '',
-          answersCount: {
-            correct: 0,
-            incorrect: 0,
-          },
-          result: ''
-         
+            counter: 0,
+            questionId: 1,
+            question: '',
+            answers: [],
+            correctAnswer: '',
+            answersCount: {
+                correct: 0,
+                incorrect: 0,
+            },
+            answer: '',
+            result: ""
+
         };
-    console.log("gameplay line 29" , this.state);    
-    console.log("tempQuesitons", tempQuestions);
-       this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
-      }
-    
-      componentWillMount() {
-        const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
-        this.setState({
-          question: tempQuestions[0].question,
-          answers: shuffledanswerChoices[0],
-          correctAnswer: tempQuestions[0].correctAnswer
-        });
-       }
-       
-       shuffleArray(array) {
+        console.log("gameplay line 29", this.state);
+        console.log("tempQuesitons", tempQuestions);
+        this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
+    }
+
+    shuffleArray(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
-       
+
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
-       
-          // Pick a remaining element...
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-       
-          // And swap it with the current element.
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-        }
-       
-        return array;
-       };
 
-      handleAnswerSelected(event) {
-        this.setUserAnswer(event.currentTarget.value);
-         console.log("game play line 61: " + this.state.questionId);
-         console.log("game play line 62: " +this.setNextQuestion);
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    };
+
+    setNextQuestion = () => {
+        const counter = this.state.counter + 1;
+        const questionId = this.state.questionId + 1;
+        this.setState({
+            counter: counter,
+            questionId: questionId,
+            question: tempQuestions[counter].question,
+            answers: tempQuestions[counter].possibleAnswers,
+            correctAnswer: tempQuestions[counter].correctAnswer,
+            answer: ''
+        });
+    }
+
+    handleAnswerSelected = event => {
+        this.setUserAnswer(event.target.value);
         if (this.state.questionId < tempQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
         } else {
-            setTimeout(() => this.setResults(this.getResults()), 300);
-            console.log("event", event);
+            console.log("GAME OVER!");
+            console.log("right:",this.state.answersCount.correct);
+            console.log("wrong:",this.state.answersCount.incorrect);
         }
-      }
-     
-
-      setUserAnswer(answer) {
-        const updatedAnswersCount = update(this.state.answersCount, {
-          [answer]: {$apply: (currentValue) => currentValue + 1}
-        });
-        this.setState({
-          answersCount: updatedAnswersCount,
-          answer: answer
-      });
     }
 
-    setNextQuestion() {
-      const counter = this.state.counter + 1;
-      const questionId = this.state.questionId + 1;
-  
-      this.setState({
-          counter: counter,
-          questionId: questionId,
-          question: tempQuestions[counter].question,
-          answers: tempQuestions[counter].answers,
-          answer: ''
-      });
-      console.log("GamePlay state 93: " , this.setState);
+
+    setUserAnswer = answer => {
+        if (answer == this.state.correctAnswer) {
+            console.log("THATS CORRECT");
+            this.setState({
+                answersCount: {
+                    correct: this.state.answersCount.correct += 1,
+                    incorrect: this.state.answersCount.incorrect
+                },
+                answer: answer
+            });
+        }
+        else {
+            console.log("THATS INCORRECT");
+            this.setState({
+                answersCount: {
+                    correct: this.state.answersCount.correct,
+                    incorrect: this.state.answersCount.incorrect += 1,
+                },
+                answer: answer
+            });
+        }
     }
-    getResults() {
-      const answersCount = this.state.answersCount;
-      const answersCountKeys = Object.keys(answersCount);
-      const answersCountValues = answersCountKeys.map((key) => answersCount[key]);
-      const maxAnswerCount = Math.max.apply(null, answersCountValues);
-  
-      return answersCountKeys.filter((key) => answersCount[key] === maxAnswerCount);
+
+    getResults = () => {
+        const answersCount = this.state.answersCount;
+        const answersCountKeys = Object.keys(answersCount);
+        const answersCountValues = answersCountKeys.map((key) => answersCount[key]);
+        const maxAnswerCount = Math.max.apply(null, answersCountValues);
+
+        return answersCountKeys.filter((key) => answersCount[key] === maxAnswerCount);
     }
 
-    setResults(result) {
-      if (result.length === 1) {
-        this.setState({ result: result[0] });
-      } else {
-        this.setState({ result: 'Undetermined' });
-      }
+    setResults = result => {
+        if (result.length === 1) {
+            this.setState({ result: result[0] });
+        } else {
+            this.setState({ result: 'Undetermined' });
+        }
     }
-  
-
-
-
-   
-
-
-    // renderGame() {
-    //   return (
-    //     <Game
-    //       answer={this.state.answer}
-    //       answers={this.state.answers}
-    //       questionId={this.state.questionId}
-    //       question={this.state.question}
-    //       questionTotal={tempQuestions.length}
-    //       onAnswerSelected={this.handleAnswerSelected}
-    //     />
-    //   );
-    // }
-
-    
 
     render() {
-        console.log("gp 103: ", this.state);
         return (
-            <div>
-            <Navigation />
-            <div className="container gameContainer">
-                <div className="game">
-                <Game
-          answer={this.state.correctAnswer}
-          answers={this.state.answers}
-          questionId={this.state.questionId}
-          question={this.state.question}
-          questionTotal={tempQuestions.length}
-          onAnswerSelected={this.handleAnswerSelected}
-        />
-                    {/* <Questions /> 
-                     <Answers/> 
-                     <div className="QandA">
-                         <Questions /> 
-            
-                        <div className="user">
-                            <img alt="teacher_icon" src={teacherProfile} />
-                        </div> 
-                         <Answers /> 
-                    </div>  */}
-                    <Animation />
-                </div>
-                <div className="footer">
-                        <ButtonBtn>
-                            Play Again
+            <div className="container">
+                <p>Clicked game: {this.state.gameID}</p>
+                <div>
+                    <Navigation />
+                    <div className="container gameContainer">
+                        <div className="game">
+                            <Game
+                                answer={this.state.answer}
+                                correctAnswer={this.state.correctAnswer}
+                                answers={this.state.answers}
+                                questionId={this.state.questionId}
+                                question={this.state.question}
+                                questionTotal={tempQuestions.length}
+                                onAnswerSelected={this.handleAnswerSelected}
+                            />
+
+
+                            <Animation />
+                        </div>
+                        <div className="footer">
+                            <ButtonBtn>
+                                Play Again
                         </ButtonBtn>
-                        <ButtonBtn>
-                            Play
+                            <ButtonBtn>
+                                Play
                         </ButtonBtn>
-                        <ButtonBtn>
-                            Home
+                            <ButtonBtn>
+                                Home
                         </ButtonBtn>
 
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div>
         )
-    }  
+    }
 }
 
 export default GamePlay;
