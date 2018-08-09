@@ -18,9 +18,7 @@ class GamePlay extends Component {
     }
 
     componentDidMount() {
-        // let session=sessionStorage.getItem("gameID");
         this.setState({ gameID: sessionStorage.getItem("gameID") });
-        // interview question:   set state by calling a function to get the current state and prevents
         // the code in 23 is async and the console log lines in 27 -28 could run before its completed
         // this.setState( state => ( { gameID: sessionStorage.getItem("gameID")}));
         console.log("from session storage", sessionStorage.getItem("gameID"));
@@ -32,16 +30,6 @@ class GamePlay extends Component {
             correctAnswer: tempQuestions[counter].correctAnswer
         }));
     }
-
-    // render() {
-
-    //     console.log('game pla loaded')
-    //     return (
-    //         <div className="container">
-    //             <p>Clicked game: {this.state.gameID}</p>
-    //             </div>
-    //             )
-    // }
 
     constructor(props) {
         super(props);
@@ -56,22 +44,14 @@ class GamePlay extends Component {
                 correct: 0,
                 incorrect: 0,
             },
-            result: ''
+            answer: '',
+            result: ""
 
         };
         console.log("gameplay line 29", this.state);
         console.log("tempQuesitons", tempQuestions);
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
-
-    //   componentDidUpdate() {
-    //     const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
-    //     this.setState (({counter}) => ({
-    //       question: tempQuestions[counter].question,
-    //       answers: shuffledanswerChoices[counter],
-    //       correctAnswer: tempQuestions[counter].correctAnswer
-    //     }));
-    //    }
 
     shuffleArray(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -95,44 +75,49 @@ class GamePlay extends Component {
     setNextQuestion = () => {
         const counter = this.state.counter + 1;
         const questionId = this.state.questionId + 1;
-        console.log("set next question 125: ", this.state);
         this.setState({
             counter: counter,
             questionId: questionId,
             question: tempQuestions[counter].question,
             answers: tempQuestions[counter].possibleAnswers,
+            correctAnswer: tempQuestions[counter].correctAnswer,
             answer: ''
         });
-        console.log("set next questions line: ", this.state.counter);
-        console.log("GamePlay state 93: ", this.setState);
-        console.log("Game Play  counter: ", counter);
-        console.log("GAme Play questionId:", questionId)
     }
 
-    handleAnswerSelected = (event) => {
-        console.log("answer selected event", event.target.value);
-        this.setUserAnswer(event.currentTarget.value);
-        console.log("GP 76 -setuseranswer: ", this.setUserAnswer);
-        console.log("game play line 61: " + this.state.questionId);
-        console.log("game play line 62: " + this.setNextQuestion);
+    handleAnswerSelected = event => {
+        this.setUserAnswer(event.target.value);
         if (this.state.questionId < tempQuestions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
         } else {
-            setTimeout(() => this.setResults(this.getResults()), 300);
-            console.log("event", event);
+            console.log("GAME OVER!");
+            console.log("right:",this.state.answersCount.correct);
+            console.log("wrong:",this.state.answersCount.incorrect);
         }
     }
 
 
     setUserAnswer = answer => {
-        console.log("Answer 103: " + answer);
-        const updatedAnswersCount = update(this.state.answersCount, {
-            [answer]: { $apply: (currentValue) => currentValue + 1 }
-        });
-        this.setState({
-            answersCount: updatedAnswersCount,
-            answer: answer
-        });
+        if (answer == this.state.correctAnswer) {
+            console.log("THATS CORRECT");
+            this.setState({
+                answersCount: {
+                    correct: this.state.answersCount.correct += 1,
+                    incorrect: this.state.answersCount.incorrect
+                },
+                answer: answer
+            });
+        }
+        else {
+            console.log("THATS INCORRECT");
+            this.setState({
+                answersCount: {
+                    correct: this.state.answersCount.correct,
+                    incorrect: this.state.answersCount.incorrect += 1,
+                },
+                answer: answer
+            });
+        }
     }
 
     getResults = () => {
@@ -152,29 +137,7 @@ class GamePlay extends Component {
         }
     }
 
-
-
-
-
-
-
-    // renderGame() {
-    //   return (
-    //     <Game
-    //       answer={this.state.answer}
-    //       answers={this.state.answers}
-    //       questionId={this.state.questionId}
-    //       question={this.state.question}
-    //       questionTotal={tempQuestions.length}
-    //       onAnswerSelected={this.handleAnswerSelected}
-    //     />
-    //   );
-    // }
-
-
-
     render() {
-        console.log("gp 103: ", this.state);
         return (
             <div className="container">
                 <p>Clicked game: {this.state.gameID}</p>
@@ -183,7 +146,8 @@ class GamePlay extends Component {
                     <div className="container gameContainer">
                         <div className="game">
                             <Game
-                                answer={this.state.correctAnswer}
+                                answer={this.state.answer}
+                                correctAnswer={this.state.correctAnswer}
                                 answers={this.state.answers}
                                 questionId={this.state.questionId}
                                 question={this.state.question}

@@ -4,10 +4,7 @@ import "./Answers.css";
 import "./../../utils/API/tempQuestions"
 
 const Answers = (props) => {
-  console.log("Answer 7 >> props : ", props);
-
-
-  return (
+    return (
     <div className="answerswrap">
         {/* <h5>Select Answer</h5>  */}
         <div className="answerList"> 

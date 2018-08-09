@@ -14,12 +14,14 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                 <h3>Create Question</h3>
                 <h5>{game.name}</h5>
                 <form className="container">
-                    <Input
+                    <textarea
+                        className="form-control"
+                        rows="3"
                         value={currentQuestion}
                         onChange={handleInputChange}
                         name="currentQuestion"
-                        placeholder="Question"
-                    />
+                        placeholder="Question">
+                    </textarea>
                     <Input
                         value={currentAnswer1}
                         onChange={handleInputChange}
@@ -50,12 +52,14 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                 </form>
                 <h3>Edit Question</h3>
                 <form>
-                    <Input
+                    <textarea
+                        className="form-control"
+                        rows="3"
                         value={updateQuestion}
                         onChange={handleInputChange}
                         name="updateQuestion"
                         placeholder="Question"
-                    />
+                    ></textarea>
                     <Input
                         value={updateAnswer1}
                         onChange={handleInputChange}

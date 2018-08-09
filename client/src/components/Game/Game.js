@@ -6,29 +6,15 @@ import teacherProfile from "../../images/user1profile.svg";
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 function Game(props) {
-console.log("Game props: ", props);
-console.log("game questionID: ", props.questionId );
-  function renderAnswers(key) {
-    return (
-      <Answers
-        answer={props.answer}
-        questionId={props.questionId}
-        onAnswerSelected={props.onAnswerSelected}
-      />
-    );
-
-  }
-
-  console.log("game.js 23: ", props);
   return (
     <CSSTransitionGroup
       className="container"
       component="div"
       transitionName="fade"
-      transitionEnterTimeout={800}
-      transitionLeaveTimeout={500}
+      transitionEnterTimeout={2000}
+      transitionLeaveTimeout={2000}
       transitionAppear
-      transitionAppearTimeout={500}
+      transitionAppearTimeout={2000}
     >
         <QuestionCount
          counter={props.questionId}
@@ -40,7 +26,6 @@ console.log("game questionID: ", props.questionId );
         <div className="user">
             <img alt="teacher_icon" src={teacherProfile} />
         </div>
-        {/* <ul className="answers"> </ul> */}
        <Answers 
         answers={props.answers}
         onAnswerSelected={props.onAnswerSelected}
