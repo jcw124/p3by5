@@ -141,8 +141,14 @@ class GamePlay extends Component {
 
     // animations
 
-    // state = {
-    //     };
+        // correctOrIncorrect = () => {
+        //     if () {
+
+        //     }else (){
+
+        //     };
+        // };
+
 
 
         walkleft = () => {
@@ -173,6 +179,16 @@ class GamePlay extends Component {
                 });
             } else if (this.state.userProgress == 4) {
                 user.classList.add("walk5");
+                this.setState({
+                    userProgress: 5
+                });
+            } else if (this.state.userProgress == 5) {
+                user.classList.add("walk6");
+                this.setState({
+                    userProgress: 6
+                });
+            } else if (this.state.userProgress == 6) {
+                user.classList.add("walk7");
             };
         };
     
@@ -193,16 +209,6 @@ class GamePlay extends Component {
                 console.log(this.state.teacherProgress);
             } else if (this.state.teacherProgress == 2) {
                 document.querySelector('#teacher').classList.add("walk3");
-                this.setState({
-                    teacherProgress: 3
-                });
-            } else if (this.state.teacherProgress == 3) {
-                document.querySelector('#teacher').classList.add("walk4");
-                this.setState({
-                    teacherProgress: 4
-                });
-            } else if (this.state.teacherProgress == 4) {
-                document.querySelector('#teacher').classList.add("walk5");
             };
         };
 
@@ -252,10 +258,10 @@ class GamePlay extends Component {
                     <Animation />
                 </div>
                 <div className="footer">
-                        <ButtonBtn onClick={this.walkright}>
+                        <ButtonBtn>
                             Play Again
                         </ButtonBtn>
-                        <ButtonBtn onClick={this.walkleft}>
+                        <ButtonBtn>
                             Play
                         </ButtonBtn>
                         <ButtonBtn>

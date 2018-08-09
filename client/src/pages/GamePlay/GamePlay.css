@@ -59,7 +59,13 @@
     margin-right:40%;
 }
 .userContainer .dont-walk.walk5 {
-    margin-right:45%;
+    margin-right:50%;
+}
+.userContainer .dont-walk.walk6 {
+    margin-right:60%;
+}
+.userContainer .dont-walk.walk7 {
+    margin-right:65%;
 }
 .userContainer .walk1{
     background: url('../../images/user1walk.png');
@@ -91,6 +97,18 @@
     -webkit-animation: walk5 .5s steps(6) 2;
     -ms-animation: walk5 .5s steps(6) 2;
     -moz-animation: walk5 .5s steps(6) 2;
+}
+.userContainer .walk6 {
+    animation: walk6 .5s steps(6) 2;
+    -webkit-animation: walk6 .5s steps(6) 2;
+    -ms-animation: walk6 .5s steps(6) 2;
+    -moz-animation: walk6 .5s steps(6) 2;
+}
+.userContainer .walk7 {
+    animation: walk7 .5s steps(6) 2;
+    -webkit-animation: walk7 .5s steps(6) 2;
+    -ms-animation: walk7 .5s steps(6) 2;
+    -moz-animation: walk7 .5s steps(6) 2;
 }
 .userContainer .dont-walk {
     transition:1s;
@@ -251,6 +269,42 @@
     to {background-position: -546px;}
 }
 @-moz-keyframes walk5 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+
+@keyframes walk6 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk6 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk6 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk6 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+
+@keyframes walk7 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk7 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk7 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk7 {
     from {background-position: 0px;}
     to {background-position: -546px;}
 }
