@@ -1,19 +1,18 @@
 const db = require('../models');
 
-
 exports.getUserbyUsernamePass = function (req, res) {
-    /*DELETE_ON_PRODUCTION
-      req.query syntax:
-    {
-        username: {username of admin},
-        password: {password of admin}
-    }
-    */
-    db.User.findOne(req.query)
+    var newuser = new db.User();
+    db.User.findOne({username: req.query.username})
         .then(function (dbUser) {
-            return res.json(dbUser);
+            if(newuser.validPassword(req.query.password, dbUser.password))
+            {
+                console.log("FUCKING AUTHENTICATED");
+                return res.json(dbUser);
+            }
+            return res.json(null);
         })
         .catch(function (err) {
+            console.log(err);
             return res.json(err);
         });
 }
@@ -41,6 +40,12 @@ exports.saveUser = function (req, res) {
         admin: {_id of admin associated with user}
     }
     */
+   var newuser = new db.User();
+    console.log("made it to the user.js");
+    console.log(req.body);
+    req.body.password = newuser.generateHash(req.body.password);
+    console.log(req.body);
+
     db.User.create(req.body)
         .then(function (dbUser) {
             return db.Admin.findByIdAndUpdate(req.body.admin, { $push: { users: dbUser._id } }, { new: true });
@@ -98,7 +103,7 @@ exports.deleteUser = function (req, res) {
                         }
                         else newUsers.push(id);
                     });
-                    db.Admin.findByIdAndUpdate(result._id, { users: newUsers },{ new: true })
+                    db.Admin.findByIdAndUpdate(result._id, { users: newUsers }, { new: true })
                         .then(function (dbAdmin) {
                             res.json(dbAdmin);
                         })

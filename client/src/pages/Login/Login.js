@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Register from "../Register";
-import { adminAPI, userAPI } from "../../utils/API";
+import { userAPI } from "../../utils/API";
 
 require('./login.css');
 
@@ -34,6 +34,7 @@ export default class Login extends Component {
   }
 
   loginUser(user) {
+    console.log(user);
     userAPI.getUserbyUsernamePass(user.username, user.password)
 		.then(function(data) {
       if(data.data)

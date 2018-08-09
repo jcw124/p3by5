@@ -3,11 +3,6 @@ const mongoose = require("mongoose");
 // Save a reference to the Schema constructor
 const Schema = mongoose.Schema;
 
-'use strict';
-
-// app/models/user.js
-// load the things we need
-var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
 // Using the Schema constructor, create a new UserSchema object
@@ -45,8 +40,8 @@ UserSchema.methods.generateHash = function(password) {
 };
 
 // checking if password is valid
-UserSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
+UserSchema.methods.validPassword = function(password, hashed) {
+    return bcrypt.compareSync(password, hashed);
 };
 
 // This creates our model from the above schema, using mongoose's model method
