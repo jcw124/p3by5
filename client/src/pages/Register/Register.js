@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { userAPI } from "../../utils/API";
+import Navigation from "../../components/Navigation";
 
 require('./register.css');
 
@@ -242,42 +243,43 @@ export default class Register extends Component {
 
         return (
             <div>
-                <div id="registration-container" className="container-fluid">
+                <Navigation />
+                <div id="registration-container" >
+                        <h1>Registration</h1>
                     <section className="container">
                         <div className="container-page">
                             <form onSubmit={this.handleSubmit.bind(this)}>
-                                <div className="col-md-6">
-                                    <h3 className="dark-grey">Registration</h3>
+                                <div className="">
 
                                     <div id="username-form" ref="usernameForm" className="form-group col-lg-12">
-                                        <label>Username</label>
-                                        <input type="" name="" ref="username" className="form-control" id="username-input" value={this.state.username} onChange={this.handleUsernameValidation} />
+                                        {/* <label>Username</label> */}
+                                        <input type="" name="" ref="username" placeholder="Username" className="form-control" id="username-input" value={this.state.username} onChange={this.handleUsernameValidation} />
                                         <small id="username-feedback" ref="usernameFeedback" className=""></small>
                                     </div>
 
                                     <div id="password-form" className="form-group col-lg-12" ref="passwordForm">
-                                        <label>Password</label>
-                                        <input type="password" name="" ref="password" className="form-control" id="password-input" value={this.state.password} onChange={this.handlePasswordValidation} />
+                                        {/* <label>Password</label> */}
+                                        <input type="password" name="" placeholder="Password" ref="password" className="form-control" id="password-input" value={this.state.password} onChange={this.handlePasswordValidation} />
                                         <small id="password-feedback" ref="passwordFeedback" className=""></small>
                                     </div>
 
                                     <div id="repeat-password-form" className="form-group col-lg-12" ref="repeatPasswordForm">
-                                        <label>Repeat Password</label>
-                                        <input type="password" name="" ref="repeatPassword" className="form-control" id="repeat-password-input" value={this.state.passwordRepeat} onChange={this.handlePasswordRepeat} />
+                                        {/* <label>Repeat Password</label> */}
+                                        <input type="password" name="" placeholder="Repeat Password" ref="repeatPassword" className="form-control" id="repeat-password-input" value={this.state.passwordRepeat} onChange={this.handlePasswordRepeat} />
                                         <small id="repeat-password-feedback" className="" ref="repeatPasswordFeedback"></small>
                                     </div>
 
                                     <div id="email-form" className="form-group col-lg-12" ref="emailForm">
-                                        <label>Email Address</label>
-                                        <input type="email" name="" ref="email" className="form-control" id="email-input" value={this.state.email} onChange={this.handleEmailValidation} />
+                                        {/* <label>Email Address</label> */}
+                                        <input type="email" name="" placeholder="Email Address" ref="email" className="form-control" id="email-input" value={this.state.email} onChange={this.handleEmailValidation} />
 
                                         <p id="email-feedback" className="" ref="emailFeedback"></p>
                                         <small id="email-additional-feedback" ref="emailAdditionalFeedback" className="form-text text-muted"></small>
                                     </div>
 
                                     <div id="email-repeat-form" className="form-group col-lg-12" ref="emailRepeatForm">
-                                        <label>Repeat Email Address</label>
-                                        <input type="email" name="" ref="emailRepeat" className="form-control" id="repeat-email-input" value={this.state.emailRepeat} onChange={this.handleEmailRepeat} />
+                                        {/* <label>Repeat Email Address</label> */}
+                                        <input type="email" name="" ref="emailRepeat" placeholder="Repeat Email Address" className="form-control" id="repeat-email-input" value={this.state.emailRepeat} onChange={this.handleEmailRepeat} />
                                         <small id="email-repeat-feedback" className="" ref="emailRepeatFeedback"></small>
                                     </div>
                                     <div id="admin-form" ref="adminForm" className="form-group col-lg-12">
@@ -288,7 +290,7 @@ export default class Register extends Component {
 
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="">
 
                                     <button type="submit" className="btn btn-primary register">Register</button>
                                 </div>

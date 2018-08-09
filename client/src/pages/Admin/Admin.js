@@ -1,4 +1,6 @@
+
 import React, { Component } from "react"
+import Navigation from "../../components/Navigation";
 import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
@@ -6,6 +8,8 @@ import ButtonBtn from "../../components/ButtonBtn";
 import { Input, FormBtn } from "../../components/Form";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { GameCreate } from "../GameCreate";
+import './Admin.css';
+
 
 //Admin page contains 
 //new game button to create a new game 
@@ -243,96 +247,125 @@ class Admin extends Component {
 
     render() {
         return (
-            <div className="container">
-                <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                    <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
-                    <ModalBody>
-                        <GameCreate questions={this.state.questions}
-                            gameID={this.state.selectedGameID}
-                            game={this.state.currentGame}
-                            currentQuestion={this.state.currentQuestion}
-                            currentAnswer1={this.state.currentAnswer1}
-                            currentAnswer2={this.state.currentAnswer2}
-                            currentAnswer3={this.state.currentAnswer3}
-                            currentCorrect={this.state.currentCorrect}
-                            handleInputChange={this.handleInputChange}
-                            addQuestion={this.addQuestion}
-                            removeQuestion={this.removeQuestion}
-                            updateQuestion={this.state.updateQuestion}
-                            updateAnswer1={this.state.updateAnswer1}
-                            updateAnswer2={this.state.updateAnswer2}
-                            updateAnswer3={this.state.updateAnswer3}
-                            updateCorrect={this.state.updateCorrect}
-                            updateID={this.state.updateID}
-                            loadEdit={this.loadEdit}
-                            editQuestion={this.editQuestion} />
-                    </ModalBody>
-                    <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
-                </Modal>
-                <Modal isOpen={this.state.confirmDelete} toggle={this.toggleDeleteMessage}>
-                    <ModalHeader toggle={this.toggleDeleteMessage}>Are You Sure You Want to Delete This Game?</ModalHeader>
-                    <ModalBody>
-                        <p>This will permanently delete the game you have selected. All game data, including scores, will be removed.</p>
-                    </ModalBody>
-                    <ModalFooter>
-                        <ButtonBtn onClick={this.toggleDeleteMessage}>Cancel</ButtonBtn>
-                        <button className="btn btn-danger" id={this.state.deleteGameID} onClick={this.removeGame}>DELETE</button>
-                    </ModalFooter>
-                </Modal>
-                <div className="row">
-                    <div className="col-md-6">
-                        <h2>Current EduGames</h2>
-                        {this.state.games.length ? (
-                            <List>
-                                {this.state.games.map(game => {
-                                    return (
-                                        <ListItem key={game._id}>
-                                            <h3>{game.name}</h3>
-                                            <button className="btn btn-secondary" id={game._id} name={game.name} onClick={this.getScores}>View Scores</button>
-                                            <BtnEdit id={game._id} click={this.editGame} />
-                                            <button className="btn btn-danger" id={game._id} onClick={this.toggleDeleteMessage}>Delete Game</button>
-                                        </ListItem>
-                                    );
-                                })}
-                            </List>
-                        ) : (
-                                <h3>Create a game to begin</h3>
-                            )}
-                    </div>
+            <div>
+                <Navigation />
+                <div className="AdminWrap">
+                    <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
+                        <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
+                        <ModalBody>
+                            <GameCreate questions={this.state.questions}
+                                gameID={this.state.selectedGameID}
+                                game={this.state.currentGame}
+                                currentQuestion={this.state.currentQuestion}
+                                currentAnswer1={this.state.currentAnswer1}
+                                currentAnswer2={this.state.currentAnswer2}
+                                currentAnswer3={this.state.currentAnswer3}
+                                currentCorrect={this.state.currentCorrect}
+                                handleInputChange={this.handleInputChange}
+                                addQuestion={this.addQuestion}
+                                removeQuestion={this.removeQuestion}
+                                updateQuestion={this.state.updateQuestion}
+                                updateAnswer1={this.state.updateAnswer1}
+                                updateAnswer2={this.state.updateAnswer2}
+                                updateAnswer3={this.state.updateAnswer3}
+                                updateCorrect={this.state.updateCorrect}
+                                updateID={this.state.updateID}
+                                loadEdit={this.loadEdit}
+                                editQuestion={this.editQuestion} />
+                        </ModalBody>
+                        <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
+                    </Modal>
+                    <Modal isOpen={this.state.confirmDelete} toggle={this.toggleDeleteMessage}>
+                        <ModalHeader toggle={this.toggleDeleteMessage}>Are You Sure You Want to Delete This Game?</ModalHeader>
+                        <ModalBody>
+                            <p>This will permanently delete the game you have selected. All game data, including scores, will be removed.</p>
+                        </ModalBody>
+                        <ModalFooter>
+                            <ButtonBtn onClick={this.toggleDeleteMessage}>Cancel</ButtonBtn>
+                            <button className="btn btn-danger" id={this.state.deleteGameID} onClick={this.removeGame}>DELETE</button>
+                        </ModalFooter>
+                    </Modal>
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <h1>Current EduGames</h1>
+                            <div className="container">
+                                {this.state.games.length ? (
+                                    <List>
+                                        {this.state.games.map(game => {
+                                            return (
+                                                <div key={game._id} className="card">
+                                                    <div className="card-body">
+                                                        <ListItem>
+                                                            <h3>{game.name}</h3>
+                                                            <div className="btn-group" role="group" aria-label="Game Controls">
+                                                                <button type="button" className="btn btn-primary btn-small" id={game._id} name={game.name} onClick={this.getScores}>View Scores</button>
+                                                                <button type="button" className="btn btn-primary btn-small" id={game._id} onClick={this.editGame}>Edit</button>
+                                                                <button type="button" className="btn btn-danger btn-small" id={game._id} onClick={this.toggleDeleteMessage}>Delete Game</button>
+                                                            </div>
+                                                        </ListItem>
+                                                    </div>
+                                                </div>
 
-                    <div className="col-md-6">
-                        <div className="container createNewGame">
-                            <h2>Create a Game</h2>
-                            <form>
-                                <Input
-                                    value={this.state.newGameName}
-                                    onChange={this.handleInputChange}
-                                    name="newGameName"
-                                    placeholder="Game Name"
-                                />
-                                <FormBtn
-                                    disabled={!(this.state.newGameName)}
-                                    click={this.createGame}
-                                    text="Create New Game"
-                                />
-                            </form>
-                        </div>
-                        <br />
-                        <div className="container highScore">
-                            <h2>High Scores</h2>
-                            <h4>{this.state.gameForScores}</h4>
-                            {this.state.scores.length ? (
-                                <List>
-                                    {this.state.scores.map(score =>
-                                        <ListItem key={score._id}>
-                                            <p>{score.user.username}:</p>
-                                            <p>{score.name} {score.score}</p>
-                                        </ListItem>
+                                            );
+                                        })}
+                                    </List>
+                                ) : (
+                                        <h5>Create a game to begin</h5>
                                     )}
-                                </List>
-                            ) : (
-                                    <h3>No Scores for this Game Yet</h3>
-                                )}
+                            </div>
+                        </div>
+                        <div className="createGame col-lg-6">
+                            <h1>Create a Game</h1>
+                            <div className="container createNewGame">
+                                <form>
+                                    <Input
+                                        value={this.state.newGameName}
+                                        onChange={this.handleInputChange}
+                                        name="newGameName"
+                                        placeholder="Game Name"
+                                    />
+                                    <FormBtn
+                                        disabled={!(this.state.newGameName)}
+                                        onClick={this.createGame}>
+                                        Create New Game
+                                    </FormBtn>
+                                </form>
+                            </div>
+                            <br />
+                            <div className="container highScore">
+                                <h1>High Scores</h1>
+                                <h4>{this.state.gameForScores}</h4>
+                                {this.state.scores.length ? (
+                                    <div className="row">
+                                        <div className="col-4">
+                                            <ul className="list-group list-group-flush">
+                                                <li className="list-group-item list-group-title">Username</li>
+                                                {this.state.scores.map(score =>
+                                                    <li key={score._id} className="list-group-item list-group-child">{score.user.username}</li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="col-4">
+                                            <ul className="list-group list-group-flush">
+                                                <li className="list-group-item list-group-title">Name</li>
+                                                {this.state.scores.map(score =>
+                                                    <li key={score._id} className="list-group-item list-group-child"> {score.name}</li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="col-4">
+                                            <ul className="list-group list-group-flush">
+                                                <li className="list-group-item list-group-title">Name</li>
+                                                {this.state.scores.map(score =>
+                                                    < li key={score._id} className="list-group-item list-group-child"> {score.score}</li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ) : (
+                                        <h3>No Scores to Display</h3>
+                                    )}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -340,5 +373,4 @@ class Admin extends Component {
         );
     }
 }
-
 export default Admin;

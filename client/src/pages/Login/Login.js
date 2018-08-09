@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Register from "../Register";
 import { userAPI } from "../../utils/API";
+import Navigation from "../../components/Navigation";
 
 require('./login.css');
 
@@ -86,9 +87,11 @@ export default class Login extends Component {
     }
     
     return (
-    	<div>
+      <div>
+        <Navigation />
+    	<div className="loginWrap">
+				<h1>Log In Or Register</h1>
 				<div className="loginmodal-container">
-					<h1 className="">Log In to Your Account</h1><br />
 				  <form className="login" onSubmit={this.handleSubmit.bind(this)}>
 						<input id="username-input" ref="user" type="text" name="user" placeholder="Username" onChange={this.handleUsernameChange} value={this.state.username}/>
 						<input id="password-input" ref="password" type="password" name="pass" placeholder="Password" onChange={this.handlePasswordChange} value={this.state.password} />
@@ -99,6 +102,7 @@ export default class Login extends Component {
 				  </div>
 				</div>
 			</div>
+      </div>
     );
   }
 }
