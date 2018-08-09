@@ -28,6 +28,7 @@ const Answers = (props) => {
          </Button>
        <Button color="primary" onClick="" active="false">
           {props.answers[1]}
+
         </Button>
        {props.answers[2]}
          </Button>

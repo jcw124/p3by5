@@ -35,6 +35,8 @@ class GamePlay extends Component {
         super(props);
 
         this.state = {
+            teacherProgress: 0,
+            userProgress: 0,
             counter: 0,
             questionId: 1,
             question: '',
@@ -45,7 +47,7 @@ class GamePlay extends Component {
                 incorrect: 0,
             },
             answer: '',
-            result: ""
+            result: ''
 
         };
         console.log("gameplay line 29", this.state);
@@ -91,8 +93,8 @@ class GamePlay extends Component {
             setTimeout(() => this.setNextQuestion(), 300);
         } else {
             console.log("GAME OVER!");
-            console.log("right:",this.state.answersCount.correct);
-            console.log("wrong:",this.state.answersCount.incorrect);
+            console.log("right:", this.state.answersCount.correct);
+            console.log("wrong:", this.state.answersCount.incorrect);
         }
     }
 
@@ -119,6 +121,78 @@ class GamePlay extends Component {
             });
         }
     }
+    // animations
+
+    // correctOrIncorrect = () => {
+    //     if () {
+
+    //     }else (){
+
+    //     };
+    // };
+
+
+
+    walkleft = () => {
+
+        let user = document.querySelector('#user');
+
+        if (this.state.userProgress == 0) {
+            user.classList.add("walk1");
+            this.setState({
+                userProgress: 1
+            });
+            console.log(this.state.userProgress);
+        } else if (this.state.userProgress == 1) {
+            user.classList.add("walk2");
+            this.setState({
+                userProgress: 2
+            });
+            console.log(this.stateuuserProgress);
+        } else if (this.state.userProgress == 2) {
+            user.classList.add("walk3");
+            this.setState({
+                userProgress: 3
+            });
+        } else if (this.state.userProgress == 3) {
+            user.classList.add("walk4");
+            this.setState({
+                userProgress: 4
+            });
+        } else if (this.state.userProgress == 4) {
+            user.classList.add("walk5");
+            this.setState({
+                userProgress: 5
+            });
+        } else if (this.state.userProgress == 5) {
+            user.classList.add("walk6");
+            this.setState({
+                userProgress: 6
+            });
+        } else if (this.state.userProgress == 6) {
+            user.classList.add("walk7");
+        };
+    };
+
+    walkright = () => {
+        // let teacher = document.getElementById('teacher');
+
+        if (this.state.teacherProgress == 0) {
+            document.querySelector('#teacher').classList.add("walk1");
+            this.setState({
+                teacherProgress: 1
+            });
+            console.log(this.state.teacherProgress);
+        } else if (this.state.teacherProgress == 1) {
+            document.querySelector('#teacher').classList.add("walk2");
+            this.setState({
+                teacherProgress: 2
+            });
+            console.log(this.state.teacherProgress);
+        } else if (this.state.teacherProgress == 2) {
+            document.querySelector('#teacher').classList.add("walk3");
+        };
+    };
 
     getResults = () => {
         const answersCount = this.state.answersCount;

@@ -24,6 +24,7 @@
     border: none !important;
 }
 .AnimationContainer {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -34,35 +35,40 @@
     margin-right: 10px;
 }
 
-
 #user {
     position: absolute;
-    right: -52px;
+    right: -44px;
 }
 #user.dont-walk {
-    background: url('../../images/teacherwalk.png');
+    background: url('../../images/user1walk.png');
     background-position: 92px;
     width: 91px;
     height: 142px;
 }
 
 .userContainer .dont-walk.walk1 {
-    margin-right:20%;
+    margin-right:10%;
 }
 .userContainer .dont-walk.walk2 {
-    margin-right:40%;
+    margin-right:20%;
 }
 .userContainer .dont-walk.walk3 {
-    margin-right:60%;
+    margin-right:30%;
 }
 .userContainer .dont-walk.walk4 {
-    margin-right:80%;
+    margin-right:40%;
 }
 .userContainer .dont-walk.walk5 {
-    margin-right:100%;
+    margin-right:50%;
+}
+.userContainer .dont-walk.walk6 {
+    margin-right:60%;
+}
+.userContainer .dont-walk.walk7 {
+    margin-right:65%;
 }
 .userContainer .walk1{
-    background: url('../../images/teacherwalk.png');
+    background: url('../../images/user1walk.png');
     animation: walk .5s steps(6) 2;
     -webkit-animation: walk .5s steps(6) 2;
     -ms-animation: walk .5s steps(6) 2;
@@ -92,6 +98,18 @@
     -ms-animation: walk5 .5s steps(6) 2;
     -moz-animation: walk5 .5s steps(6) 2;
 }
+.userContainer .walk6 {
+    animation: walk6 .5s steps(6) 2;
+    -webkit-animation: walk6 .5s steps(6) 2;
+    -ms-animation: walk6 .5s steps(6) 2;
+    -moz-animation: walk6 .5s steps(6) 2;
+}
+.userContainer .walk7 {
+    animation: walk7 .5s steps(6) 2;
+    -webkit-animation: walk7 .5s steps(6) 2;
+    -ms-animation: walk7 .5s steps(6) 2;
+    -moz-animation: walk7 .5s steps(6) 2;
+}
 .userContainer .dont-walk {
     transition:1s;
     -webkit-transition:1s;
@@ -104,19 +122,19 @@
     position: absolute;
 }
 .teacherContainer .dont-walk.walk1 {
-    margin-left:20%;
+    margin-left:10%;
 }
 .teacherContainer .dont-walk.walk2 {
-    margin-left:40%;
+    margin-left:20%;
 }
 .teacherContainer .dont-walk.walk3 {
-    margin-left:60%;
+    margin-left:30%;
 }
 .teacherContainer .dont-walk.walk4 {
-    margin-left:80%;
+    margin-left:40%;
 }
 .teacherContainer .dont-walk.walk5 {
-    margin-left:100%;
+    margin-left:45%;
 }
 .teacherContainer .walk1{
     background: url('../../images/teacherwalk.png');
@@ -251,6 +269,42 @@
     to {background-position: -546px;}
 }
 @-moz-keyframes walk5 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+
+@keyframes walk6 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk6 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk6 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk6 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+
+
+@keyframes walk7 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-webkit-keyframes walk7 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-ms-keyframes walk7 {
+    from {background-position: 0px;}
+    to {background-position: -546px;}
+}
+@-moz-keyframes walk7 {
     from {background-position: 0px;}
     to {background-position: -546px;}
 }
