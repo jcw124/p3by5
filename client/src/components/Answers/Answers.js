@@ -4,17 +4,17 @@ import "./Answers.css";
 import "./../../utils/API/tempQuestions"
 
 const Answers = (props) => {
-  console.log("Answer props: ", props);
+  console.log("Answer 7 >> props : ", props);
 
 
   return (
     <div className="answerswrap">
         {/* <h5>Select Answer</h5>  */}
         <div className="answerList"> 
-            <button className="answerbtn opt1"  onClick={props.onAnswerSelected} value={props.answers[0]}>{props.answers[0]} </button>
-            <button className="answerbtn opt2" active="" onClick={props.onAnswerSelected} value={props.answers[1]}>  {props.answers[1]}</button>
-            <button className="answerbtn opt3" active="" onClick={props.onAnswerSelected} value={props.answers[2]}>  {props.answers[2]}</button>
-            <button className="answerbtn opt4" active="" onClick={props.onAnswerSelected} value={props.answers[3]}>  {props.answers[3]} </button>
+            <button className="answerbtn opt1"  onClick={props.onAnswerSelected} value={props.answers[0]}>  {props.answers[0]}</button>
+            <button className="answerbtn opt2"  onClick={props.onAnswerSelected} value={props.answers[1]}>  {props.answers[1]}</button>
+            <button className="answerbtn opt3"  onClick={props.onAnswerSelected} value={props.answers[2]}>  {props.answers[2]}</button>
+            <button className="answerbtn opt4"  onClick={props.onAnswerSelected} value={props.answers[3]}>  {props.answers[3]} </button>
         </div>    
           {/* <p>Selected: {}</p>  */}
 
@@ -42,10 +42,10 @@ const Answers = (props) => {
       </div>
 
  );
-  console.log("props.answerType : ", props.answerType);
-  console.log("props.answer : ", props.answer);
-  console.log("props.onAnswerSelected : ", props.onAnswerSelected);
-  console.log("props.content : ", props.answerContent);
+  console.log("answer 45 props.answerType : ", props.answerType);
+  console.log("answer 46 props.answer : ", props.answer);
+  console.log("answer 47 props.onAnswerSelected : ", props.onAnswerSelected);
+  console.log("answer 48 props.content : ", props.answerContent);
 
 };
 

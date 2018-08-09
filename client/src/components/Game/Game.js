@@ -7,12 +7,10 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 function Game(props) {
 console.log("Game props: ", props);
+console.log("game questionID: ", props.questionId );
   function renderAnswers(key) {
     return (
       <Answers
-        // key={key.content}
-        // answerContent={key.content}
-        // answerType={key.type}
         answer={props.answer}
         questionId={props.questionId}
         onAnswerSelected={props.onAnswerSelected}
@@ -32,13 +30,12 @@ console.log("Game props: ", props);
       transitionAppear
       transitionAppearTimeout={500}
     >
-       {/* <div key={props.questionId}>
-        <QuestionCount  */}
-      <div className="QandA" key={props.questionId}>
-        {/* <QuestionCount
-          counter={props.questionId}
+        <QuestionCount
+         counter={props.questionId}
           total={props.questionTotal}
-        /> */}
+        />
+
+      <div className="QandA" key={props.questionId}>
         <Questions content={props.question} />
         <div className="user">
             <img alt="teacher_icon" src={teacherProfile} />
@@ -49,10 +46,7 @@ console.log("Game props: ", props);
         onAnswerSelected={props.onAnswerSelected}
        />
     
-        {/* <QuestionCount
-          counter={props.questionId}
-          total={props.questionTotal}
-        /> */}
+     
       </div>
     </CSSTransitionGroup>
   );
