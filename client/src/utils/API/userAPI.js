@@ -29,6 +29,10 @@ export default {
 
     deleteUser: function (userID) {
         return axios.delete(`/api/delete/user/${userID}`);
+    },
+
+    pleasegodlogin: function(cred){
+        return axios.get(`/api/get/user/plzlogin`);
     }
 };
 

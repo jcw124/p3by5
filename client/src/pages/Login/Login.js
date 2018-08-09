@@ -35,7 +35,7 @@ export default class Login extends Component {
 
   loginUser(user) {
     console.log(user);
-    userAPI.getUserbyUsernamePass(user.username, user.password)
+    userAPI.pleasegodlogin({username: user.username,password: user.password})
 		.then(function(data) {
       if(data.data)
       {
