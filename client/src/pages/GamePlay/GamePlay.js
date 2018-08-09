@@ -6,6 +6,7 @@ import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
 import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import teacherProfile from "../../images/user1profile.svg";
 import { walkright } from '../../components/Animation';
 import './GamePlay.css';
@@ -52,6 +53,12 @@ class GamePlay extends Component {
         console.log("tempQuesitons", tempQuestions);
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
+
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal,
+        });
+        }
 
     shuffleArray(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -107,6 +114,9 @@ class GamePlay extends Component {
                 },
                 answer: answer
             });
+            if(this.state.answersCount.correct === 7 ) {
+                this.toggle()
+            }
         }
         else {
             console.log("THATS INCORRECT");
@@ -117,7 +127,14 @@ class GamePlay extends Component {
                 },
                 answer: answer
             });
+            if(this.state.answersCount.incorrect === 3 ) {
+                this.toggle()
+            }
         }
+        console.log(
+            "correct", this.state.answersCount
+        )
+        
     }
 
     getResults = () => {
@@ -140,9 +157,29 @@ class GamePlay extends Component {
     render() {
         return (
             <div className="container">
-                <p>Clicked game: {this.state.gameID}</p>
                 <div>
                     <Navigation />
+
+                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                        <ModalBody>
+                            {this.state.answersCount.incorrect === 3 ? 
+                            <h3> Game Over: Do you want to try again? </h3> 
+                            : 
+                            <h3> Awesome Work!! Try another game </h3>
+                            } 
+                        </ModalBody>
+                        <ModalFooter>
+                            <div className="footer">
+                            <ButtonBtn>
+                                Play Again
+                            </ButtonBtn>
+                            <ButtonBtn>
+                                Home
+                            </ButtonBtn>
+                            </div>
+                        </ModalFooter>
+                    </Modal>
+
                     <div className="container gameContainer">
                         <div className="game">
                             <Game
@@ -154,21 +191,7 @@ class GamePlay extends Component {
                                 questionTotal={tempQuestions.length}
                                 onAnswerSelected={this.handleAnswerSelected}
                             />
-
-
                             <Animation />
-                        </div>
-                        <div className="footer">
-                            <ButtonBtn>
-                                Play Again
-                        </ButtonBtn>
-                            <ButtonBtn>
-                                Play
-                        </ButtonBtn>
-                            <ButtonBtn>
-                                Home
-                        </ButtonBtn>
-
                         </div>
                     </div>
                 </div>
