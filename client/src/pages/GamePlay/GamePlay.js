@@ -21,17 +21,28 @@ class GamePlay extends Component {
     componentDidMount(){
         // let session=sessionStorage.getItem("gameID");
         this.setState({ gameID: sessionStorage.getItem("gameID")});
+    // interview question:   set state by calling a function to get the current state and prevents
+    // the code in 23 is async and the console log lines in 27 -28 could run before its completed
+    // this.setState( state => ( { gameID: sessionStorage.getItem("gameID")}));
         console.log("from session storage",sessionStorage.getItem("gameID")); 
         console.log("load!!!", this.state.gameID);
+        const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
+        this.setState (({counter}) => ({
+          question: tempQuestions[counter].question,
+          answers: shuffledanswerChoices[counter],
+          correctAnswer: tempQuestions[counter].correctAnswer
+        }));
     }
 
-    render() {
+    // render() {
 
-        console.log('game pla loaded')
-        return (
-            <div className="container">
-                <p>Clicked game: {this.state.gameID}</p>
-                </div>)}
+    //     console.log('game pla loaded')
+    //     return (
+    //         <div className="container">
+    //             <p>Clicked game: {this.state.gameID}</p>
+    //             </div>
+    //             )
+    // }
 
     constructor(props) {
         super(props);
@@ -54,14 +65,14 @@ class GamePlay extends Component {
        this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
       }
     
-      componentWillMount() {
-        const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
-        this.setState({
-          question: tempQuestions[0].question,
-          answers: shuffledanswerChoices[0],
-          correctAnswer: tempQuestions[0].correctAnswer
-        });
-       }
+    //   componentDidUpdate() {
+    //     const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
+    //     this.setState (({counter}) => ({
+    //       question: tempQuestions[counter].question,
+    //       answers: shuffledanswerChoices[counter],
+    //       correctAnswer: tempQuestions[counter].correctAnswer
+    //     }));
+    //    }
        
        shuffleArray(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -82,8 +93,10 @@ class GamePlay extends Component {
         return array;
        };
 
-      handleAnswerSelected(event) {
+      handleAnswerSelected = (event) => {
+        console.log("answer selected event",  event.target.value);
         this.setUserAnswer(event.currentTarget.value);
+        console.log("GP 76 -setuseranswer: ", this.setUserAnswer);
          console.log("game play line 61: " + this.state.questionId);
          console.log("game play line 62: " +this.setNextQuestion);
         if (this.state.questionId < tempQuestions.length) {
@@ -96,6 +109,7 @@ class GamePlay extends Component {
      
 
       setUserAnswer(answer) {
+          console.log("Answer 103: " + answer);
         const updatedAnswersCount = update(this.state.answersCount, {
           [answer]: {$apply: (currentValue) => currentValue + 1}
         });
@@ -108,7 +122,7 @@ class GamePlay extends Component {
     setNextQuestion() {
       const counter = this.state.counter + 1;
       const questionId = this.state.questionId + 1;
-  
+    console.log("set next question 125: ", this.state);
       this.setState({
           counter: counter,
           questionId: questionId,
@@ -116,7 +130,10 @@ class GamePlay extends Component {
           answers: tempQuestions[counter].answers,
           answer: ''
       });
+      console.log("set next questions line: ", this.state.counter);
       console.log("GamePlay state 93: " , this.setState);
+      console.log("Game Play  counter: ", counter);
+      console.log("GAme Play questionId:", questionId)
     }
     getResults() {
       const answersCount = this.state.answersCount;
@@ -159,6 +176,8 @@ class GamePlay extends Component {
     render() {
         console.log("gp 103: ", this.state);
         return (
+            <div className="container">
+                            <p>Clicked game: {this.state.gameID}</p>
             <div>
             <Navigation />
             <div className="container gameContainer">
@@ -171,16 +190,8 @@ class GamePlay extends Component {
           questionTotal={tempQuestions.length}
           onAnswerSelected={this.handleAnswerSelected}
         />
-                    {/* <Questions /> 
-                     <Answers/> 
-                     <div className="QandA">
-                         <Questions /> 
-            
-                        <div className="user">
-                            <img alt="teacher_icon" src={teacherProfile} />
-                        </div> 
-                         <Answers /> 
-                    </div>  */}
+         
+              
                     <Animation />
                 </div>
                 <div className="footer">
@@ -195,6 +206,7 @@ class GamePlay extends Component {
                         </ButtonBtn>
 
                 </div>
+            </div>
             </div>
             </div>
         )
