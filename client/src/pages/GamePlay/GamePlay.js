@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import Game from './../../components/Game';
 import QuestionCount from './../../components/QuestionCount';
@@ -8,34 +9,16 @@ import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import teacherProfile from "../../images/user1profile.svg";
-import { walkright } from '../../components/Animation';
 import './GamePlay.css';
 
 class GamePlay extends Component {
     //Setting initial state
-    state = {
-        gameID: "",
-        gameName: "",
-    }
-
-    componentDidMount() {
-        this.setState({ gameID: sessionStorage.getItem("gameID") });
-        // the code in 23 is async and the console log lines in 27 -28 could run before its completed
-        // this.setState( state => ( { gameID: sessionStorage.getItem("gameID")}));
-        console.log("from session storage", sessionStorage.getItem("gameID"));
-        console.log("load!!!", this.state.gameID);
-        const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
-        this.setState(({ counter }) => ({
-            question: tempQuestions[counter].question,
-            answers: shuffledanswerChoices[counter],
-            correctAnswer: tempQuestions[counter].correctAnswer
-        }));
-    }
-
     constructor(props) {
         super(props);
 
         this.state = {
+            gameID: "",
+            gameName: "",
             teacherProgress: 0,
             userProgress: 0,
             counter: 0,
@@ -56,6 +39,20 @@ class GamePlay extends Component {
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
 
+    componentDidMount() {
+        this.setState({ gameID: sessionStorage.getItem("gameID") });
+        // the code in 23 is async and the console log lines in 27 -28 could run before its completed
+        // this.setState( state => ( { gameID: sessionStorage.getItem("gameID")}));
+        console.log("from session storage", sessionStorage.getItem("gameID"));
+        console.log("load!!!", this.state.gameID);
+        const shuffledanswerChoices = tempQuestions.map((question) => this.shuffleArray(question.possibleAnswers));
+        this.setState(({ counter }) => ({
+            question: tempQuestions[counter].question,
+            answers: shuffledanswerChoices[counter],
+            correctAnswer: tempQuestions[counter].correctAnswer
+        }));
+    }
+
     toggle = () => {
         this.setState({
             modal: !this.state.modal,
@@ -64,20 +61,16 @@ class GamePlay extends Component {
 
     shuffleArray(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
-
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
-
             // Pick a remaining element...
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex -= 1;
-
             // And swap it with the current element.
             temporaryValue = array[currentIndex];
             array[currentIndex] = array[randomIndex];
             array[randomIndex] = temporaryValue;
         }
-
         return array;
     };
 
@@ -116,6 +109,7 @@ class GamePlay extends Component {
                 },
                 answer: answer
             });
+            this.walkleft();
             if(this.state.answersCount.correct === 7 ) {
                 this.toggle()
             }
@@ -129,6 +123,7 @@ class GamePlay extends Component {
                 },
                 answer: answer
             });
+            this.walkright();
             if(this.state.answersCount.incorrect === 3 ) {
                 this.toggle()
             }
@@ -138,22 +133,9 @@ class GamePlay extends Component {
         )
         
     }
-    // animations
-
-    // correctOrIncorrect = () => {
-    //     if () {
-
-    //     }else (){
-
-    //     };
-    // };
-
-
 
     walkleft = () => {
-
         let user = document.querySelector('#user');
-
         if (this.state.userProgress == 0) {
             user.classList.add("walk1");
             this.setState({
@@ -193,7 +175,6 @@ class GamePlay extends Component {
 
     walkright = () => {
         // let teacher = document.getElementById('teacher');
-
         if (this.state.teacherProgress == 0) {
             document.querySelector('#teacher').classList.add("walk1");
             this.setState({
@@ -228,6 +209,27 @@ class GamePlay extends Component {
         }
     }
 
+    resetState = event => {
+        event.preventDefault();
+        this.setState({
+            teacherProgress: 0,
+            userProgress: 0,
+            counter: 0,
+            questionId: 1,
+            question: '',
+            answers: [],
+            correctAnswer: '',
+            answersCount: {
+                correct: 0,
+                incorrect: 0,
+            },
+            answer: '',
+            result: ''
+        })
+        this.componentDidMount();
+        console.log (this.state.gameID);
+    }
+
     render() {
         return (
             <div className="container">
@@ -244,12 +246,16 @@ class GamePlay extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <div className="footer">
-                            <ButtonBtn>
-                                Play Again
-                            </ButtonBtn>
-                            <ButtonBtn>
-                                Home
-                            </ButtonBtn>
+                            <button>
+                                <Link to="/Play">
+                                    Play Again
+                                </Link>
+                            </button>
+                            <button>
+                                <Link to="/User">
+                                    Home
+                                </Link>
+                            </button>
                             </div>
                         </ModalFooter>
                     </Modal>
