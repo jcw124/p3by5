@@ -6,7 +6,6 @@ import { List, ListItem } from "../../components/List";
 import Play from "../GamePlay";
 import Navigation from "../../components/Navigation";
 
-
 require('./User.css');
 
 class User extends Component {
@@ -14,7 +13,7 @@ class User extends Component {
         userID: "",
         username: "username1",
         password: "password1",
-        adminID: "5b66983807d53261048bb933",
+        adminID: "5b66195f7e2cbc066fa39181",
         games: [],
         selectedGameID: "",
         gameScores: "",

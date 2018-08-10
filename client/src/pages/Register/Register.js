@@ -265,7 +265,7 @@ export default class Register extends Component {
 
                                     <div id="repeat-password-form" className="form-group col-lg-12" ref="repeatPasswordForm">
                                         {/* <label>Repeat Password</label> */}
-                                        <input type="password" name="" placeholder="Repeat Password" ref="repeatPassword" className="form-control" id="repeat-password-input" value={this.state.passwordRepeat} onChange={this.handlePasswordRepeat} />
+                                        <input type="password" name="" placeholder="Confirm Password" ref="repeatPassword" className="form-control" id="repeat-password-input" value={this.state.passwordRepeat} onChange={this.handlePasswordRepeat} />
                                         <small id="repeat-password-feedback" className="" ref="repeatPasswordFeedback"></small>
                                     </div>
 
@@ -279,12 +279,12 @@ export default class Register extends Component {
 
                                     <div id="email-repeat-form" className="form-group col-lg-12" ref="emailRepeatForm">
                                         {/* <label>Repeat Email Address</label> */}
-                                        <input type="email" name="" ref="emailRepeat" placeholder="Repeat Email Address" className="form-control" id="repeat-email-input" value={this.state.emailRepeat} onChange={this.handleEmailRepeat} />
+                                        <input type="email" name="" ref="emailRepeat" placeholder="Confirm Email Address" className="form-control" id="repeat-email-input" value={this.state.emailRepeat} onChange={this.handleEmailRepeat} />
                                         <small id="email-repeat-feedback" className="" ref="emailRepeatFeedback"></small>
                                     </div>
                                     <div id="admin-form" ref="adminForm" className="form-group col-lg-12">
-                                        <label>Teacher Name</label>
-                                        <input type="" name="" ref="admin" className="form-control" id="admin-input" value={this.state.admin} onChange={this.handleAdminValidation} />
+                                        {/* <label>Teacher Name</label> */}
+                                        <input type="" name="" ref="admin" placeholder="Teacher Name" className="form-control" id="admin-input" value={this.state.admin} onChange={this.handleAdminValidation} />
                                         <small id="admin-feedback" ref="adminFeedback" className=""></small>
                                     </div>
 

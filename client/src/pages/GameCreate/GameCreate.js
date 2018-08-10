@@ -105,11 +105,13 @@ export const GameCreate = ({ questions, gameID, game, currentQuestion, currentAn
                                             <h4>Possible Answers</h4>
                                             {
                                                 question.possibleAnswers.map((answer, i) =>
-                                                    <p key={i}>{i + 1}. {answer}</p>
+                                                    <p className="options" key={i}>{i + 1}. {answer}</p>
                                                 )}
                                             <p>Correct Answer: {question.correctAnswer}</p>
-                                            <button className="edit-btn btn-primary mx-auto" id={question._id} onClick={loadEdit}>Edit</button>
-                                            <button className="btn btn-danger mx-auto" id={question._id} onClick={removeQuestion}>Remove Question</button>
+                                            <div className="btn-group">
+                                                <button className="edit-btn btn-primary mx-auto" id={question._id} onClick={loadEdit}>Edit</button>
+                                                <button className="btn btn-danger mx-auto" id={question._id} onClick={removeQuestion}>Remove</button>
+                                            </div>
                                         </ListItem>
                                     </div>
                                 </div>

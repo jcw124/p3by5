@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import Game from './../../components/Game';
 import QuestionCount from './../../components/QuestionCount';
@@ -9,7 +10,6 @@ import Animation from "../../components/Animation";
 import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import teacherProfile from "../../images/user1profile.svg";
-import { walkright } from '../../components/Animation';
 import './GamePlay.css';
 
 class GamePlay extends Component {
@@ -75,6 +75,7 @@ class GamePlay extends Component {
             })
             .catch(err => console.log(err));
     }
+
     toggle = () => {
         this.setState({
             modal: !this.state.modal,
@@ -138,6 +139,7 @@ class GamePlay extends Component {
                 },
                 answer: answer
             });
+            this.walkleft();
             if(this.state.answersCount.correct === 7 ) {
                 this.toggle()
             }
@@ -152,6 +154,7 @@ class GamePlay extends Component {
                 },
                 answer: answer
             });
+            this.walkright();
             if(this.state.answersCount.incorrect === 3 ) {
                 this.toggle()
             }
@@ -163,9 +166,7 @@ class GamePlay extends Component {
     }
 
     walkleft = () => {
-
         let user = document.querySelector('#user');
-
         if (this.state.userProgress === 0) {
             user.classList.add("walk1");
             this.setState({
@@ -205,7 +206,6 @@ class GamePlay extends Component {
 
     walkright = () => {
         // let teacher = document.getElementById('teacher');
-
         if (this.state.teacherProgress === 0) {
             document.querySelector('#teacher').classList.add("walk1");
             this.setState({
@@ -240,6 +240,27 @@ class GamePlay extends Component {
         }
     }
 
+    resetState = event => {
+        event.preventDefault();
+        this.setState({
+            teacherProgress: 0,
+            userProgress: 0,
+            counter: 0,
+            questionId: 1,
+            question: '',
+            answers: [],
+            correctAnswer: '',
+            answersCount: {
+                correct: 0,
+                incorrect: 0,
+            },
+            answer: '',
+            result: ''
+        })
+        this.componentDidMount();
+        console.log (this.state.gameID);
+    }
+
     render() {
         return (
             <div className="container">
@@ -249,19 +270,18 @@ class GamePlay extends Component {
                     <Modal isOpen={this.state.modal} toggle={this.toggle}>
                         <ModalBody>
                             {this.state.answersCount.incorrect === 3 ? 
-                            <h3> Game Over: Do you want to try again? </h3> 
+                            <h3> Game Over: Go back and try again!! </h3> 
                             : 
                             <h3> Awesome Work!! Try another game </h3>
                             } 
                         </ModalBody>
                         <ModalFooter>
                             <div className="footer">
-                            <ButtonBtn>
-                                Play Again
-                            </ButtonBtn>
-                            <ButtonBtn>
-                                Home
-                            </ButtonBtn>
+                                <button>
+                                    <Link to="/User">
+                                        Home
+                                    </Link>
+                                </button>
                             </div>
                         </ModalFooter>
                     </Modal>
