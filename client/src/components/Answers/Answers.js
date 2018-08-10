@@ -3,7 +3,7 @@ import { ButtonGroup, Button } from "reactstrap";
 import "./Answers.css"; 
 import "./../../utils/API/tempQuestions"
 
-const Answers = (props) => {
+const Answers = props => {
     return (
     <div className="answerswrap">
         {/* <h5>Select Answer</h5>  */}
@@ -38,13 +38,6 @@ const Answers = (props) => {
        </ButtonGroup> */}
       {/* <p>Selected: {}</p>  */}
       </div>
-
- );
-  console.log("answer 45 props.answerType : ", props.answerType);
-  console.log("answer 46 props.answer : ", props.answer);
-  console.log("answer 47 props.onAnswerSelected : ", props.onAnswerSelected);
-  console.log("answer 48 props.content : ", props.answerContent);
-
-};
+ )};
 
 export default Answers;
