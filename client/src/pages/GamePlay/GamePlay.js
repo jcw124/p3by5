@@ -247,7 +247,7 @@ class GamePlay extends Component {
                         <ModalFooter>
                             <div className="footer">
                             <button>
-                                <Link to="/Play">
+                                <Link onClick={this.resetState} to="/Play">
                                     Play Again
                                 </Link>
                             </button>

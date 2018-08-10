@@ -44,6 +44,10 @@ class User extends Component {
             .catch(err => console.log(err));
     }
 
+    // getAdminId =() => {
+    
+    // }
+
     loadGames = () => {
         adminAPI.getGamesbyAdminID(this.state.adminID)
             .then(res => {
