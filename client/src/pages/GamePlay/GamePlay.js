@@ -39,29 +39,48 @@ class GamePlay extends Component {
     }
 
     componentDidMount() {
-        if (!sessionStorage.getItem("gameID"))
-            // { this.context.router.history.push("/login") };
-            this.setState({ gameID: sessionStorage.getItem("gameID") });
-        if (sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`)) {
+        const ID = sessionStorage.getItem("gameID"),
+            numCorrect = parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`)),
+            numWrong = parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`));
+
+        if (!ID) { this.context.router.history.push("/login") };
+        this.setState({ gameID: ID });
+        if (sessionStorage.getItem(`gameCounter${ID}`)) {
             this.setState({
-                counter: parseInt(sessionStorage.getItem(`gameCounter${sessionStorage.getItem("counter")}`))
+                counter: parseInt(sessionStorage.getItem(`gameCounter${ID}`))
             })
         }
-        if (sessionStorage.getItem(`numCorrect${sessionStorage.getItem("answersCount.correct")}`)) {
+        if (sessionStorage.getItem(`numCorrect${ID}`)) {
+            document.querySelector('#user').classList.add(`walk${numCorrect}`);
             this.setState({
+                userProgress: numCorrect, 
                 answersCount: {
-                    correct: parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("answersCounter.correct")}`)),
-                    incorrect: this.state.answersCount.incorrect
-                }
-            })
-        }
-        if (sessionStorage.getItem(`numWrong${sessionStorage.getItem("answersCounter.incorrect")}`)) {
-            this.setState({
-                answersCount: {
-                    correct: this.state.answersCount.correct,
-                    incorrect: parseInt(sessionStorage.getItem(`numWrong${sessionStorage.getItem("answersCounter.incorrect")}`))
-                }
-            })
+                        correct: numCorrect,
+                        incorrect: this.state.answersCount.incorrect
+                    }
+            }, function () {
+                    if (sessionStorage.getItem(`numWrong${ID}`)) {
+                        document.querySelector('#teacher').classList.add(`walk${numWrong}`);
+                        this.setState({
+                            teacherProgress: numWrong,
+                            answersCount: {
+                                correct: this.state.answersCount.correct,
+                                incorrect: numWrong
+                            }
+                        })
+                    }
+                })
+        } else {
+            if (sessionStorage.getItem(`numWrong${ID}`)) {
+                document.querySelector('#teacher').classList.add(`walk${numWrong}`);
+                this.setState({
+                    teacherProgress: numWrong,
+                    answersCount: {
+                        correct: this.state.answersCount.correct,
+                        incorrect: numWrong
+                    }
+                })
+            }
         }
         gameAPI.getGame(sessionStorage.getItem("gameID"))
             .then(res => {
@@ -103,7 +122,9 @@ class GamePlay extends Component {
 
     setNextQuestion = () => {
         const counter = this.state.counter + 1;
-        sessionStorage.setItem(`gameCounter${this.state.gameID}`, counter);
+        if (this.state.answersCount.correct < 7 && this.state.answersCount.incorrect < 3) {
+            sessionStorage.setItem(`gameCounter${sessionStorage.getItem("gameID")}`, counter);
+        }
         this.setState({
             counter: counter,
             question: this.state.game.questions[counter].question,
@@ -115,16 +136,7 @@ class GamePlay extends Component {
 
     handleAnswerSelected = event => {
         this.setUserAnswer(event.target.value);
-        if ((this.state.counter + 1) < this.state.game.questions.length) {
-            setTimeout(() => this.setNextQuestion(), 300);
-        } else {
-            sessionStorage.removeItem(`numCorrect${this.state.answersCount.correct}`);
-            sessionStorage.removeItem(`numWrong${this.state.answersCount.incorrect}`);
-            sessionStorage.removeItem(`gameCounter${this.state.counter}`);
-            console.log("GAME OVER!");
-            console.log("right:", this.state.answersCount.correct);
-            console.log("wrong:", this.state.answersCount.incorrect);
-        }
+        this.setNextQuestion();
     }
 
 
@@ -140,10 +152,10 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkleft();
-            if (this.state.answersCount.correct === 7) {
-                sessionStorage.removeItem(`numCorrect${this.state.answersCount.correct}`);
-                sessionStorage.removeItem(`numWrong${this.state.answersCount.incorrect}`);
-                sessionStorage.removeItem(`gameCounter${this.state.counter}`);
+            if (this.state.answersCount.correct >= 7) {
+                sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
+                sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
+                sessionStorage.removeItem(`gameCounter${sessionStorage.getItem("gameID")}`);
                 this.toggle()
             }
         }
@@ -158,10 +170,10 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkright();
-            if (this.state.answersCount.incorrect === 3) {
-                sessionStorage.removeItem(`numCorrect${this.state.answersCount.correct}`);
-                sessionStorage.removeItem(`numWrong${this.state.answersCount.incorrect}`);
-                sessionStorage.removeItem(`gameCounter${this.state.counter}`);
+            if (this.state.answersCount.incorrect >= 3) {
+                sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
+                sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
+                sessionStorage.removeItem(`gameCounter${sessionStorage.getItem("gameID")}`);
                 this.toggle()
             }
         }
