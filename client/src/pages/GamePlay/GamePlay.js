@@ -80,7 +80,7 @@ class GamePlay extends Component {
         this.setState({
             modal: !this.state.modal,
         });
-        }
+    }
 
 
     shuffleArray(array) {
@@ -117,7 +117,8 @@ class GamePlay extends Component {
         this.setUserAnswer(event.target.value);
         if ((this.state.counter + 1) < this.state.game.questions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
-        } else {
+        } 
+        if (this.state.answersCount.correct === 7 || this.state.answersCount.incorrect ===3) {
             sessionStorage.removeItem(`numCorrect${this.state.gameID}`);
             sessionStorage.removeItem(`numWrong${this.state.gameID}`);
             sessionStorage.removeItem(`gameCounter${this.state.gameID}`);
@@ -140,9 +141,9 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkleft();
-            // if(this.state.answersCount.correct === 7 ) {
-            //     this.toggle()
-            // }
+            if(this.state.answersCount.correct === 7 ) {
+                this.toggle()
+            }
         }
         else {
             sessionStorage.setItem(`numWrong${this.state.gameID}`, this.state.answersCount.incorrect + 1);
@@ -155,9 +156,9 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkright();
-            // if(this.state.answersCount.incorrect === 3 ) {
-            //     this.toggle()
-            // }
+            if(this.state.answersCount.incorrect === 3 ) {
+                this.toggle()
+            }
         }
         console.log(
             "correct", this.state.answersCount
@@ -240,26 +241,26 @@ class GamePlay extends Component {
         }
     }
 
-    resetState = event => {
-        event.preventDefault();
-        this.setState({
-            teacherProgress: 0,
-            userProgress: 0,
-            counter: 0,
-            questionId: 1,
-            question: '',
-            answers: [],
-            correctAnswer: '',
-            answersCount: {
-                correct: 0,
-                incorrect: 0,
-            },
-            answer: '',
-            result: ''
-        })
-        this.componentDidMount();
-        console.log (this.state.gameID);
-    }
+    // resetState = event => {
+    //     event.preventDefault();
+    //     this.setState({
+    //         teacherProgress: 0,
+    //         userProgress: 0,
+    //         counter: 0,
+    //         questionId: 1,
+    //         question: '',
+    //         answers: [],
+    //         correctAnswer: '',
+    //         answersCount: {
+    //             correct: 0,
+    //             incorrect: 0,
+    //         },
+    //         answer: '',
+    //         result: ''
+    //     })
+    //     this.componentDidMount();
+    //     console.log (this.state.gameID);
+    // }
 
     render() {
         return (
