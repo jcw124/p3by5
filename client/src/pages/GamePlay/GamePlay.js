@@ -41,7 +41,8 @@ class GamePlay extends Component {
     }
 
     componentDidMount() {
-        if (!sessionStorage.getItem("gameID")) { this.context.router.history.push("/login") };
+        if (!sessionStorage.getItem("gameID")) 
+        // { this.context.router.history.push("/login") };
         this.setState({ gameID: sessionStorage.getItem("gameID") });
         if (sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`)) {
             this.setState({
@@ -256,8 +257,8 @@ class GamePlay extends Component {
                 
                     <Navigation />
                     <div className="scoreCountRedGreen">
-                        <div className="wrong" href="">0</div>
-                        <div className="correct" href="">0</div>
+                        <div className="wrong"  href="">0</div>
+                        <div className="correct"  href="">0</div>
                     </div>
           {/* <div className="container">  */}
                 <div>
