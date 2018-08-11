@@ -140,9 +140,9 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkleft();
-            if(this.state.answersCount.correct === 7 ) {
-                this.toggle()
-            }
+            // if(this.state.answersCount.correct === 7 ) {
+            //     this.toggle()
+            // }
         }
         else {
             sessionStorage.setItem(`numWrong${this.state.gameID}`, this.state.answersCount.incorrect + 1);
@@ -155,9 +155,9 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkright();
-            if(this.state.answersCount.incorrect === 3 ) {
-                this.toggle()
-            }
+            // if(this.state.answersCount.incorrect === 3 ) {
+            //     this.toggle()
+            // }
         }
         console.log(
             "correct", this.state.answersCount
@@ -278,7 +278,9 @@ class GamePlay extends Component {
                         <ModalFooter>
                             <div className="footer">
                                 <button>
-                                    <Link to="/User">
+                                    <Link 
+                                        onClick={this.handleAnswerSelected}
+                                        to="/User">
                                         Home
                                     </Link>
                                 </button>
