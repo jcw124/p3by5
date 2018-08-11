@@ -4,6 +4,7 @@ import Navigation from "../../components/Navigation";
 import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
 import { List, ListItem } from "../../components/List";
 import BtnEdit from "../../components/BtnEdit";
+import { Link, Redirect } from 'react-router-dom';
 import ButtonBtn from "../../components/ButtonBtn";
 import { Input, FormBtn } from "../../components/Form";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -18,34 +19,39 @@ import './Admin.css';
 
 class Admin extends Component {
     // Setting inital state
-    state = {
-        adminID: "",
-        username: "admin1",
-        password: "password1",
-        games: [],
-        selectedGameID: "",
-        gameForScores: "",
-        scores: [],
-        questions: [],
-        newGameName: "",
-        newGameWrong: 3,
-        newGameQuestions: 10,
-        currentGame: {},
-        currentQuestion: "",
-        currentAnswer1: "",
-        currentAnswer2: "",
-        currentAnswer3: "",
-        currentCorrect: "",
-        updateQuestion: "",
-        updateAnswer1: "",
-        updateAnswer2: "",
-        updateAnswer3: "",
-        updateCorrect: "",
-        updateID: "",
-        deleteGameID: "",
-        modal: false,
-        confirmDelete: false
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            adminID: "",
+            username: "admin1",
+            password: "password1",
+            games: [],
+            selectedGameID: "",
+            gameForScores: "",
+            scores: [],
+            questions: [],
+            newGameName: "",
+            newGameWrong: 3,
+            newGameQuestions: 10,
+            currentGame: {},
+            currentQuestion: "",
+            currentAnswer1: "",
+            currentAnswer2: "",
+            currentAnswer3: "",
+            currentCorrect: "",
+            updateQuestion: "",
+            updateAnswer1: "",
+            updateAnswer2: "",
+            updateAnswer3: "",
+            updateCorrect: "",
+            updateID: "",
+            deleteGameID: "",
+            modal: false,
+            confirmDelete: false
+        };
+
+    }
 
     //load into gamelist container existing games 
     componentDidMount() {
@@ -246,6 +252,26 @@ class Admin extends Component {
     }
 
     render() {
+        if (this.state.username==="" || this.state.password==="") {
+            return (
+                <div>
+                  <Navigation />
+                  <div className="loginWrap">
+                    <h1>Log In Or Register</h1>
+                    <div className="loginmodal-container">
+                      <form className="login" onSubmit={this.handleSubmit}>
+                        <input id="username-input" ref="user" type="text" name="user" placeholder="Username" onChange={this.handleUsernameChange} value={this.state.username} />
+                        <input id="password-input" ref="password" type="password" name="pass" placeholder="Password" onChange={this.handlePasswordChange} value={this.state.password} />
+                        <input type="submit" name="login" className="login loginmodal-submit" value="Login" />
+                      </form>
+                      <div className="login-help">
+                        <Link to={"/adminreg"}> Register </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+         }
         return (
             <div>
                 <Navigation />

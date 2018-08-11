@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default {
-    getAdminbyUsernamePass: function (username, password){
+    getAdminbyUsernamePass: function (username, password) {
         return axios.get(`/api/get/admin/login?username=${username}&password=${password}`);
     },
 
@@ -9,15 +9,16 @@ export default {
         return axios.get(`/api/get/admin/${adminID}`);
     },
 
-    saveAdmin: function (username, password) {
+    saveAdmin: function (username, password, email) {
         return axios.put('/api/admin', {
             username: username,
-            password: password
+            password: password,
+            email: email
         });
     },
 
     updateAdmin: function (id, username, password) {
-        return axios.post('/api/admin',{
+        return axios.post('/api/admin', {
             id: id,
             username: username,
             password: password

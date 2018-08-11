@@ -33,7 +33,7 @@ const saveScore = require('../serverAPI/score').saveScore;
 const deleteScore = require('../serverAPI/score').deleteScore;
 
 router.get("/get/user/login/", getUserbyUsernamePass);
-router.get("/get/user/plzlogin/", pleasegodlogin);
+router.post("/get/user/plzlogin/", pleasegodlogin);
 router.get("/get/user/:id", getUser);
 router.put("/user", saveUser);
 router.post("/user", updateUser);

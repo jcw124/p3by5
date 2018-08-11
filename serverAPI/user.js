@@ -27,7 +27,14 @@ exports.pleasegodlogin = (req, res, next) => {
   
       console.log(token, "this is the token in users_api.js");
       console.log(userData, "this is the userData in users_api.js");
-  
+      if(!token){
+          return res.json({
+              success: false,
+              message: 'Login Failed',
+              token,
+              user: userData
+          })
+      }
       return res.json({
         success: true,
         message: 'You have successfully logged in!',

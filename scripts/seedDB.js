@@ -8,7 +8,7 @@ mongoose.connect(
 
 const adminSeed = [
     {
-        username: "Teacher1",
+        username: "admin1",
         password: "password1",
         
     }

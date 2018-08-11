@@ -6,8 +6,7 @@ import teacherProfile from "../../images/teacherprofile.svg";
 
 
 function Questions(props) {
-  console.log("line 7 props.questions:  ", props);
-   return ( 
+     return ( 
   <div className="questionContainer">
     <div className="teacher">
         <img alt="teacher_icon" src={teacherProfile} />
@@ -33,12 +32,5 @@ function Questions(props) {
 //     </div>
   );
  }
-
-console.log("line 15 tempquestions: " , tempQuestions[0]);
-console.log("line 16 questions: " , Questions);
-
-  
-
-
 
 export default Questions; 
