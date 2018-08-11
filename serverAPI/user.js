@@ -9,7 +9,7 @@ exports.pleasegodlogin = (req, res, next) => {
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
 
-    return passport.authenticate('user-local', (err, token, userData) => {
+    return passport.authenticate('user-local', (err, userData) => {
         if (err) {
             console.log(err);
             if (err.name === 'IncorrectCredentialsError') {
@@ -25,19 +25,18 @@ exports.pleasegodlogin = (req, res, next) => {
             });
         }
 
-        console.log(token, "this is the token in users_api.js");
         console.log(userData, "this is the userData in users_api.js");
-        if (!token) {
+        if (!userData) {
             return res.json({
                 success: false,
                 message: 'Login Failed',
-                user: token
+                user: userData
             })
         }
         return res.json({
             success: true,
             message: 'You have successfully logged in!',
-            user: token
+            user: userData
         });
     })(req, res, next);
 };
