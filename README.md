@@ -1,5 +1,13 @@
 # p3by5 - Venatus Education
 
+Click Here to Play: 
+
+![Home](/client/src/images/screenshots/HomePage.png)
+![Registration](/client/src/images/screenshots/RegistrationPage.png)
+![Login](/client/src/images/screenshots/LoginPage.png)
+![Questions](/client/src/images/screenshots/Questions .png)
+![Game Admin](/client/src/images/screenshots/GameAdminPage.png)
+
 #Play the Game 
 Todo: ( add Heroku Link Here)
 Todo:  Add Game Image here 
