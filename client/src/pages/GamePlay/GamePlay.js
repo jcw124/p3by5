@@ -41,7 +41,7 @@ class GamePlay extends Component {
     componentDidMount() {
         const ID = sessionStorage.getItem("gameID"),
             numCorrect = parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`)),
-            numWrong = parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`));
+            numWrong = parseInt(sessionStorage.getItem(`numWrong${sessionStorage.getItem("gameID")}`));
 
         this.setState({ gameID: ID });
         if (sessionStorage.getItem(`gameCounter${ID}`)) {
