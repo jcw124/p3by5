@@ -28,10 +28,10 @@ Our game is intended to serve as a tool to reinforce information through game pl
 
 
 ## Developed by:
-Tony Centeno
-Angel Delgadillo, Jr. 
-Eric Liu
-Regina Lo
-Janell Williams
+- Tony Centeno
+- Angel Delgadillo, Jr. 
+- Eric Liu
+- Regina Lo
+- Janell Williams
 
 
