@@ -14,26 +14,8 @@ li {
     background: rgba(25, 149, 251, 0.671);
     position: fixed !important;
     width: 100%;
-    top: 0px;
-}
-.wrong::before {
-    display: inline-block;
-    content: '';
-    background: #f30000;
-    width: 12px;
-    height: 12px;
-    border-radius: 100%;
-    margin-right: 5px;
-}
-
-.correct::before {
-    display: inline-block;
-    content: '';
-    background: #00ca33;
-    width: 12px;
-    height: 12px;
-    border-radius: 100%;
-    margin-right: 5px;
+    top: 0px;    
+    left: 0;
 }
 .logosm {
     width: 305px;

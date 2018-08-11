@@ -1,3 +1,36 @@
+.wrong::before {
+    display: inline-block;
+    content: '';
+    background: #f30000;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    margin-right: 5px;
+}
+.correct::before {
+    display: inline-block;
+    content: '';
+    background: #00ca33;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    margin-right: 5px;
+}
+.correct {
+    display: inline-block;
+    color: #fff;
+    padding-left: 10px;
+}
+.wrong {
+    display: inline-block;
+    color:#fff;
+}
+.scoreCountRedGreen {
+    position: absolute;
+    right: 10px;
+    position: absolute;
+    top: 1px;
+}
 .footer {
     background: rgba(25, 149, 251, 0.671);
     position: fixed;
@@ -24,7 +57,6 @@
     border: none !important;
 }
 .AnimationContainer {
-    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -34,17 +66,13 @@
     background-color: rgba(255, 255, 255, 0.781);
     margin-right: 10px;
 }
-
-#user {
-    position: absolute;
-    right: -44px;
-}
 #user.dont-walk {
     background: url('../../images/user1walk.png');
     background-position: 92px;
     width: 91px;
     height: 142px;
 }
+
 
 .userContainer .dont-walk.walk1 {
     margin-right:10%;
@@ -116,6 +144,27 @@
     -ms-transition:1s;
     -moz-transition:1s;
 }
+.play.container {
+    position: relative;
+}
+.animationWrap {
+    background: url('../../images/badge.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    position: fixed;
+    bottom: 222px;
+    left: 0px;
+    height: 70px;
+    width: inherit;
+}
+.userContainer {
+    position: fixed;
+    right: 10px;
+}
+.play .questionCount {
+    color:#fff;
+}
+
 
 /* teacher styling and animation --------------------------*/
 #teacher {
@@ -183,6 +232,10 @@
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
+}
+.teacherContainer {
+    position: fixed;
+    left: 50px;
 }
 @keyframes walk {
     from {background-position: 0px;}
@@ -328,5 +381,10 @@
   }
 }
 @media (max-width: 575.98px) {
-  
+  .animationWrap{
+      bottom: 166px;
+  }
+  .answerbtn {
+      font-size: 18px;
+  }
 }

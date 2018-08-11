@@ -21,12 +21,6 @@ const Navigation = () => (
         {/* <NavItem >
           <NavLink href="">Games</NavLink>
         </NavItem> */}
-        <NavItem>
-          <NavLink href="">0</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="">0</NavLink>
-        </NavItem>
       </Nav>
       </div>
     </Navbar>

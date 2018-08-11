@@ -10,6 +10,14 @@ import Animation from "../../components/Animation";
 import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import teacherProfile from "../../images/user1profile.svg";
+<<<<<<< HEAD
+=======
+import { walkright } from '../../components/Animation';
+import{
+    NavItem,
+    NavLink
+   } from "reactstrap";
+>>>>>>> master
 import './GamePlay.css';
 
 class GamePlay extends Component {
@@ -203,6 +211,9 @@ class GamePlay extends Component {
             });
         } else if (this.state.userProgress === 6) {
             user.classList.add("walk7");
+            this.setState({
+                userProgress: 0
+            });
         };
     };
 
@@ -222,6 +233,9 @@ class GamePlay extends Component {
             console.log(this.state.teacherProgress);
         } else if (this.state.teacherProgress === 2) {
             document.querySelector('#teacher').classList.add("walk3");
+            this.setState({
+                userProgress: 0
+            });
         };
     };
 
@@ -265,7 +279,14 @@ class GamePlay extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="play container"> 
+                
+                    <Navigation />
+                    <div className="scoreCountRedGreen">
+                        <div className="wrong" href="">0</div>
+                        <div className="correct" href="">0</div>
+                    </div>
+          {/* <div className="container">  */}
                 <div>
                     <Navigation />
 
@@ -301,11 +322,14 @@ class GamePlay extends Component {
                                 questionTotal={this.state.game.questions.length}
                                 onAnswerSelected={this.handleAnswerSelected}
                             />
-                            <Animation />
+
+                            <div className="animationWrap">
+                                <Animation />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         )
     }
 }
