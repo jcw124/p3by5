@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+const pleasegodlogin = require('../serverAPI/user').pleasegodlogin;
 const getUserbyUsernamePass = require('../serverAPI/user').getUserbyUsernamePass;
 const getUser = require('../serverAPI/user').getUser;
 const saveUser = require('../serverAPI/user').saveUser;
@@ -31,7 +32,8 @@ const getScores = require('../serverAPI/score').getScores;
 const saveScore = require('../serverAPI/score').saveScore;
 const deleteScore = require('../serverAPI/score').deleteScore;
 
-router.get("/get/user/login", getUserbyUsernamePass);
+router.get("/get/user/login/", getUserbyUsernamePass);
+router.get("/get/user/plzlogin/", pleasegodlogin);
 router.get("/get/user/:id", getUser);
 router.put("/user", saveUser);
 router.post("/user", updateUser);

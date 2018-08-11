@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { adminAPI, gameAPI, userAPI, scoreAPI } from "../../utils/API";
 import ButtonBtn from "../../components/ButtonBtn";
@@ -14,15 +14,15 @@ class User extends Component {
         userID: "",
         username: "username1",
         password: "password1",
-        adminID: "5b66195f7e2cbc066fa39181",
+        adminID: "5b66983807d53261048bb933",
         games: [],
         selectedGameID: "",
-        gameScores:"",
+        gameScores: "",
         scores: [],
         selectedGame: {},
         gameName: "",
         gameQuestions: "",
-        gameAnswers:"",
+        gameAnswers: "",
     };
 
     static contextTypes = {
@@ -49,90 +49,83 @@ class User extends Component {
             .then(res => {
                 console.log("game id", this.state.adminID);
                 this.setState({ games: res.data })
+                console.log("games", res.data);
             })
-            .catch (err => console.log (err));
-    }   
+            .catch(err => console.log(err));
+    }
 
     loadScores = event => {
         event.preventDefault();
-        this.setState ({ gameScores: event.target.name });
+        this.setState({ gameScores: event.target.name });
         scoreAPI.getScore(event.target.getAttribute("id"))
-            .then(res => this.setState({ scores: res.data}))
+            .then(res => this.setState({ scores: res.data }))
             .catch(err => console.log(err));
     }
 
     playGame = event => {
         event.preventDefault();
-        console.log ("Play game", event.target.getAttribute("id"));
-        this.setState ({ selectedGameID: event.target.getAttribute("id") })
-        sessionStorage.setItem("gameID", event.target.getAttribute("id"))
-        gameAPI.getGame(event.target.getAttribute("id"))
-            .then(res => {
-                console.log(res.data);        
-            })
-            .catch(err => console.log(err));
-            this.context.router.history.push("/Play");
+        sessionStorage.setItem("gameID", event.target.getAttribute("id"));
+        this.context.router.history.push("/play");
     }
 
     render() {
-
-        console.log("userrrr", this.props.gameName)
-        return(
+        return (
             <div>
-            <Navigation />
-            <div className="UserWrap">
-                <div className="row">
-                    <div className="col-lg-6">
-                        <h1>Current EduGames</h1>
-                        <div className="container">
-                            {this.state.games.length ? (
-                                <List>
-                                    {this.state.games.map (game => {
-                                        return (
-                                            <ListItem key={game._id}>
-                                                    <h3>{game.name}</h3> 
-                                                <ButtonBtn 
-                                                    id={game._id}
-                                                    name={game.name}
-                                                    onClick={this.loadScores}>
-                                                        High Score
+                <Navigation />
+                <div className="UserWrap">
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <h1>Current EduGames</h1>
+                            <div className="container">
+                                {this.state.games.length ? (
+                                    <List>
+                                        {this.state.games.map(game => {
+                                            if (game.questions.length)
+                                                return (
+                                                    <ListItem key={game._id}>
+                                                        <h3>{game.name}</h3>
+                                                        <ButtonBtn
+                                                            id={game._id}
+                                                            name={game.name}
+                                                            onClick={this.loadScores}>
+                                                            High Score
                                                 </ButtonBtn>
-                                                <ButtonBtn 
-                                                    id={game._id}
-                                                    name={game.name}
-                                                    onClick={this.playGame}> 
-                                                    Play
+                                                        <ButtonBtn
+                                                            id={game._id}
+                                                            name={game.name}
+                                                            onClick={this.playGame}>
+                                                            Play
                                                 </ButtonBtn>
-                                            </ListItem>   
-                                        );
-                                    })}
-                                </List> 
-                            ): (
-                                <h3>There are currently no games</h3>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="YourScore col-lg-6">
-                            <h1> Your Score</h1>
-                        <div className="container highScore">
-                            <h3> Your Score</h3>
-                            <h4>{this.state.gameScores}</h4>
-                            {this.state.scores.length ? (
-                                <List>
-                                    {this.state.scores.map(score =>
-                                        <ListItem key={score.id}>
-                                            <p>{score.score}</p>
-                                        </ListItem>
+                                                    </ListItem>
+                                                );
+                                        })}
+                                    </List>
+                                ) : (
+                                        <h3>There are currently no games</h3>
                                     )}
-                                </List>
-                            ):(
-                                <h4>No Scores for this Game Yet</h4>
-                            )}                            
+                            </div>
+                        </div>
+
+                        <div className="YourScore col-lg-6">
+                            <h1> Your Score</h1>
+                            <div className="container highScore">
+                                <h3> Your Score</h3>
+                                <h4>{this.state.gameScores}</h4>
+                                {this.state.scores.length ? (
+                                    <List>
+                                        {this.state.scores.map(score =>
+                                            <ListItem key={score.id}>
+                                                <p>{score.score}</p>
+                                            </ListItem>
+                                        )}
+                                    </List>
+                                ) : (
+                                        <h4>No Scores for this Game Yet</h4>
+                                    )}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         );
     }

@@ -5,6 +5,9 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const mongoose = require("mongoose");
 const apiRoutes = require("./routes/apiRoutes");
+const session        = require('express-session'); 
+const passport 			 = require("./passport");
+const config				 = require("./extra-config");
 
 
 // Define middleware here
@@ -22,6 +25,11 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/projec
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
+const authCheck = require('./middleware/attachAuthenticationStatus');
+app.use(session({ secret: config.sessionKey, resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(authCheck);
 
 // Define API routes here
 app.use("/api", apiRoutes);

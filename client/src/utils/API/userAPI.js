@@ -9,11 +9,13 @@ export default {
         return axios.get(`/api/get/users/${userID}`);
     },
 
-    saveUser: function (adminID, username, password) {
-        return axios.put('/api/users', {
+    saveUser: function (username, password, email, admin) {
+
+        return axios.put('/api/user', {
             username: username,
             password: password,
-            admin: adminID
+            email: email,
+            adminName: admin
         });
     },
 
@@ -26,7 +28,11 @@ export default {
     },
 
     deleteUser: function (userID) {
-        return axios.delete(`/api/delete/users/${userID}`);
+        return axios.delete(`/api/delete/user/${userID}`);
+    },
+
+    pleasegodlogin: function(cred){
+        return axios.get(`/api/get/user/plzlogin`);
     }
 };
 
