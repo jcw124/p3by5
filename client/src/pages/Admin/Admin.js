@@ -288,6 +288,7 @@ class Admin extends Component {
             <div>
                 <Navigation />
                 <div className="loginWrap">
+                    <h1>ADMIN</h1>
                     <h1>Log In Or Register</h1>
                     <div className="loginmodal-container">
                         <form className="login" onSubmit={this.attemptLogin}>
