@@ -2,6 +2,7 @@
 
 [Click Here to Play](https://mysterious-thicket-42805.herokuapp.com/)
 
+[Click Here for Demo](https://drive.google.com/file/d/1U40UG6axzaC-mI0JCuYmzNpilhgGQznC/view)
 
 ![Home](/client/src/images/screenshots/HomePage.png)
 ![Registration](/client/src/images/screenshots/RegistrationPage.png)
