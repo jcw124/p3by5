@@ -19,18 +19,6 @@ function Questions(props) {
   </div>
   
 
-
-// const Questions = props => (
-//     <div className="questionContainer">
-//       <div className="teacher">
-//         <img alt="teacher_icon" src={teacherProfile} />
-//       </div>
-//       <div className="mainQuestion">
-//         <div className="questions">
-//           This is a place holder for a question
-//         </div>
-//       </div>
-//     </div>
   );
  }
 
