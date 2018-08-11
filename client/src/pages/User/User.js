@@ -78,6 +78,9 @@ class User extends Component {
 
     logout = () => {
         this.props.deAuthenticate();
+        sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
+        sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
+        sessionStorage.removeItem(`gameCounter${sessionStorage.getItem("gameID")}`);
         sessionStorage.removeItem("userAuth");
         sessionStorage.removeItem("userUsername");
         sessionStorage.removeItem("adminID");
