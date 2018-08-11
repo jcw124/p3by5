@@ -251,27 +251,6 @@ class GamePlay extends Component {
         }
     }
 
-    // resetState = event => {
-    //     event.preventDefault();
-    //     this.setState({
-    //         teacherProgress: 0,
-    //         userProgress: 0,
-    //         counter: 0,
-    //         questionId: 1,
-    //         question: '',
-    //         answers: [],
-    //         correctAnswer: '',
-    //         answersCount: {
-    //             correct: 0,
-    //             incorrect: 0,
-    //         },
-    //         answer: '',
-    //         result: ''
-    //     })
-    //     this.componentDidMount();
-    //     console.log (this.state.gameID);
-    // }
-
     render() {
         return (
             <div className="play container"> 
