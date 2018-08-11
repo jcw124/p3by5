@@ -8,7 +8,6 @@ import Play from "../GamePlay";
 import { FormBtn } from "../../components/Form";
 import Navigation from "../../components/Navigation";
 
-
 require('./User.css');
 
 class User extends Component {

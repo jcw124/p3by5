@@ -32,6 +32,10 @@
     transform: perspective(1px) translateY(-50%);
 }
 
+.link {
+    color: #fff!important;
+}
+
 /* media query */
 
 @media (max-width: 1199.98px) {
