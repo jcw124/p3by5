@@ -87,11 +87,11 @@
     .UserWrap {
         padding-top: 80px;
     }
-    .opt1:before,
+    /* .opt1:before,
     .opt2:before,
     .opt3:before,
     .opt4:before {
         width: 26px;
         left: -26px;
-    }
+    } */
 }
