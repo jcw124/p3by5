@@ -39,24 +39,24 @@ class GamePlay extends Component {
     componentDidMount() {
         if (!sessionStorage.getItem("gameID")) { this.context.router.history.push("/login") };
         this.setState({ gameID: sessionStorage.getItem("gameID") });
-        if (sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`)) {
+        if (sessionStorage.getItem(`gameCounter${sessionStorage.getItem("counter")}`)) {
             this.setState({
                 counter: parseInt(sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`))
             })
         }
-        if (sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`)) {
+        if (sessionStorage.getItem(`numCorrect${sessionStorage.getItem("answerCount.correct")}`)) {
             this.setState({
                 answersCount: {
-                    correct: parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`)),
+                    correct: parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("answerCount.correct")}`)),
                     incorrect: this.state.answersCount.incorrect
                 }
             })
         }
-        if (sessionStorage.getItem(`numWrong${sessionStorage.getItem("gameID")}`)) {
+        if (sessionStorage.getItem(`numWrong${sessionStorage.getItem("answerCount.incorrect")}`)) {
             this.setState({
                 answersCount: {
                     correct: this.state.answersCount.correct,
-                    incorrect: parseInt(sessionStorage.getItem(`numWrong${sessionStorage.getItem("gameID")}`))
+                    incorrect: parseInt(sessionStorage.getItem(`numWrong${sessionStorage.getItem("answerCount.incorrect")}`))
                 }
             })
         }
@@ -118,13 +118,14 @@ class GamePlay extends Component {
         if ((this.state.counter + 1) < this.state.game.questions.length) {
             setTimeout(() => this.setNextQuestion(), 300);
         } 
-        if (this.state.answersCount.correct === 7 || this.state.answersCount.incorrect ===3) {
-            sessionStorage.removeItem(`numCorrect${this.state.gameID}`);
-            sessionStorage.removeItem(`numWrong${this.state.gameID}`);
-            sessionStorage.removeItem(`gameCounter${this.state.gameID}`);
+        if (this.state.answersCount.correct == 7 || this.state.answersCount.incorrect == 3) {
+            sessionStorage.removeItem(`numCorrect${this.state.answersCount.correct}`);
+            sessionStorage.removeItem(`numWrong${this.state.answersCount.incorrect}`);
+            sessionStorage.removeItem(`gameCounter${this.state.counter}`);
             console.log("GAME OVER!");
             console.log("right:", this.state.answersCount.correct);
             console.log("wrong:", this.state.answersCount.incorrect);
+            console.log(`numCorrect${this.state.gameID}`);
         }
     }
 
