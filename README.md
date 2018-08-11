@@ -10,16 +10,12 @@
 ![Questions](/client/src/images/screenshots/Questions .png)
 ![Game Admin](/client/src/images/screenshots/GameAdminPage.png)
 
-#Play the Game 
-Todo: ( add Heroku Link Here)
-Todo:  Add Game Image here 
-Todo:  Insert a video
 
 # Project Name
 Venatus Education is our Final Project for the UCLA Full Stack Coding Boot Camp
 
 
-##Overview 
+## Overview 
 Our game is intended to serve as a tool to reinforce information through game play.  Our game can be customized to display questions from any subject being covered in the classroom.  
 
 ## Future Enhancements
