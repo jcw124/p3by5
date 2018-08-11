@@ -1,5 +1,6 @@
 import React from "react";
 import "./Animation.css";
+import logosm from "../../images/badge.svg";
 
 // function walkright() {
 //     document.getElementById("#teacher").classList.toggle("walk");
@@ -13,6 +14,7 @@ const Animation = props => (
         <div className="teacherContainer">
             <div id="teacher" className="dont-walk"></div>
         </div>
+        <div className="gamebadge"><img alt="badge" src={logosm} /></div>
         <div className="userContainer">
             <div id="user" className="dont-walk"></div>
         </div>
