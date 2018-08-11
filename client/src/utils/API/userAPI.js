@@ -5,8 +5,8 @@ export default {
         return axios.get(`/api/get/user/login?username=${username}&password=${password}`);
     },
 
-    getUser: function (userID) {
-        return axios.get(`/api/get/user/${userID}`);
+    getUser: function (username) {
+        return axios.get(`/api/get/user/${username}`);
     },
 
     saveUser: function (username, password, email, adminID) {

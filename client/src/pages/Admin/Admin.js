@@ -3,8 +3,7 @@ import React, { Component } from "react"
 import Navigation from "../../components/Navigation";
 import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
 import { List, ListItem } from "../../components/List";
-import BtnEdit from "../../components/BtnEdit";
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ButtonBtn from "../../components/ButtonBtn";
 import { Input, FormBtn } from "../../components/Form";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -54,7 +53,7 @@ class Admin extends Component {
 
     //load into gamelist container existing games 
     componentDidMount() {
-        if (sessionStorage.getItem('adminUsername')) {
+        if ((sessionStorage.getItem('adminAuth') === 'yes') && sessionStorage.getItem('adminUsername')) {
             this.setState({ username: sessionStorage.getItem('adminUsername') });
             this.getAdminId(sessionStorage.getItem('adminUsername'));
         }
@@ -63,7 +62,6 @@ class Admin extends Component {
     getAdminId = username => {
         adminAPI.getAdminbyUsername(username)
             .then(res => {
-                console.log("got admin id", res);
                 this.setState({ adminID: res.data._id });
                 this.loadGames(res.data._id);
             })
@@ -105,7 +103,6 @@ class Admin extends Component {
     //render new game name on page in game container 
     createGame = event => {
         event.preventDefault();
-        console.log("creating game...");
         gameAPI.saveGame(this.state.newGameName, this.state.newGameWrong, this.state.newGameQuestions, this.state.adminID)
             .then(res => {
                 this.setState({
@@ -121,7 +118,6 @@ class Admin extends Component {
 
     editGame = event => {
         event.preventDefault();
-        console.log(event.target.getAttribute("id"));
         this.setState({ selectedGameID: event.target.getAttribute("id") })
         gameAPI.getGame(event.target.getAttribute("id"))
             .then(res => {
@@ -155,10 +151,8 @@ class Admin extends Component {
 
     loadEdit = event => {
         event.preventDefault();
-        console.log("loading edit");
         questionAPI.getQuestion(event.target.getAttribute("id"))
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     updateQuestion: res.data.question,
                     updateAnswer1: res.data.possibleAnswers[0],
@@ -180,7 +174,6 @@ class Admin extends Component {
         questionArray.push(this.state.updateCorrect);
         questionAPI.updateQuestion(this.state.updateID, this.state.updateQuestion, questionArray, this.state.updateCorrect)
             .then(res => {
-                console.log("NEW UPDATED QUESTION:", res.data);
                 questionArray = this.state.questions;
                 let newArray = [];
                 questionArray.forEach(question => {
@@ -202,17 +195,14 @@ class Admin extends Component {
 
     addQuestion = event => {
         event.preventDefault();
-        console.log("ADDING QUESTION");
         let questionArray = [];
         if (this.state.currentAnswer1 !== "") { questionArray.push(this.state.currentAnswer1); }
         if (this.state.currentAnswer2 !== "") { questionArray.push(this.state.currentAnswer2); }
         if (this.state.currentAnswer3 !== "") { questionArray.push(this.state.currentAnswer3); }
-        console.log("saving", this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
         questionArray.push(this.state.currentCorrect);
         questionAPI.saveQuestion(this.state.currentQuestion, questionArray, this.state.currentCorrect, this.state.selectedGameID)
             .then(res => {
                 questionArray = this.state.questions;
-                console.log("NEW QUESTION", res.data);
                 questionArray.push(res.data);
                 this.setState({
                     questions: questionArray,
@@ -227,7 +217,6 @@ class Admin extends Component {
 
     removeQuestion = event => {
         event.preventDefault();
-        console.log("removing question");
         let questionArray = this.state.questions;
         questionArray = questionArray.filter(question => question._id !== event.target.getAttribute("id"));
         this.setState({ questions: questionArray })
@@ -241,7 +230,7 @@ class Admin extends Component {
             .catch(err => console.log(err));
     }
     //Entering a new game name
-    
+
     getScores = event => {
         event.preventDefault();
         this.setState({ gameForScores: event.target.name });
@@ -252,7 +241,6 @@ class Admin extends Component {
     }
 
     loginAdmin = admin => {
-        console.log(admin);
         adminAPI.adminLogin({ username: admin.username, password: admin.password })
             .then(function (data) {
                 console.log(data.data);
@@ -266,10 +254,7 @@ class Admin extends Component {
                     alert("Username or password is Incorrect.");
                 }
             }.bind(this))
-            .catch(function (err) {
-                console.log("NOT IN DATABASE");
-                console.log(err);
-            });
+            .catch(function (err) { console.log(err); });
 
     }
 
@@ -291,6 +276,7 @@ class Admin extends Component {
     }
 
     logout = () => {
+        this.props.deAuthenticate();
         sessionStorage.removeItem("adminAuth");
         sessionStorage.removeItem("adminUsername");
         window.location.reload();
@@ -320,9 +306,6 @@ class Admin extends Component {
                 <div>
                     <Navigation />
                     <div className="AdminWrap">
-                        <button onClick={this.logout}>logout</button>
-                        <h1>{this.state.username}</h1>
-                        <h1>{this.state.adminID}</h1>
                         <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
                             <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
                             <ModalBody>
@@ -440,6 +423,7 @@ class Admin extends Component {
                                         )}
                                 </div>
                             </div>
+                            <FormBtn onClick={this.logout}>logout</FormBtn>
                         </div>
                     </div>
                 </div>

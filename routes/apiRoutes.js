@@ -35,7 +35,7 @@ const deleteScore = require('../serverAPI/score').deleteScore;
 
 router.get("/get/user/login/", getUserbyUsernamePass);
 router.post("/user/login", pleasegodlogin);
-router.get("/get/user/:id", getUser);
+router.get("/get/user/:username", getUser);
 router.put("/user", saveUser);
 router.post("/user", updateUser);
 router.delete("/delete/user/:id", deleteUser);

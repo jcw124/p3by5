@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Redirect } from 'react-router-dom';
 import { adminAPI, gameAPI, userAPI, scoreAPI } from "../../utils/API";
 import ButtonBtn from "../../components/ButtonBtn";
 import { List, ListItem } from "../../components/List";
 import Play from "../GamePlay";
+import { FormBtn } from "../../components/Form";
 import Navigation from "../../components/Navigation";
 
 
@@ -12,9 +14,8 @@ require('./User.css');
 class User extends Component {
     state = {
         userID: "",
-        username: "username1",
-        password: "password1",
-        adminID: "5b66983807d53261048bb933",
+        username: "",
+        adminID: "",
         games: [],
         selectedGameID: "",
         gameScores: "",
@@ -22,7 +23,7 @@ class User extends Component {
         selectedGame: {},
         gameName: "",
         gameQuestions: "",
-        gameAnswers: "",
+        gameAnswers: ""
     };
 
     static contextTypes = {
@@ -30,12 +31,19 @@ class User extends Component {
     }
 
     componentDidMount() {
-        // var data = sessionStorage.getItem('auth')
-        this.getUserId();
+        if ((sessionStorage.getItem('userAuth') === 'yes') && sessionStorage.getItem("userUsername")) {
+            if (sessionStorage.getItem("adminID")) {
+                this.setState({
+                    adminID: sessionStorage.getItem("adminID"),
+                    username: sessionStorage.getItem('userUsername')
+                });
+            }
+            this.getUserId(sessionStorage.getItem('userUsername'));
+        }
     }
 
-    getUserId = () => {
-        userAPI.getUserbyUsernamePass(this.state.username, this.state.password)
+    getUserId = userUsername => {
+        userAPI.getUser(userUsername)
             .then(res => {
                 console.log("get username", res);
                 this.setState({ userID: res.data._id });
@@ -68,8 +76,18 @@ class User extends Component {
         this.context.router.history.push("/play");
     }
 
+
+    logout = () => {
+        this.props.deAuthenticate();
+        sessionStorage.removeItem("userAuth");
+        sessionStorage.removeItem("userUsername");
+        sessionStorage.removeItem("adminID");
+        window.location.reload();
+    }
+
     render() {
-        return (
+        return (!(sessionStorage.getItem("userAuth") === 'yes') ?
+            <Redirect to={{ pathname: '/login' }} /> :
             <div>
                 <Navigation />
                 <div className="UserWrap">
@@ -124,6 +142,7 @@ class User extends Component {
                                     )}
                             </div>
                         </div>
+                        <FormBtn onClick={this.logout}>logout</FormBtn>
                     </div>
                 </div>
             </div>

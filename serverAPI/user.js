@@ -43,7 +43,7 @@ exports.pleasegodlogin = (req, res, next) => {
 };
 
 exports.getUserbyUsernamePass = function (req, res) {
-    var newuser = new db.User();
+    var newuser = new User();
     db.User.findOne({ username: req.query.username })
         .then(function (dbUser) {
             if (newuser.validPassword(req.query.password, dbUser.password)) {
@@ -62,8 +62,9 @@ exports.getUser = function (req, res) {
     /*DELETE_ON_PRODUCTION
     req.params gives _id of user
     */
-    db.User.findById(req.params.id)
+    db.User.findOne({ username: req.params.username })
         .then(function (dbUser) {
+            console.log("USER", dbUser);
             res.json(dbUser);
         })
         .catch(function (err) {
@@ -82,10 +83,7 @@ exports.saveUser = function (req, res) {
     }
     */
     var newuser = new db.User();
-    console.log("made it to the user.js");
-    console.log(req.body);
     req.body.password = newuser.generateHash(req.body.password);
-    console.log(req.body);
 
     db.User.create(req.body)
         .then(function (dbUser) {

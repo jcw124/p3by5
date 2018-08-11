@@ -83,10 +83,7 @@ exports.saveAdmin = function (req, res) {
     }
     */
     var newAdmin = new db.Admin();
-    console.log(req.body);
     req.body.password = newAdmin.generateHash(req.body.password);
-    console.log(req.body);
-
     db.Admin.create(req.body)
         .then(function (dbAdmin) {
             // If we were able to successfully update a Game, send it back to the client

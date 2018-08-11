@@ -1,10 +1,9 @@
 // Include React
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { userAPI } from "../../utils/API";
+import { userAPI, adminAPI } from "../../utils/API";
 import Navigation from "../../components/Navigation";
-
-require('./register.css');
+import './register.css';
 
 export default class Register extends Component {
 
@@ -27,7 +26,17 @@ export default class Register extends Component {
         this.handleEmailRepeat = this.handleEmailRepeat.bind(this);
         this.signUpUser = this.signUpUser.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleAdminValidation = this.handleAdminValidation.bind(this);
+    }
+
+    componentDidMount() {
+        adminAPI.getAllAdmins()
+            .then(res => {
+                console.log(res.data);
+                this.setState({ allAdmins: res.data })
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     }
 
     handleUsernameValidation(event) {
@@ -50,29 +59,6 @@ export default class Register extends Component {
 
             usernameForm.classList.add("has-success");
             usernameFeedback.textContent = "Username valid!";
-        }
-    }
-
-    handleAdminValidation(event) {
-        // username is passed in
-        const adminVal = this.refs.admin.value,
-            adminForm = this.refs.adminForm,
-            adminFeedback = this.refs.adminFeedback;
-        // admin is updated in state
-        this.setState({
-            'admin': adminVal
-        });
-
-        // admin is checked to see if it matches certain length. If not, the screen will indicate it as such.
-        if (adminVal.length < 6) {
-            adminForm.classList.remove("has-success");
-            adminForm.classList.add("has-error");
-            adminFeedback.textContent = "please enter only the teacher's lastname!";
-        } else {
-            adminForm.classList.remove("has-error");
-
-            adminForm.classList.add("has-success");
-            adminFeedback.textContent = "Username valid!";
         }
     }
 
@@ -177,24 +163,33 @@ export default class Register extends Component {
     }
 
     signUpUser(userData) {
-        
+        let username=userData.username;
         userAPI.saveUser(userData.username, userData.password, userData.email, userData.admin)
-        .then(function (data) {
-            console.log(data);
-            var message = data.data ? data.data.message : '';
+            .then(function (data) {
+                console.log(data);
+                var message = data.data.message ? data.data.message : '';
 
-            if (message.includes("duplicate")) {
-                alert("Sorry, that username has been taken");
-            } else if (data.statusText === "OK") {
-                console.log("yay!")
-                this.props.authenticate();
-                this.setState({
-                    redirectToReferrer: true
-                });
-            }
-        }.bind(this)).catch(function (err) {
-            console.log(err);
-        });
+                if (message.includes("duplicate")) {
+                    alert("Sorry, that username has been taken");
+                } else if (data.statusText === "OK") {
+                    this.props.authenticate();
+                    sessionStorage.setItem('userAuth', 'yes');
+                    sessionStorage.setItem("userUsername",username);
+                    sessionStorage.setItem("adminID",data.data._id);
+                    this.setState({
+                        redirectToReferrer: true
+                    });
+                }
+            }.bind(this)).catch(function (err) {
+                console.log(err);
+            });
+    }
+
+    
+    handleAdminSelect = event => {
+        this.setState({admin: event.target.value});
+        let id=event.target.value;
+        console.log(id);
     }
 
     handleSubmit(event) {
@@ -245,7 +240,7 @@ export default class Register extends Component {
             <div>
                 <Navigation />
                 <div id="registration-container" >
-                        <h1>Registration</h1>
+                    <h1>Registration</h1>
                     <section className="container">
                         <div className="container-page">
                             <form onSubmit={this.handleSubmit.bind(this)}>
@@ -283,9 +278,12 @@ export default class Register extends Component {
                                         <small id="email-repeat-feedback" className="" ref="emailRepeatFeedback"></small>
                                     </div>
                                     <div id="admin-form" ref="adminForm" className="form-group col-lg-12">
-                                        <label>Teacher Name</label>
-                                        <input type="" name="" ref="admin" className="form-control" id="admin-input" value={this.state.admin} onChange={this.handleAdminValidation} />
-                                        <small id="admin-feedback" ref="adminFeedback" className=""></small>
+                                        <label>Teacher Username</label>
+                                        <select multiple className="form-control" id="teacher-select" onChange={this.handleAdminSelect}>
+                                            {this.state.allAdmins ? this.state.allAdmins.map(admin =>
+                                                <option key={admin._id} value={admin._id}>{admin.username}</option>
+                                            ) : ''}
+                                        </select>
                                     </div>
 
                                 </div>

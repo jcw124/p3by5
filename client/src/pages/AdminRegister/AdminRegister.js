@@ -152,25 +152,25 @@ export default class Register extends Component {
     }
 
     signUpAdmin(adminData) {
-        
+        let username=adminData.username;
         adminAPI.saveAdmin(adminData.username, adminData.password, adminData.email)
-        .then(function (data) {
-            console.log(data);
-            var message = data.data ? data.data.message : '';
+            .then(function (data) {
+                console.log(data);
+                var message = data.data.message ? data.data.message : '';
 
-            if (message.includes("duplicate")) {
-                alert("Sorry, that username has been taken");
-            } else if (data.statusText === "OK") {
-                console.log("yay!")
-                this.props.authenticate();
-                sessionStorage.setItem('adminAuth','yes');
-                this.setState({
-                    redirectToReferrer: true
-                });
-            }
-        }.bind(this)).catch(function (err) {
-            console.log(err);
-        });
+                if (message.includes("duplicate")) {
+                    alert("Sorry, that username has been taken");
+                } else if (data.statusText === "OK") {
+                    this.props.authenticate();
+                    sessionStorage.setItem('adminAuth', 'yes');
+                    sessionStorage.setItem('adminUsername', username);
+                    this.setState({
+                        redirectToReferrer: true
+                    });
+                }
+            }.bind(this)).catch(function (err) {
+                console.log(err);
+            });
     }
 
     handleSubmit(event) {
@@ -205,12 +205,11 @@ export default class Register extends Component {
     }
 
     render() {
-        const { from } = this.props.location.state || { from: { pathname: '/' } };
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
             return (
-                <Redirect to={from} />
+                <Redirect to={{pathname: '/admin'}} />
             )
         }
 
@@ -218,7 +217,7 @@ export default class Register extends Component {
             <div>
                 <Navigation />
                 <div id="registration-container" >
-                        <h1>Admin Registration</h1>
+                    <h1>Admin Registration</h1>
                     <section className="container">
                         <div className="container-page">
                             <form onSubmit={this.handleSubmit.bind(this)}>

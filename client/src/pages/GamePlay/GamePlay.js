@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import update from 'immutability-helper';
+// import update from 'immutability-helper';
 import Game from './../../components/Game';
-import QuestionCount from './../../components/QuestionCount';
-import tempQuestions from './../../utils/API/tempQuestions';
+import { Redirect } from 'react-router-dom';
+// import QuestionCount from './../../components/QuestionCount';
+// import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
 import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
-import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import teacherProfile from "../../images/user1profile.svg";
-import { walkright } from '../../components/Animation';
+import { gameAPI } from "../../utils/API";
+import { Modal, ModalBody, ModalFooter } from 'reactstrap';
+// import teacherProfile from "../../images/user1profile.svg";
+// import { walkright } from '../../components/Animation';
 import './GamePlay.css';
 
 class GamePlay extends Component {
@@ -79,7 +80,7 @@ class GamePlay extends Component {
         this.setState({
             modal: !this.state.modal,
         });
-        }
+    }
 
 
     shuffleArray(array) {
@@ -138,7 +139,7 @@ class GamePlay extends Component {
                 },
                 answer: answer
             });
-            if(this.state.answersCount.correct === 7 ) {
+            if (this.state.answersCount.correct === 7) {
                 this.toggle()
             }
         }
@@ -152,14 +153,14 @@ class GamePlay extends Component {
                 },
                 answer: answer
             });
-            if(this.state.answersCount.incorrect === 3 ) {
+            if (this.state.answersCount.incorrect === 3) {
                 this.toggle()
             }
         }
         console.log(
             "correct", this.state.answersCount
         )
-        
+
     }
 
     walkleft = () => {
@@ -241,26 +242,26 @@ class GamePlay extends Component {
     }
 
     render() {
-        return (
+        return (!(sessionStorage.getItem("userAuth") === 'yes') ?
+            <Redirect to={{ pathname: '/login' }} /> :
             <div className="container">
                 <div>
                     <Navigation />
-
                     <Modal isOpen={this.state.modal} toggle={this.toggle}>
                         <ModalBody>
-                            {this.state.answersCount.incorrect === 3 ? 
-                            <h3> Game Over: Do you want to try again? </h3> 
-                            : 
-                            <h3> Awesome Work!! Try another game </h3>
-                            } 
+                            {this.state.answersCount.incorrect === 3 ?
+                                <h3> Game Over: Do you want to try again? </h3>
+                                :
+                                <h3> Awesome Work!! Try another game </h3>
+                            }
                         </ModalBody>
                         <ModalFooter>
                             <div className="footer">
-                            <ButtonBtn>
-                                Play Again
+                                <ButtonBtn>
+                                    Play Again
                             </ButtonBtn>
-                            <ButtonBtn>
-                                Home
+                                <ButtonBtn>
+                                    Home
                             </ButtonBtn>
                             </div>
                         </ModalFooter>
@@ -282,7 +283,7 @@ class GamePlay extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 

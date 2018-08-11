@@ -34,12 +34,15 @@ export default class Login extends Component {
   }
 
   loginUser = user => {
-    console.log(user);
+    let username=user.username;
     userAPI.pleasegodlogin({ username: user.username, password: user.password })
       .then(function (data) {
         console.log(data.data);
         if (data.data.success) {
           this.props.authenticate();
+          sessionStorage.setItem('userAuth', 'yes');
+          sessionStorage.setItem("userUsername", username);
+          sessionStorage.setItem("adminID", data.data.user.admin);
           this.setState({
             redirectToReferrer: true
           });
