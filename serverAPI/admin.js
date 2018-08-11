@@ -8,7 +8,7 @@ exports.adminLogin = (req, res, next) => {
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
 
-    return passport.authenticate('local', (err, token, excess) => {
+    return passport.authenticate('admin-local', (err, token, excess) => {
         if (err) {
             console.log(err);
             if (err.name === 'IncorrectCredentialsError') {
@@ -41,12 +41,11 @@ exports.adminLogin = (req, res, next) => {
     })(req, res, next);
 };
 
-exports.getAdminbyUsernamePass = function (req, res) {
+exports.getAdminbyUsername = function (req, res) {
     /*DELETE_ON_PRODUCTION
     req.query syntax:
     {
-        username: {username of admin},
-        password: {password of admin}
+        username: {username of admin}
     }
     */
     db.Admin.findOne(req.query)

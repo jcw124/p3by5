@@ -25,7 +25,6 @@ class Admin extends Component {
         this.state = {
             adminID: "",
             username: "",
-            password: "",
             games: [],
             selectedGameID: "",
             gameForScores: "",
@@ -55,8 +54,29 @@ class Admin extends Component {
 
     //load into gamelist container existing games 
     componentDidMount() {
-        sessionStorage.clear();
+        if (sessionStorage.getItem('adminUsername')) {
+            this.setState({ username: sessionStorage.getItem('adminUsername') });
+            this.getAdminId(sessionStorage.getItem('adminUsername'));
+        }
     }
+
+    getAdminId = username => {
+        adminAPI.getAdminbyUsername(username)
+            .then(res => {
+                console.log("got admin id", res);
+                this.setState({ adminID: res.data._id });
+                this.loadGames(res.data._id);
+            })
+            .catch(err => console.log(err));
+    }
+
+    loadGames = adminID => {
+        adminAPI.getGamesbyAdminID(adminID)
+            .then(res => {
+                this.setState({ games: res.data })
+            })
+            .catch(err => console.log(err));
+    };
 
     handleInputChange = event => {
         const { name, value } = event.target;
@@ -80,6 +100,50 @@ class Admin extends Component {
             updateCorrect: "",
             updateID: ""
         });
+    }
+    //submit new game name 
+    //render new game name on page in game container 
+    createGame = event => {
+        event.preventDefault();
+        console.log("creating game...");
+        gameAPI.saveGame(this.state.newGameName, this.state.newGameWrong, this.state.newGameQuestions, this.state.adminID)
+            .then(res => {
+                this.setState({
+                    questions: [],
+                    currentGame: res.data,
+                    selectedGameID: res.data._id
+                });
+                this.loadGames(this.state.adminID);
+                this.toggle();
+            })
+            .catch(err => console.log(err));
+    };
+
+    editGame = event => {
+        event.preventDefault();
+        console.log(event.target.getAttribute("id"));
+        this.setState({ selectedGameID: event.target.getAttribute("id") })
+        gameAPI.getGame(event.target.getAttribute("id"))
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    questions: res.data.questions,
+                    currentGame: res.data
+                })
+            }
+            )
+            .catch(err => console.log(err));
+        this.toggle();
+    }
+
+    removeGame = event => {
+        event.preventDefault();
+        gameAPI.deleteGame(event.target.getAttribute("id"))
+            .then(() => {
+                this.setState({ confirmDelete: !this.state.confirmDelete });
+                this.loadGames(this.state.adminID);
+            })
+            .catch(err => console.log(err));
     }
 
     toggleDeleteMessage = event => {
@@ -136,24 +200,6 @@ class Admin extends Component {
             .catch(err => console.log(err));
     }
 
-    getAdminId = () => {
-        adminAPI.getAdminbyUsernamePass(this.state.username, this.state.password)
-            .then(res => {
-                console.log("got admin id", res);
-                this.setState({ adminID: res.data._id });
-                this.loadGames();
-            })
-            .catch(err => console.log(err));
-    }
-
-    loadGames = () => {
-        adminAPI.getGamesbyAdminID(this.state.adminID)
-            .then(res => {
-                this.setState({ games: res.data })
-            })
-            .catch(err => console.log(err));
-    };
-
     addQuestion = event => {
         event.preventDefault();
         console.log("ADDING QUESTION");
@@ -195,53 +241,7 @@ class Admin extends Component {
             .catch(err => console.log(err));
     }
     //Entering a new game name
-
-
-    //submit new game name 
-    //render new game name on page in game container 
-    createGame = event => {
-        event.preventDefault();
-        console.log("creating game...");
-        gameAPI.saveGame(this.state.newGameName, this.state.newGameWrong, this.state.newGameQuestions, this.state.adminID)
-            .then(res => {
-                this.setState({
-                    questions: [],
-                    currentGame: res.data,
-                    selectedGameID: res.data._id
-                });
-                this.loadGames();
-                this.toggle();
-            })
-            .catch(err => console.log(err));
-    };
-
-    editGame = event => {
-        event.preventDefault();
-        console.log(event.target.getAttribute("id"));
-        this.setState({ selectedGameID: event.target.getAttribute("id") })
-        gameAPI.getGame(event.target.getAttribute("id"))
-            .then(res => {
-                console.log(res.data);
-                this.setState({
-                    questions: res.data.questions,
-                    currentGame: res.data
-                })
-            }
-            )
-            .catch(err => console.log(err));
-        this.toggle();
-    }
-
-    removeGame = event => {
-        event.preventDefault();
-        gameAPI.deleteGame(event.target.getAttribute("id"))
-            .then(() => {
-                this.setState({ confirmDelete: !this.state.confirmDelete });
-                this.loadGames();
-            })
-            .catch(err => console.log(err));
-    }
-
+    
     getScores = event => {
         event.preventDefault();
         this.setState({ gameForScores: event.target.name });
@@ -258,11 +258,15 @@ class Admin extends Component {
                 console.log(data.data);
                 if (data.data.success) {
                     this.props.authenticate();
+                    sessionStorage.setItem('adminAuth', 'yes');
+                    sessionStorage.setItem('adminUsername', this.state.username);
+                    window.location.reload();
                 }
                 else {
                     alert("Username or password is Incorrect.");
                 }
-            }.bind(this)).catch(function (err) {
+            }.bind(this))
+            .catch(function (err) {
                 console.log("NOT IN DATABASE");
                 console.log(err);
             });
@@ -284,6 +288,12 @@ class Admin extends Component {
         }
         // If we have an email and password we run the loginUser function and clear the form
         this.loginAdmin(objSubmit);
+    }
+
+    logout = () => {
+        sessionStorage.removeItem("adminAuth");
+        sessionStorage.removeItem("adminUsername");
+        window.location.reload();
     }
 
     render() {
@@ -310,6 +320,9 @@ class Admin extends Component {
                 <div>
                     <Navigation />
                     <div className="AdminWrap">
+                        <button onClick={this.logout}>logout</button>
+                        <h1>{this.state.username}</h1>
+                        <h1>{this.state.adminID}</h1>
                         <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
                             <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
                             <ModalBody>

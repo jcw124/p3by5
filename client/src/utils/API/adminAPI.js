@@ -5,8 +5,8 @@ export default {
         return axios.post('/api/admin/login',cred);
     },
 
-    getAdminbyUsernamePass: function (username, password) {
-        return axios.get(`/api/get/admin/login?username=${username}&password=${password}`);
+    getAdminbyUsername: function (username) {
+        return axios.get(`/api/get/admin/login?username=${username}`);
     },
 
     getAdmin: function (adminID) {

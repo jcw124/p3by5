@@ -46,13 +46,13 @@ export default class App extends Component {
       authenticated: false
     })
   }
-  adminAuthenticate() {
+  adminAuthenticate = () => {
     this.setState({
       adminAuthenticated: true
     })
   }
 
-  adminDeAuthenticate() {
+  adminDeAuthenticate = () => {
     this.setState({
       adminAuthenticated: false
     })
@@ -65,7 +65,7 @@ export default class App extends Component {
         <Router>
           <div className="master">
             <Switch>
-            <Route exact path="/" render={props =>
+              <Route exact path="/" render={props =>
                 <Home
                   {...props}
                   authenticate={this.authenticate}
@@ -111,8 +111,8 @@ export default class App extends Component {
                   authenticate={this.authenticate}
                   deAuthenticate={this.deAuthenticate}
                   authenticated={this.state.authenticated}
-                  // updateGamePlay={this.updateGame}
-                  // gameName={this.state.gameName}
+                // updateGamePlay={this.updateGame}
+                // gameName={this.state.gameName}
                 />}
               />
               <Route exact path="/play" render={props =>
@@ -121,8 +121,8 @@ export default class App extends Component {
                   authenticate={this.authenticate}
                   deAuthenticate={this.deAuthenticate}
                   authenticated={this.state.authenticated}
-                  // gameName={this.state.gameName}
-                />} 
+                // gameName={this.state.gameName}
+                />}
               />
             </Switch>
           </div>

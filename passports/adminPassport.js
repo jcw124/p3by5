@@ -1,10 +1,10 @@
 
-var Admin= require("../models/Admin.js");
+var Admin = require("../models/Admin.js");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 
 // Telling passport we want to use a Local Strategy. In other words, we want login with a username/email and password
-passport.use(new LocalStrategy(
+passport.use('admin-local', new LocalStrategy(
 	// Our user will sign in using an email, rather than a "username"
 	{
 		usernameField: "username",

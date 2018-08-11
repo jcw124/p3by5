@@ -8,7 +8,7 @@ const updateUser = require('../serverAPI/user').updateUser;
 const deleteUser = require('../serverAPI/user').deleteUser;
 
 const adminLogin = require('../serverAPI/admin').adminLogin;
-const getAdminbyUsernamePass = require('../serverAPI/admin').getAdminbyUsernamePass;
+const getAdminbyUsername = require('../serverAPI/admin').getAdminbyUsername;
 const getAdmin = require('../serverAPI/admin').getAdmin;
 const saveAdmin = require('../serverAPI/admin').saveAdmin;
 const updateAdmin = require('../serverAPI/admin').updateAdmin;
@@ -41,7 +41,7 @@ router.post("/user", updateUser);
 router.delete("/delete/user/:id", deleteUser);
 
 router.post("/admin/login", adminLogin);
-router.get("/get/admin/login", getAdminbyUsernamePass);
+router.get("/get/admin/login", getAdminbyUsername);
 router.get("/get/admin/:id", getAdmin);
 router.put("/admin", saveAdmin);
 router.post("/admin", updateAdmin);

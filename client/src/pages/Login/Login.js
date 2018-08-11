@@ -33,7 +33,7 @@ export default class Login extends Component {
     });
   }
 
-  loginUser(user) {
+  loginUser = user => {
     console.log(user);
     userAPI.pleasegodlogin({ username: user.username, password: user.password })
       .then(function (data) {
