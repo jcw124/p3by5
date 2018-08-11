@@ -13,9 +13,16 @@ require('./User.css');
 
 class User extends Component {
     state = {
+<<<<<<< HEAD
         userID: "",
         username: "",
         adminID: "",
+=======
+        userID: "5b6e26cae967756121c4a1cd",
+        username: "Janell Williams",
+        password: "$2a$08$1lfOyOunF4PxB2lDQ2VM5.dU23u4CXIku2aJ3yVDrPGUw9rH1.1Q2",
+        adminID: "5b6dd70f7bba819f6b4d7bc9",
+>>>>>>> origin
         games: [],
         selectedGameID: "",
         gameScores: "",

@@ -9,8 +9,9 @@ import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
 import { gameAPI } from "../../utils/API";
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
-// import teacherProfile from "../../images/user1profile.svg";
-// import { walkright } from '../../components/Animation';
+import teacherProfile from "../../images/user1profile.svg";
+import { walkright } from '../../components/Animation';
+import { NavItem, NavLink } from "reactstrap";
 import './GamePlay.css';
 
 class GamePlay extends Component {
@@ -38,8 +39,9 @@ class GamePlay extends Component {
     }
 
     componentDidMount() {
-        if (!sessionStorage.getItem("gameID")) { this.context.router.history.push("/login") };
-        this.setState({ gameID: sessionStorage.getItem("gameID") });
+        if (!sessionStorage.getItem("gameID"))
+            // { this.context.router.history.push("/login") };
+            this.setState({ gameID: sessionStorage.getItem("gameID") });
         if (sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`)) {
             this.setState({
                 counter: parseInt(sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`))
@@ -201,6 +203,9 @@ class GamePlay extends Component {
             });
         } else if (this.state.userProgress === 6) {
             user.classList.add("walk7");
+            this.setState({
+                userProgress: 0
+            });
         };
     };
 
@@ -221,6 +226,9 @@ class GamePlay extends Component {
             console.log(this.state.teacherProgress);
         } else if (this.state.teacherProgress === 2) {
             document.querySelector('#teacher').classList.add("walk3");
+            this.setState({
+                userProgress: 0
+            });
         };
     };
 
@@ -244,40 +252,45 @@ class GamePlay extends Component {
     render() {
         return (!(sessionStorage.getItem("userAuth") === 'yes') ?
             <Redirect to={{ pathname: '/login' }} /> :
-            <div className="container">
-                <div>
-                    <Navigation />
-                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                        <ModalBody>
-                            {this.state.answersCount.incorrect === 3 ?
-                                <h3> Game Over: Do you want to try again? </h3>
-                                :
-                                <h3> Awesome Work!! Try another game </h3>
-                            }
-                        </ModalBody>
-                        <ModalFooter>
-                            <div className="footer">
-                                <ButtonBtn>
-                                    Play Again
+            <div className="play container">
+                <Navigation />
+                <div className="scoreCountRedGreen">
+                    <div className="wrong" href="">0</div>
+                    <div className="correct" href="">0</div>
+                </div>
+                <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <ModalBody>
+                        {this.state.answersCount.incorrect === 3 ?
+                            <h3> Game Over: Do you want to try again? </h3>
+                            :
+                            <h3> Awesome Work!! Try another game </h3>
+                        }
+                    </ModalBody>
+                    <ModalFooter>
+                        <div className="footer">
+                            <ButtonBtn>
+                                Play Again
                             </ButtonBtn>
-                                <ButtonBtn>
-                                    Home
+                            <ButtonBtn>
+                                Home
                             </ButtonBtn>
-                            </div>
-                        </ModalFooter>
-                    </Modal>
+                        </div>
+                    </ModalFooter>
+                </Modal>
 
-                    <div className="container gameContainer">
-                        <div className="game">
-                            <Game
-                                answer={this.state.answer}
-                                correctAnswer={this.state.correctAnswer}
-                                answers={this.state.answers}
-                                questionId={this.state.counter + 1}
-                                question={this.state.question}
-                                questionTotal={this.state.game.questions.length}
-                                onAnswerSelected={this.handleAnswerSelected}
-                            />
+                <div className="container gameContainer">
+                    <div className="game">
+                        <Game
+                            answer={this.state.answer}
+                            correctAnswer={this.state.correctAnswer}
+                            answers={this.state.answers}
+                            questionId={this.state.counter + 1}
+                            question={this.state.question}
+                            questionTotal={this.state.game.questions.length}
+                            onAnswerSelected={this.handleAnswerSelected}
+                        />
+
+                        <div className="animationWrap">
                             <Animation />
                         </div>
                     </div>
