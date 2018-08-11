@@ -15,6 +15,9 @@
     margin: 10px auto;
     padding: 0 50px;
 }
+.homeWrap a{
+    color: white!important;
+}
 .homeLogo {
     width: 50%;
     margin: auto;

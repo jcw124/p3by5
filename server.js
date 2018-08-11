@@ -5,9 +5,10 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const mongoose = require("mongoose");
 const apiRoutes = require("./routes/apiRoutes");
-const session        = require('express-session'); 
-const passport 			 = require("./passport");
-const config				 = require("./extra-config");
+const session = require('express-session');
+const userPassport = require("./passports/userPassport");
+const adminPassport = require("./passports/adminPassport");
+const config = require("./extra-config");
 
 
 // Define middleware here
@@ -27,8 +28,10 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 const authCheck = require('./middleware/attachAuthenticationStatus');
 app.use(session({ secret: config.sessionKey, resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(userPassport.initialize());
+app.use(userPassport.session());
+app.use(adminPassport.initialize());
+app.use(adminPassport.session());
 app.use(authCheck);
 
 // Define API routes here

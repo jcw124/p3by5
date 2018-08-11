@@ -1,9 +1,10 @@
 // Include React
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { userAPI, adminAPI } from "../../utils/API";
+import { adminAPI } from "../../utils/API";
 import Navigation from "../../components/Navigation";
-import './register.css';
+
+require('./register.css');
 
 export default class Register extends Component {
 
@@ -16,7 +17,6 @@ export default class Register extends Component {
             passwordRepeat: '',
             email: '',
             emailRepeat: '',
-            admin: ''
         };
 
         this.handleUsernameValidation = this.handleUsernameValidation.bind(this);
@@ -24,19 +24,8 @@ export default class Register extends Component {
         this.handlePasswordRepeat = this.handlePasswordRepeat.bind(this);
         this.handleEmailValidation = this.handleEmailValidation.bind(this);
         this.handleEmailRepeat = this.handleEmailRepeat.bind(this);
-        this.signUpUser = this.signUpUser.bind(this);
+        this.signUpAdmin = this.signUpAdmin.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentDidMount() {
-        adminAPI.getAllAdmins()
-            .then(res => {
-                console.log(res.data);
-                this.setState({ allAdmins: res.data })
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
     }
 
     handleUsernameValidation(event) {
@@ -162,9 +151,9 @@ export default class Register extends Component {
         }
     }
 
-    signUpUser(userData) {
-        let username=userData.username;
-        userAPI.saveUser(userData.username, userData.password, userData.email, userData.admin)
+    signUpAdmin(adminData) {
+        let username=adminData.username;
+        adminAPI.saveAdmin(adminData.username, adminData.password, adminData.email)
             .then(function (data) {
                 console.log(data);
                 var message = data.data.message ? data.data.message : '';
@@ -173,9 +162,8 @@ export default class Register extends Component {
                     alert("Sorry, that username has been taken");
                 } else if (data.statusText === "OK") {
                     this.props.authenticate();
-                    sessionStorage.setItem('userAuth', 'yes');
-                    sessionStorage.setItem("userUsername",username);
-                    sessionStorage.setItem("adminID",data.data._id);
+                    sessionStorage.setItem('adminAuth', 'yes');
+                    sessionStorage.setItem('adminUsername', username);
                     this.setState({
                         redirectToReferrer: true
                     });
@@ -185,34 +173,25 @@ export default class Register extends Component {
             });
     }
 
-    
-    handleAdminSelect = event => {
-        this.setState({admin: event.target.value});
-        let id=event.target.value;
-        console.log(id);
-    }
-
     handleSubmit(event) {
         event.preventDefault();
 
         const username = this.state.username;
         const email = this.state.email;
         const password = this.state.password;
-        const admin = this.state.admin;
 
-        let userData = {
+        let adminData = {
             username: username,
             email: email,
             password: password,
-            admin: admin
         };
 
-        if (!userData.username || !userData.email || !userData.password || !userData.admin) {
+        if (!adminData.username || !adminData.email || !adminData.password) {
             return alert("Please don't leave fields blank");
         }
 
         // If we have an email and password, run the signUpUser function
-        this.signUpUser(userData);
+        this.signUpAdmin(adminData);
 
         this.setState({
             value: '',
@@ -221,18 +200,16 @@ export default class Register extends Component {
             passwordRepeat: '',
             email: '',
             emailRepeat: '',
-            admin: '',
             redirectToReferrer: false
         });
     }
 
     render() {
-        const { from } = this.props.location.state || { from: { pathname: '/' } };
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
             return (
-                <Redirect to={from} />
+                <Redirect to={{pathname: '/admin'}} />
             )
         }
 
@@ -240,7 +217,7 @@ export default class Register extends Component {
             <div>
                 <Navigation />
                 <div id="registration-container" >
-                    <h1>Registration</h1>
+                    <h1>Admin Registration</h1>
                     <section className="container">
                         <div className="container-page">
                             <form onSubmit={this.handleSubmit.bind(this)}>
@@ -260,7 +237,7 @@ export default class Register extends Component {
 
                                     <div id="repeat-password-form" className="form-group col-lg-12" ref="repeatPasswordForm">
                                         {/* <label>Repeat Password</label> */}
-                                        <input type="password" name="" placeholder="Confirm Password" ref="repeatPassword" className="form-control" id="repeat-password-input" value={this.state.passwordRepeat} onChange={this.handlePasswordRepeat} />
+                                        <input type="password" name="" placeholder="Repeat Password" ref="repeatPassword" className="form-control" id="repeat-password-input" value={this.state.passwordRepeat} onChange={this.handlePasswordRepeat} />
                                         <small id="repeat-password-feedback" className="" ref="repeatPasswordFeedback"></small>
                                     </div>
 
@@ -274,18 +251,9 @@ export default class Register extends Component {
 
                                     <div id="email-repeat-form" className="form-group col-lg-12" ref="emailRepeatForm">
                                         {/* <label>Repeat Email Address</label> */}
-                                        <input type="email" name="" ref="emailRepeat" placeholder="Confirm Email Address" className="form-control" id="repeat-email-input" value={this.state.emailRepeat} onChange={this.handleEmailRepeat} />
+                                        <input type="email" name="" ref="emailRepeat" placeholder="Repeat Email Address" className="form-control" id="repeat-email-input" value={this.state.emailRepeat} onChange={this.handleEmailRepeat} />
                                         <small id="email-repeat-feedback" className="" ref="emailRepeatFeedback"></small>
                                     </div>
-                                    <div id="admin-form" ref="adminForm" className="form-group col-lg-12">
-                                        <label>Teacher Username</label>
-                                        <select multiple className="form-control" id="teacher-select" onChange={this.handleAdminSelect}>
-                                            {this.state.allAdmins ? this.state.allAdmins.map(admin =>
-                                                <option key={admin._id} value={admin._id}>{admin.username}</option>
-                                            ) : ''}
-                                        </select>
-                                    </div>
-
                                 </div>
 
                                 <div className="">

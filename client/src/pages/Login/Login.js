@@ -4,16 +4,15 @@ import { Link, Redirect } from 'react-router-dom';
 import Register from "../Register";
 import { userAPI } from "../../utils/API";
 import Navigation from "../../components/Navigation";
-
-require('./login.css');
+import './login.css';
 
 export default class Login extends Component {
 
-	constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
-    	username: '',
-    	password: '',
+      username: '',
+      password: '',
       redirectToReferrer: false
     };
 
@@ -23,35 +22,38 @@ export default class Login extends Component {
   }
 
   handleUsernameChange(event) {
-  	this.setState({
+    this.setState({
       username: event.target.value
     });
   }
 
   handlePasswordChange(event) {
-  	this.setState({
+    this.setState({
       password: event.target.value
     });
   }
 
-  loginUser(user) {
-    console.log(user);
-    userAPI.pleasegodlogin({username: user.username,password: user.password})
-		.then(function(data) {
-      if(data.data)
-      {
-        this.props.authenticate();
-        this.setState({
-          redirectToReferrer: true
-        });
-      }
-      else{
-        alert("Username or password is Incorrect. ");
-      }
-    }.bind(this)).catch(function(err) {
-      console.log("NOT IN DATABASE");
-      console.log(err);
-    });
+  loginUser = user => {
+    let username=user.username;
+    userAPI.pleasegodlogin({ username: user.username, password: user.password })
+      .then(function (data) {
+        console.log(data.data);
+        if (data.data.success) {
+          this.props.authenticate();
+          sessionStorage.setItem('userAuth', 'yes');
+          sessionStorage.setItem("userUsername", username);
+          sessionStorage.setItem("adminID", data.data.user.admin);
+          this.setState({
+            redirectToReferrer: true
+          });
+        }
+        else {
+          alert("Username or password is Incorrect.");
+        }
+      }.bind(this)).catch(function (err) {
+        console.log("NOT IN DATABASE");
+        console.log(err);
+      });
 
     this.setState({
       username: "",
@@ -59,22 +61,22 @@ export default class Login extends Component {
     });
   }
 
-	handleSubmit(event) {
-		event.preventDefault();
-		const usernameInput = this.state.username;
-		const passwordInput = this.state.password;
+  handleSubmit(event) {
+    event.preventDefault();
+    const usernameInput = this.state.username;
+    const passwordInput = this.state.password;
 
-		const objSubmit = {
-			username: usernameInput,
-			password: passwordInput
-		}
+    const objSubmit = {
+      username: usernameInput,
+      password: passwordInput
+    }
 
-		if (!objSubmit.username || !objSubmit.password) {
+    if (!objSubmit.username || !objSubmit.password) {
       return;
     }
     // If we have an email and password we run the loginUser function and clear the form
     this.loginUser(objSubmit);
-	}
+  }
 
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
@@ -82,26 +84,26 @@ export default class Login extends Component {
 
     if (redirectToReferrer) {
       return (
-        <Redirect to={from}/>
+        <Redirect to={from} />
       )
     }
-    
+
     return (
       <div>
         <Navigation />
-    	<div className="loginWrap">
-				<h1>Log In Or Register</h1>
-				<div className="loginmodal-container">
-				  <form className="login" onSubmit={this.handleSubmit.bind(this)}>
-						<input id="username-input" ref="user" type="text" name="user" placeholder="Username" onChange={this.handleUsernameChange} value={this.state.username}/>
-						<input id="password-input" ref="password" type="password" name="pass" placeholder="Password" onChange={this.handlePasswordChange} value={this.state.password} />
-						<input type="submit" name="login" className="login loginmodal-submit" value="Login" />
-				  </form>
-				  <div className="login-help">
-						<Link to={"/register"} component={Register}> Register </Link>
-				  </div>
-				</div>
-			</div>
+        <div className="loginWrap">
+          <h1>Log In Or Register</h1>
+          <div className="loginmodal-container">
+            <form className="login" onSubmit={this.handleSubmit.bind(this)}>
+              <input id="username-input" ref="user" type="text" name="user" placeholder="Username" onChange={this.handleUsernameChange} value={this.state.username} />
+              <input id="password-input" ref="password" type="password" name="pass" placeholder="Password" onChange={this.handlePasswordChange} value={this.state.password} />
+              <input type="submit" name="login" className="login loginmodal-submit" value="Login" />
+            </form>
+            <div className="login-help">
+              <Link to={"/register"}> Register </Link>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

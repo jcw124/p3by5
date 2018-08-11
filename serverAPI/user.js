@@ -1,5 +1,5 @@
 const db = require('../models');
-const User       = require('../models/User');
+const User = require('../models/User');
 const passport = require("passport");
 
 // login
@@ -8,41 +8,45 @@ exports.pleasegodlogin = (req, res, next) => {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
-  
-    return passport.authenticate('local', (err, token, userData) => {
-      if (err) {
-          console.log(err);
-          if (err.name === 'IncorrectCredentialsError') {
-          return res.status(400).json({
-            success: false,
-            message: err.message
-          });
+
+    return passport.authenticate('user-local', (err, token, userData) => {
+        if (err) {
+            console.log(err);
+            if (err.name === 'IncorrectCredentialsError') {
+                return res.status(400).json({
+                    success: false,
+                    message: err.message
+                });
+            }
+
+            return res.status(400).json({
+                success: false,
+                message: 'Could not process the form.'
+            });
         }
-  
-        return res.status(400).json({
-          success: false,
-          message: 'Could not process the form.'
+
+        console.log(token, "this is the token in users_api.js");
+        console.log(userData, "this is the userData in users_api.js");
+        if (!token) {
+            return res.json({
+                success: false,
+                message: 'Login Failed',
+                user: token
+            })
+        }
+        return res.json({
+            success: true,
+            message: 'You have successfully logged in!',
+            user: token
         });
-      }
-  
-      console.log(token, "this is the token in users_api.js");
-      console.log(userData, "this is the userData in users_api.js");
-  
-      return res.json({
-        success: true,
-        message: 'You have successfully logged in!',
-        token,
-        user: userData
-      });
     })(req, res, next);
-  };
+};
 
 exports.getUserbyUsernamePass = function (req, res) {
-    var newuser = new db.User();
-    db.User.findOne({username: req.query.username})
+    var newuser = new User();
+    db.User.findOne({ username: req.query.username })
         .then(function (dbUser) {
-            if(newuser.validPassword(req.query.password, dbUser.password))
-            {
+            if (newuser.validPassword(req.query.password, dbUser.password)) {
                 console.log("FUCKING AUTHENTICATED");
                 return res.json(dbUser);
             }
@@ -58,8 +62,9 @@ exports.getUser = function (req, res) {
     /*DELETE_ON_PRODUCTION
     req.params gives _id of user
     */
-    db.User.findById(req.params.id)
+    db.User.findOne({ username: req.params.username })
         .then(function (dbUser) {
+            console.log("USER", dbUser);
             res.json(dbUser);
         })
         .catch(function (err) {
@@ -77,11 +82,8 @@ exports.saveUser = function (req, res) {
         admin: {_id of admin associated with user}
     }
     */
-   var newuser = new db.User();
-    console.log("made it to the user.js");
-    console.log(req.body);
+    var newuser = new db.User();
     req.body.password = newuser.generateHash(req.body.password);
-    console.log(req.body);
 
     db.User.create(req.body)
         .then(function (dbUser) {

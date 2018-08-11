@@ -11,25 +11,25 @@ const UserSchema = new Schema({
     // `title` is required and of type String
     username: {
         type: String,
-        required: true,
+        min: [1, 'Too few characters'],
+        max: 100,
+        required: [true, 'Please enter a username.'],
         unique: true
-    },
-    // `link` is required and of type String
-    password: {
-        type: String,
-        required: true
     },
     email: {
         type: String,
-        required: true
+        min: [3, 'Please enter an email in the correct format'],
+        required: [true, 'Please enter an email']
     },
-    adminName: {
+    password: {
         type: String,
-        required: true
+        min: [8, 'Your password must be at least 8 characters large'],
+        required: [true, 'Please enter a password.']
     },
     admin: {
         type: Schema.Types.ObjectId,
-        ref: "Admin"
+        ref: "Admin",
+        required: [true, 'Please enter associated admin']
     }
 });
 

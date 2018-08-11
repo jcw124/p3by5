@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import Game from './../../components/Game';
-import QuestionCount from './../../components/QuestionCount';
-import tempQuestions from './../../utils/API/tempQuestions';
+import { Redirect } from 'react-router-dom';
+// import QuestionCount from './../../components/QuestionCount';
+// import tempQuestions from './../../utils/API/tempQuestions';
 import Navigation from "../../components/Navigation";
 import ButtonBtn from "../../components/ButtonBtn";
 import Animation from "../../components/Animation";
 import { adminAPI, gameAPI, scoreAPI, questionAPI } from "../../utils/API";
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
 import teacherProfile from "../../images/user1profile.svg";
-import{ NavItem, NavLink } from "reactstrap";
+import { NavItem, NavLink } from "reactstrap";
 import './GamePlay.css';
 
 class GamePlay extends Component {
@@ -38,10 +39,10 @@ class GamePlay extends Component {
     }
 
     componentDidMount() {
-        if (!sessionStorage.getItem("gameID")) 
-        // { this.context.router.history.push("/login") };
-        this.setState({ gameID: sessionStorage.getItem("gameID") });
-        if (sessionStorage.getItem(`gameCounter${sessionStorage.getItem("counter")}`)) {
+        if (!sessionStorage.getItem("gameID"))
+            // { this.context.router.history.push("/login") };
+            this.setState({ gameID: sessionStorage.getItem("gameID") });
+        if (sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`)) {
             this.setState({
                 counter: parseInt(sessionStorage.getItem(`gameCounter${sessionStorage.getItem("counter")}`))
             })
@@ -77,12 +78,12 @@ class GamePlay extends Component {
             })
             .catch(err => console.log(err));
     }
-    
+
     toggle = () => {
         this.setState({
             modal: !this.state.modal,
         });
-        }
+    }
 
 
     shuffleArray(array) {
@@ -139,7 +140,10 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkleft();
-            if(this.state.answersCount.correct === 7 ) {
+            if (this.state.answersCount.correct === 7) {
+                sessionStorage.removeItem(`numCorrect${this.state.answersCount.correct}`);
+                sessionStorage.removeItem(`numWrong${this.state.answersCount.incorrect}`);
+                sessionStorage.removeItem(`gameCounter${this.state.counter}`);
                 this.toggle()
             }
         }
@@ -154,14 +158,17 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkright();
-            if(this.state.answersCount.incorrect === 3 ) {
+            if (this.state.answersCount.incorrect === 3) {
+                sessionStorage.removeItem(`numCorrect${this.state.answersCount.correct}`);
+                sessionStorage.removeItem(`numWrong${this.state.answersCount.incorrect}`);
+                sessionStorage.removeItem(`gameCounter${this.state.counter}`);
                 this.toggle()
             }
         }
         console.log(
             "correct", this.state.answersCount
         )
-        
+
     }
 
     walkleft = () => {
@@ -240,30 +247,28 @@ class GamePlay extends Component {
     }
 
     render() {
-        return (
-            <div className="play container"> 
-                
-                    <Navigation />
-                    <div className="scoreCountRedGreen">
-                        <div className="wrong"  href="">0</div>
-                        <div className="correct"  href="">0</div>
-                    </div>
-          {/* <div className="container">  */}
+        return (!(sessionStorage.getItem("userAuth") === 'yes') ?
+            <Redirect to={{ pathname: '/login' }} /> :
+            <div className="play container">
+                <Navigation />
+                <div className="scoreCountRedGreen">
+                    <div className="wrong" href="">0</div>
+                    <div className="correct" href="">0</div>
+                </div>
+                {/* <div className="container">  */}
                 <div>
                     <Navigation />
-                        <div className="scoreCountRedGreen">
-                            <div className="wrong" href="">0</div>
-                            <div className="correct" href="">0</div>
-                        </div>
-                    
-
+                    <div className="scoreCountRedGreen">
+                        <div className="wrong" href="">0</div>
+                        <div className="correct" href="">0</div>
+                    </div>
                     <Modal isOpen={this.state.modal} toggle={this.toggle}>
                         <ModalBody>
-                            {this.state.answersCount.incorrect === 3 ? 
-                            <h3> Game Over: Go back and try again </h3> 
-                            : 
-                            <h3> Awesome Work!! Try another game </h3>
-                            } 
+                            {this.state.answersCount.incorrect === 3 ?
+                                <h3> Game Over: Go back and try again </h3>
+                                :
+                                <h3> Awesome Work!! Try another game </h3>
+                            }
                         </ModalBody>
                         <ModalFooter>
                             <div className="footer">
@@ -294,7 +299,7 @@ class GamePlay extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 

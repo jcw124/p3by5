@@ -2,25 +2,25 @@ import axios from "axios";
 
 export default {
     getUserbyUsernamePass: function (username, password) {
-        return axios.get(`/api/get/users/login?username=${username}&password=${password}`);
+        return axios.get(`/api/get/user/login?username=${username}&password=${password}`);
     },
 
-    getUser: function (userID) {
-        return axios.get(`/api/get/users/${userID}`);
+    getUser: function (username) {
+        return axios.get(`/api/get/user/${username}`);
     },
 
-    saveUser: function (username, password, email, admin) {
+    saveUser: function (username, password, email, adminID) {
 
         return axios.put('/api/user', {
             username: username,
             password: password,
             email: email,
-            adminName: admin
+            admin: adminID
         });
     },
 
     updateUser: function (id, username, password) {
-        return axios.post('/api/users', {
+        return axios.post('/api/user', {
             id: id,
             username: username,
             password: password
@@ -32,7 +32,7 @@ export default {
     },
 
     pleasegodlogin: function(cred){
-        return axios.get(`/api/get/user/plzlogin`);
+        return axios.post(`/api/user/login`,cred);
     }
 };
 
