@@ -1,6 +1,7 @@
 // Include React
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { adminAPI } from "../../utils/API";
 import Navigation from "../../components/Navigation";
 
@@ -152,7 +153,7 @@ export default class Register extends Component {
     }
 
     signUpAdmin(adminData) {
-        let username=adminData.username;
+        let username = adminData.username;
         adminAPI.saveAdmin(adminData.username, adminData.password, adminData.email)
             .then(function (data) {
                 console.log(data);
@@ -209,7 +210,7 @@ export default class Register extends Component {
 
         if (redirectToReferrer) {
             return (
-                <Redirect to={{pathname: '/admin'}} />
+                <Redirect to={{ pathname: '/admin' }} />
             )
         }
 
@@ -261,6 +262,9 @@ export default class Register extends Component {
                                     <button type="submit" className="btn btn-primary register">Register</button>
                                 </div>
                             </form>
+                            <div className="login-help">
+                                <p>Already have an admin account? <Link to={"/admin"}> Login </Link></p>
+                            </div>
                         </div>
                     </section>
                 </div>

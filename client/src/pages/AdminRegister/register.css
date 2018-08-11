@@ -11,6 +11,9 @@
 	font-size: 40px;
 	margin: 0 auto 26px;
   }
+#registration-container a{
+	color:white;
+}
 #registration-container .container-page {
 	max-width: 400px;
     margin: 0 auto;
