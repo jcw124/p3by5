@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import ButtonBtn from "../../components/ButtonBtn";
 import logo from "../../images/logosm.svg";
 
@@ -23,7 +24,11 @@ class Home extends Component {
                     </div>
                     {/* <h1>HELLO HOME WORLD </h1> */}
                     <h3>{message}</h3>
-                    <ButtonBtn>PLAY</ButtonBtn>
+                    <button className="btn-primary">
+                        <Link className="link" to="/Login">
+                            PLAY
+                        </Link>
+                    </button>
                 </div>
             </div>
         )
