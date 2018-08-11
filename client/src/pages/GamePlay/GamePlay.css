@@ -25,6 +25,9 @@
     display: inline-block;
     color:#fff;
 }
+.game {
+    position: relative;
+}
 .scoreCountRedGreen {
     position: absolute;
     right: 10px;
@@ -58,9 +61,8 @@
     border: none !important;
 }
 .AnimationContainer {
-    /* position: relative; */
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 30% 1fr 70%;
 }
 .user img{
     width: 130px;
@@ -68,7 +70,9 @@
     background-color: rgba(255, 255, 255, 0.781);
     margin-right: 10px;
 }
-
+.AnimationContainer .gamebadge {
+    width: 70px;
+}
 #user {
     position: absolute;
     right: -44px;
@@ -81,25 +85,25 @@
 }
 
 .userContainer .dont-walk.walk1 {
-    margin-right:10%;
+    margin-right:8%;
 }
 .userContainer .dont-walk.walk2 {
-    margin-right:20%;
+    margin-right:17%;
 }
 .userContainer .dont-walk.walk3 {
-    margin-right:30%;
+    margin-right:25%;
 }
 .userContainer .dont-walk.walk4 {
-    margin-right:40%;
+    margin-right:34%;
 }
 .userContainer .dont-walk.walk5 {
-    margin-right:50%;
+    margin-right:42%;
 }
 .userContainer .dont-walk.walk6 {
-    margin-right:60%;
+    margin-right:51%;
 }
 .userContainer .dont-walk.walk7 {
-    margin-right:65%;
+    margin-right:60%;
 }
 .userContainer .walk1{
     background: url('../../images/user1walk.png');
@@ -151,29 +155,25 @@
     -moz-transition:1s;
 }
 
-/* .play.container {
+.play.container {
     position: relative;
-} */
+}
 
-/* .animationWrap {
-    background: url('../../images/badge.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    position: fixed;
-    bottom: 222px;
+.animationWrap {
+    position: absolute;
+    bottom: 50px;
     left: 0px;
     height: 70px;
     width: inherit;
-} */
+}
 
-/* .userContainer {
-    position: fixed;
+.userContainer {
     right: 10px;
-} */
+}
 
-/* .play .questionCount {
+.play .questionCount {
     color:#fff;
-} */
+}
 
 
 /* teacher styling and animation --------------------------*/
@@ -385,7 +385,12 @@
     .answers {
         padding-top: 30px;
   }
+  .animationWrap {
+    bottom: 35px;
+  }
 }
 @media (max-width: 575.98px) {
-  
+    .animationWrap {
+        bottom: 8px;
+      }
 }
