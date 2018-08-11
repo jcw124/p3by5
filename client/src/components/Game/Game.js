@@ -3,19 +3,20 @@ import Questions from './../Questions'
 import QuestionCount from './../QuestionCount';
 import Answers from './../Answers';
 import teacherProfile from "../../images/user1profile.svg";
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+//import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 function Game(props) {
   return (
-    <CSSTransitionGroup
-      className="container"
-      component="div"
-      transitionName="fade"
-      transitionEnterTimeout={2000}
-      transitionLeaveTimeout={2000}
-      transitionAppear
-      transitionAppearTimeout={2000}
-    >
+    // <CSSTransitionGroup
+    //     // className="container"
+    //     // component="div"
+    //     // transitionName="fade"
+    //     // transitionEnterTimeout={2000}
+    //     // transitionLeaveTimeout={10}
+    //     // transitionAppear
+    //     //  transitionAppearTimeout={2000}
+    // >
+    <div>
         <QuestionCount
          counter={props.questionId}
           total={props.questionTotal}
@@ -33,7 +34,8 @@ function Game(props) {
     
      
       </div>
-    </CSSTransitionGroup>
+    {/* </CSSTransitionGroup> */}
+    </div>
   );
 
 }
