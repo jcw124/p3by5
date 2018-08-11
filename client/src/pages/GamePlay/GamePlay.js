@@ -43,7 +43,6 @@ class GamePlay extends Component {
             numCorrect = parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`)),
             numWrong = parseInt(sessionStorage.getItem(`numCorrect${sessionStorage.getItem("gameID")}`));
 
-        if (!ID) { this.context.router.history.push("/login") };
         this.setState({ gameID: ID });
         if (sessionStorage.getItem(`gameCounter${ID}`)) {
             this.setState({

@@ -1,6 +1,6 @@
 // Include React
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { userAPI, adminAPI } from "../../utils/API";
 import Navigation from "../../components/Navigation";
 import './register.css';
@@ -163,7 +163,7 @@ export default class Register extends Component {
     }
 
     signUpUser(userData) {
-        let username=userData.username;
+        let username = userData.username;
         userAPI.saveUser(userData.username, userData.password, userData.email, userData.admin)
             .then(function (data) {
                 console.log(data);
@@ -174,8 +174,8 @@ export default class Register extends Component {
                 } else if (data.statusText === "OK") {
                     this.props.authenticate();
                     sessionStorage.setItem('userAuth', 'yes');
-                    sessionStorage.setItem("userUsername",username);
-                    sessionStorage.setItem("adminID",data.data._id);
+                    sessionStorage.setItem("userUsername", username);
+                    sessionStorage.setItem("adminID", data.data._id);
                     this.setState({
                         redirectToReferrer: true
                     });
@@ -185,10 +185,10 @@ export default class Register extends Component {
             });
     }
 
-    
+
     handleAdminSelect = event => {
-        this.setState({admin: event.target.value});
-        let id=event.target.value;
+        this.setState({ admin: event.target.value });
+        let id = event.target.value;
         console.log(id);
     }
 
@@ -285,14 +285,14 @@ export default class Register extends Component {
                                             ) : ''}
                                         </select>
                                     </div>
-
                                 </div>
-
                                 <div className="">
-
                                     <button type="submit" className="btn btn-primary register">Register</button>
                                 </div>
                             </form>
+                            <div className="login-help">
+                                <p>Already have an account? <Link to={"/login"}> Login </Link></p>
+                            </div>
                         </div>
                     </section>
                 </div>
