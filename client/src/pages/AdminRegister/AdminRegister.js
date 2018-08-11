@@ -163,6 +163,7 @@ export default class Register extends Component {
             } else if (data.statusText === "OK") {
                 console.log("yay!")
                 this.props.authenticate();
+                sessionStorage.setItem('adminAuth','yes');
                 this.setState({
                     redirectToReferrer: true
                 });

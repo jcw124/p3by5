@@ -7,6 +7,7 @@ const saveUser = require('../serverAPI/user').saveUser;
 const updateUser = require('../serverAPI/user').updateUser;
 const deleteUser = require('../serverAPI/user').deleteUser;
 
+const adminLogin = require('../serverAPI/admin').adminLogin;
 const getAdminbyUsernamePass = require('../serverAPI/admin').getAdminbyUsernamePass;
 const getAdmin = require('../serverAPI/admin').getAdmin;
 const saveAdmin = require('../serverAPI/admin').saveAdmin;
@@ -33,12 +34,13 @@ const saveScore = require('../serverAPI/score').saveScore;
 const deleteScore = require('../serverAPI/score').deleteScore;
 
 router.get("/get/user/login/", getUserbyUsernamePass);
-router.post("/get/user/plzlogin/", pleasegodlogin);
+router.post("/user/login", pleasegodlogin);
 router.get("/get/user/:id", getUser);
 router.put("/user", saveUser);
 router.post("/user", updateUser);
 router.delete("/delete/user/:id", deleteUser);
 
+router.post("/admin/login", adminLogin);
 router.get("/get/admin/login", getAdminbyUsernamePass);
 router.get("/get/admin/:id", getAdmin);
 router.put("/admin", saveAdmin);

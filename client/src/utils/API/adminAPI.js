@@ -1,6 +1,10 @@
 import axios from "axios";
 
 export default {
+    adminLogin: function(cred){
+        return axios.post('/api/admin/login',cred);
+    },
+
     getAdminbyUsernamePass: function (username, password) {
         return axios.get(`/api/get/admin/login?username=${username}&password=${password}`);
     },

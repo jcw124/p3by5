@@ -31,15 +31,13 @@ exports.pleasegodlogin = (req, res, next) => {
           return res.json({
               success: false,
               message: 'Login Failed',
-              token,
-              user: userData
+              user: token
           })
       }
       return res.json({
         success: true,
         message: 'You have successfully logged in!',
-        token,
-        user: userData
+        user: token
       });
     })(req, res, next);
   };

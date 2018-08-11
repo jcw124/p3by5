@@ -1,5 +1,5 @@
 
-var User = require("../models/User.js");
+var Admin= require("../models/Admin.js");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 
@@ -11,17 +11,17 @@ passport.use(new LocalStrategy(
 		passwordField: 'password'
 	},
 	function (username, password, done) {
-		var newuser = new User();
-		User.findOne({ 'username': username })
-			.then(function (dbUser) {
+		var newAdmin = new Admin();
+		Admin.findOne({ 'username': username })
+			.then(function (dbAdmin) {
 
-				if (!dbUser) {
+				if (!dbAdmin) {
 					return done(null, false);
 				}
 
-				if (newuser.validPassword(password, dbUser.password)) {
+				if (newAdmin.validPassword(password, dbAdmin.password)) {
 					console.log("FUCKING AUTHENTICATED");
-					return done(null, dbUser);
+					return done(null, dbAdmin);
 				}
 				return done(null, false);
 			})

@@ -32,7 +32,7 @@ export default {
     },
 
     pleasegodlogin: function(cred){
-        return axios.post(`/api/get/user/plzlogin`,cred);
+        return axios.post(`/api/user/login`,cred);
     }
 };
 

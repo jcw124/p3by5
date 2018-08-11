@@ -8,7 +8,7 @@ exports.adminLogin = (req, res, next) => {
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
 
-    return passport.authenticate('local', (err, token, userData) => {
+    return passport.authenticate('local', (err, token, excess) => {
         if (err) {
             console.log(err);
             if (err.name === 'IncorrectCredentialsError') {
@@ -25,20 +25,18 @@ exports.adminLogin = (req, res, next) => {
         }
 
         console.log(token, "this is the token in admin.js");
-        console.log(userData, "this is the userData in users_api.js");
+        console.log(excess, "this is the userData in users_api.js");
         if (!token) {
             return res.json({
                 success: false,
                 message: 'Login Failed',
-                token,
-                user: userData
+                admin: token
             })
         }
         return res.json({
             success: true,
             message: 'You have successfully logged in!',
-            token,
-            user: userData
+            admin: token
         });
     })(req, res, next);
 };
