@@ -1,6 +1,7 @@
 # p3by5 - Venatus Education
 
-Click Here to Play: https://mysterious-thicket-42805.herokuapp.com/
+[Click Here to Play](https://mysterious-thicket-42805.herokuapp.com/)
+
 
 ![Home](/client/src/images/screenshots/HomePage.png)
 ![Registration](/client/src/images/screenshots/RegistrationPage.png)
