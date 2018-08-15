@@ -25,10 +25,10 @@ Our game is intended to serve as a tool to reinforce information through game pl
 
 
 ## Developed by:
-- Tony Centeno
-- Angel Delgadillo, Jr. 
-- Eric Liu
-- Regina Lo
-- Janell Williams
+- Tony Centeno [Contact Me](https://www.linkedin.com/in/tony-centeno-5a115516/)
+- Angel Delgadillo, Jr.  [Contact Me](https://www.linkedin.com/in/angeldelgadillojr/)
+- Eric Liu [Contact Me](https://www.linkedin.com/in/eric-liu-49a389a9/)
+- Regina Lo   [Contact Me](https://www.linkedin.com/in/tlo015/)
+- Janell Williams [Contact Me](https://www.linkedin.com/in/janell-carla-williams/)
 
 
