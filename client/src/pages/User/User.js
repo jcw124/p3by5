@@ -11,19 +11,23 @@ import Navigation from "../../components/Navigation";
 require('./User.css');
 
 class User extends Component {
-    state = {
-        userID: "",
-        username: "",
-        adminID: "",
-        games: [],
-        selectedGameID: "",
-        gameScores: "",
-        scores: [],
-        selectedGame: {},
-        gameName: "",
-        gameQuestions: "",
-        gameAnswers: ""
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            userID: "",
+            username: "",
+            adminID: "",
+            games: [],
+            selectedGameID: "",
+            gameScores: "",
+            scores: [],
+            selectedGame: {},
+            gameName: "",
+            gameQuestions: "",
+            gameAnswers: ""
+        };
+    }
 
     static contextTypes = {
         router: PropTypes.object,
@@ -38,7 +42,7 @@ class User extends Component {
                 });
             }
             this.getUserId(sessionStorage.getItem('userUsername'));
-            if(!sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`)){
+            if (!sessionStorage.getItem(`gameCounter${sessionStorage.getItem("gameID")}`)) {
                 sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
                 sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
             }

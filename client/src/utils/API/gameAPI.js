@@ -16,10 +16,9 @@ export default {
         });
     },
 
-    updateGame: function (gameID, name, numberWrongPermitted, numberofQuestions) {
+    updateGame: function (gameID, numberWrongPermitted, numberofQuestions) {
         return axios.post('/api/game',{
             id: gameID,
-            name: name,
             numberWrongPermitted: numberWrongPermitted,
             numberofQuestions: numberofQuestions
         });

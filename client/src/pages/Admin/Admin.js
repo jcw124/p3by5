@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import ButtonBtn from "../../components/ButtonBtn";
 import { Input, FormBtn } from "../../components/Form";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { GameCreate } from "../GameCreate";
+import GameCreate from "../GameCreate";
 import './Admin.css';
 
 
@@ -29,9 +29,8 @@ class Admin extends Component {
             gameForScores: "",
             scores: [],
             questions: [],
+            questionIndex: 0,
             newGameName: "",
-            newGameWrong: 3,
-            newGameQuestions: 10,
             currentGame: {},
             currentQuestion: "",
             currentAnswer1: "",
@@ -46,7 +45,8 @@ class Admin extends Component {
             updateID: "",
             deleteGameID: "",
             modal: false,
-            confirmDelete: false
+            confirmDelete: false,
+            showEdit: false
         };
 
     }
@@ -103,15 +103,19 @@ class Admin extends Component {
     //render new game name on page in game container 
     createGame = event => {
         event.preventDefault();
-        gameAPI.saveGame(this.state.newGameName, this.state.newGameWrong, this.state.newGameQuestions, this.state.adminID)
+        gameAPI.saveGame(this.state.newGameName, 0, 0, this.state.adminID)
             .then(res => {
                 this.setState({
                     questions: [],
                     currentGame: res.data,
-                    selectedGameID: res.data._id
+                    selectedGameID: res.data._id,
+                    questionIndex: 0,
+                    showEdit: false,
+                    questionDisplay: null
+                }, function () {
+                    this.toggle();
                 });
                 this.loadGames(this.state.adminID);
-                this.toggle();
             })
             .catch(err => console.log(err));
     };
@@ -121,10 +125,20 @@ class Admin extends Component {
         this.setState({ selectedGameID: event.target.getAttribute("id") })
         gameAPI.getGame(event.target.getAttribute("id"))
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     questions: res.data.questions,
-                    currentGame: res.data
+                    currentGame: res.data,
+                    selectedGameID: res.data._id,
+                    questionIndex: 0,
+                    showEdit: false,
+                    questionDisplay: null
+                }, function () {
+                    if (res.data.questions) {
+                        this.setState({
+                            questionDisplay: res.data.questions[0],
+                            questionIndex: 0
+                        })
+                    }
                 })
             }
             )
@@ -151,6 +165,9 @@ class Admin extends Component {
 
     loadEdit = event => {
         event.preventDefault();
+        this.setState({
+            showEdit: true
+        })
         questionAPI.getQuestion(event.target.getAttribute("id"))
             .then(res => {
                 this.setState({
@@ -167,6 +184,9 @@ class Admin extends Component {
 
     editQuestion = event => {
         event.preventDefault();
+        this.setState({
+            showEdit: false
+        })
         let questionArray = [];
         if (this.state.updateAnswer1 !== "") { questionArray.push(this.state.updateAnswer1); }
         if (this.state.updateAnswer2 !== "") { questionArray.push(this.state.updateAnswer2); }
@@ -206,22 +226,55 @@ class Admin extends Component {
                 questionArray.push(res.data);
                 this.setState({
                     questions: questionArray,
+                    questionDisplay: questionArray[questionArray.length - 1],
+                    questionIndex: questionArray.length - 1,
                     currentQuestion: "",
                     currentAnswer1: "",
                     currentAnswer2: "",
                     currentAnswer3: "",
                     currentCorrect: ""
+                }, function () {
+                    let numWrong = Math.round(this.state.questions.length / 3);
+                    gameAPI.updateGame(this.state.selectedGameID, numWrong, this.state.questions.length)
+                        .catch(err => console.log(err));
                 })
             })
+            .catch(err => console.log(err));
     };
 
     removeQuestion = event => {
         event.preventDefault();
         let questionArray = this.state.questions;
         questionArray = questionArray.filter(question => question._id !== event.target.getAttribute("id"));
-        this.setState({ questions: questionArray })
+        this.setState({
+            questions: questionArray,
+            questionDisplay: questionArray[0],
+            questionIndex: 0
+        }, function () {
+            let numWrong = Math.round(this.state.questions.length / 3);
+            gameAPI.updateGame(this.state.selectedGameID, numWrong, this.state.questions.length)
+                .catch(err => console.log(err));
+        })
         questionAPI.deleteQuestion(event.target.getAttribute("id"))
             .catch(err => console.log(err));
+    }
+
+    lastQuestion = () => {
+        if (this.state.questionIndex !== 0) {
+            this.setState({
+                questionDisplay: this.state.questions[this.state.questionIndex - 1],
+                questionIndex: this.state.questionIndex - 1
+            })
+        }
+    }
+
+    nextQuestion = () => {
+        if (this.state.questionIndex !== this.state.questions.length - 1) {
+            this.setState({
+                questionDisplay: this.state.questions[this.state.questionIndex + 1],
+                questionIndex: this.state.questionIndex + 1
+            })
+        }
     }
 
     loadScores = () => {
@@ -243,7 +296,6 @@ class Admin extends Component {
     loginAdmin = admin => {
         adminAPI.adminLogin({ username: admin.username, password: admin.password })
             .then(function (data) {
-                console.log(data.data);
                 if (data.data.success) {
                     this.props.authenticate();
                     sessionStorage.setItem('adminAuth', 'yes');
@@ -328,7 +380,13 @@ class Admin extends Component {
                                     updateCorrect={this.state.updateCorrect}
                                     updateID={this.state.updateID}
                                     loadEdit={this.loadEdit}
-                                    editQuestion={this.editQuestion} />
+                                    editQuestion={this.editQuestion}
+                                    showEdit={this.state.showEdit}
+                                    questionDisplay={this.state.questionDisplay}
+                                    questionIndex={this.state.questionIndex}
+                                    lastQuestion={this.lastQuestion}
+                                    nextQuestion={this.nextQuestion}
+                                />
                             </ModalBody>
                             <ModalFooter><ButtonBtn onClick={this.toggle}>Done</ButtonBtn></ModalFooter>
                         </Modal>
