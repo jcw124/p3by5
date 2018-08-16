@@ -91,7 +91,11 @@ class GamePlay extends Component {
                     correctAnswer: res.data.questions[counter].correctAnswer
                 }));
                 this.setState({
-                    game: res.data
+                    game: res.data,
+                    maxWrong: res.data.numberWrongPermitted,
+                    maxRight: res.data.numberofQuestions-res.data.numberWrongPermitted
+                },function(){
+                    console.log(this.state.maxWrong, this.state.maxRight);
                 })
             })
             .catch(err => console.log(err));
@@ -121,7 +125,7 @@ class GamePlay extends Component {
 
     setNextQuestion = () => {
         const counter = this.state.counter + 1;
-        if (this.state.answersCount.correct < 7 && this.state.answersCount.incorrect < 3) {
+        if (this.state.answersCount.correct < this.state.maxRight && this.state.answersCount.incorrect < this.state.maxWrong) {
             sessionStorage.setItem(`gameCounter${sessionStorage.getItem("gameID")}`, counter);
         }
         this.setState({
@@ -151,7 +155,7 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkleft();
-            if (this.state.answersCount.correct >= 7) {
+            if (this.state.answersCount.correct >= this.state.maxRight) {
                 sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
                 sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
                 sessionStorage.removeItem(`gameCounter${sessionStorage.getItem("gameID")}`);
@@ -169,7 +173,7 @@ class GamePlay extends Component {
                 answer: answer
             });
             this.walkright();
-            if (this.state.answersCount.incorrect >= 3) {
+            if (this.state.answersCount.incorrect >= this.state.maxWrong) {
                 sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
                 sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
                 sessionStorage.removeItem(`gameCounter${sessionStorage.getItem("gameID")}`);
@@ -261,21 +265,20 @@ class GamePlay extends Component {
         return (!(sessionStorage.getItem("userAuth") === 'yes') ?
             <Redirect to={{ pathname: '/login' }} /> :
             <div className="play container">
-                <Navigation />
+                {/* <Navigation />
                 <div className="scoreCountRedGreen">
-                    <div className="wrong" href="">{this.state.answersCount.incorrect}</div>
-                    <div className="correct" href="">{this.state.answersCount.correct}</div>
-                </div>
-                {/* <div className="container">  */}
+                    <div className="wrong">{this.state.answersCount.incorrect}</div>
+                    <div className="correct">{this.state.answersCount.correct}</div>
+                </div> */}
                 <div>
                     <Navigation />
                     <div className="scoreCountRedGreen">
-                        <div className="wrong" href="">0</div>
-                        <div className="correct" href="">0</div>
+                        <div className="wrong">{this.state.answersCount.incorrect}</div>
+                        <div className="correct">{this.state.answersCount.correct}</div>
                     </div>
                     <Modal isOpen={this.state.modal} toggle={this.toggle}>
                         <ModalBody>
-                            {this.state.answersCount.incorrect === 3 ?
+                            {this.state.answersCount.incorrect === this.state.maxWrong ?
                                 <h3> Game Over: Go back and try again </h3>
                                 :
                                 <h3> Awesome Work!! Try another game </h3>

@@ -28,11 +28,11 @@ class Home extends Component {
                         <div className="homeLogo">
                             <img alt="logo" src={logo} />
                         </div>
-                        {/* <h1>HELLO HOME WORLD </h1> */}
-                        <h3>{message}</h3>
                         <ButtonBtn><Link to={"/user"}>PLAY</Link></ButtonBtn>
                         <ButtonBtn onClick={this.logout}>LOGOUT</ButtonBtn>
                     </div>
+                    <h3>{message}</h3>
+
                 </div>
             )
         }
@@ -43,11 +43,10 @@ class Home extends Component {
                         <div className="homeLogo">
                             <img alt="logo" src={logo} />
                         </div>
-                        {/* <h1>HELLO HOME WORLD </h1> */}
-                        <h3>{message}</h3>
                         <ButtonBtn><Link to={"/login"}>LOGIN</Link></ButtonBtn>
                         <ButtonBtn><Link to={"/register"}>REGISTER</Link></ButtonBtn>
                     </div>
+                    <h3>{message}</h3>
                 </div>
             )
         }
