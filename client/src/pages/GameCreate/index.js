@@ -1,1 +1,1 @@
-export * from "./GameCreate.js";
+export {default} from "./GameCreate.js";

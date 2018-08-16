@@ -12,8 +12,27 @@
     font-size: 20px;
     margin: 0 auto 26px;
 }
-.gameCreateWrap h4{
-
+.gameCreateWrap h2{
+    text-transform: uppercase;
+    text-align: center;
+    padding: 7px;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 auto 26px;
+}
+.gameCreateWrap .question-heading{
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+.gameCreateWrap .question-btn{
+    margin: .5rem;
+}
+.gameCreateWrap .fas:active{
+    color: black;
+}
+.gameCreateWrap button,.gameCreateWrap .fas:hover{
+    cursor: pointer;
 }
 .gameCreateWrap button{
     font-size: 1.25rem!important;
