@@ -263,8 +263,8 @@ class GamePlay extends Component {
             <div className="play container">
                 <Navigation />
                 <div className="scoreCountRedGreen">
-                    <div className="wrong" href="">0</div>
-                    <div className="correct" href="">0</div>
+                    <div className="wrong" href="">{this.state.answersCount.incorrect}</div>
+                    <div className="correct" href="">{this.state.answersCount.correct}</div>
                 </div>
                 {/* <div className="container">  */}
                 <div>
