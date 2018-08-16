@@ -31,8 +31,6 @@ class Admin extends Component {
             questions: [],
             questionIndex: 0,
             newGameName: "",
-            newGameWrong: 0,
-            newGameQuestions: 1,
             currentGame: {},
             currentQuestion: "",
             currentAnswer1: "",
@@ -105,16 +103,16 @@ class Admin extends Component {
     //render new game name on page in game container 
     createGame = event => {
         event.preventDefault();
-        gameAPI.saveGame(this.state.newGameName, this.state.newGameWrong, this.state.newGameQuestions, this.state.adminID)
+        gameAPI.saveGame(this.state.newGameName, 0, 0, this.state.adminID)
             .then(res => {
                 this.setState({
                     questions: [],
                     currentGame: res.data,
                     selectedGameID: res.data._id,
                     questionIndex: 0,
+                    showEdit: false,
                     questionDisplay: null
                 }, function () {
-                    console.log("toggle")
                     this.toggle();
                 });
                 this.loadGames(this.state.adminID);
@@ -130,14 +128,18 @@ class Admin extends Component {
                 this.setState({
                     questions: res.data.questions,
                     currentGame: res.data,
-                    showEdit: false
+                    selectedGameID: res.data._id,
+                    questionIndex: 0,
+                    showEdit: false,
+                    questionDisplay: null
+                }, function () {
+                    if (res.data.questions) {
+                        this.setState({
+                            questionDisplay: res.data.questions[0],
+                            questionIndex: 0
+                        })
+                    }
                 })
-                if (res.data.questions) {
-                    this.setState({
-                        questionDisplay: res.data.questions[0],
-                        questionIndex: 0
-                    })
-                }
             }
             )
             .catch(err => console.log(err));
@@ -224,32 +226,41 @@ class Admin extends Component {
                 questionArray.push(res.data);
                 this.setState({
                     questions: questionArray,
-                    questionDisplay: questionArray[questionArray.length-1],
-                    questionIndex: questionArray.length-1,
+                    questionDisplay: questionArray[questionArray.length - 1],
+                    questionIndex: questionArray.length - 1,
                     currentQuestion: "",
                     currentAnswer1: "",
                     currentAnswer2: "",
                     currentAnswer3: "",
                     currentCorrect: ""
+                }, function () {
+                    let numWrong = Math.round(this.state.questions.length / 3);
+                    gameAPI.updateGame(this.state.selectedGameID, numWrong, this.state.questions.length)
+                        .catch(err => console.log(err));
                 })
             })
+            .catch(err => console.log(err));
     };
 
     removeQuestion = event => {
         event.preventDefault();
         let questionArray = this.state.questions;
         questionArray = questionArray.filter(question => question._id !== event.target.getAttribute("id"));
-        this.setState({ 
+        this.setState({
             questions: questionArray,
-            questionDisplay: questionArray[this.state.questionIndex]
-         })
+            questionDisplay: questionArray[0],
+            questionIndex: 0
+        }, function () {
+            let numWrong = Math.round(this.state.questions.length / 3);
+            gameAPI.updateGame(this.state.selectedGameID, numWrong, this.state.questions.length)
+                .catch(err => console.log(err));
+        })
         questionAPI.deleteQuestion(event.target.getAttribute("id"))
             .catch(err => console.log(err));
     }
 
     lastQuestion = () => {
         if (this.state.questionIndex !== 0) {
-            console.log(this.state.questionIndex, this.state.questions.length)
             this.setState({
                 questionDisplay: this.state.questions[this.state.questionIndex - 1],
                 questionIndex: this.state.questionIndex - 1
@@ -259,7 +270,6 @@ class Admin extends Component {
 
     nextQuestion = () => {
         if (this.state.questionIndex !== this.state.questions.length - 1) {
-            console.log(this.state.questionIndex, this.state.questions.length)
             this.setState({
                 questionDisplay: this.state.questions[this.state.questionIndex + 1],
                 questionIndex: this.state.questionIndex + 1
@@ -286,7 +296,6 @@ class Admin extends Component {
     loginAdmin = admin => {
         adminAPI.adminLogin({ username: admin.username, password: admin.password })
             .then(function (data) {
-                console.log(data.data);
                 if (data.data.success) {
                     this.props.authenticate();
                     sessionStorage.setItem('adminAuth', 'yes');
