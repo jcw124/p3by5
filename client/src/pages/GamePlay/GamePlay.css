@@ -16,6 +16,12 @@
     border-radius: 100%;
     margin-right: 5px;
 }
+a{
+    color: white;
+}
+a:hover{
+    text-decoration: none;
+}
 .correct {
     display: inline-block;
     color: #fff;

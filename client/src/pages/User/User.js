@@ -80,6 +80,7 @@ class User extends Component {
     playGame = event => {
         event.preventDefault();
         sessionStorage.setItem("gameID", event.target.getAttribute("id"));
+        sessionStorage.setItem("userID", this.state.userID);
         this.context.router.history.push("/play");
     }
 
@@ -92,6 +93,7 @@ class User extends Component {
         sessionStorage.removeItem("userAuth");
         sessionStorage.removeItem("userUsername");
         sessionStorage.removeItem("adminID");
+        sessionStorage.removeItem("userID");
         window.location.reload();
     }
 

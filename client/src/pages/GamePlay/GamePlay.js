@@ -33,7 +33,8 @@ class GamePlay extends Component {
                 incorrect: 0,
             },
             answer: '',
-            result: ''
+            result: '',
+            disableGame: false
         };
         this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
     }
@@ -52,23 +53,23 @@ class GamePlay extends Component {
         if (sessionStorage.getItem(`numCorrect${ID}`)) {
             document.querySelector('#user').classList.add(`walk${numCorrect}`);
             this.setState({
-                userProgress: numCorrect, 
+                userProgress: numCorrect,
                 answersCount: {
-                        correct: numCorrect,
-                        incorrect: this.state.answersCount.incorrect
-                    }
+                    correct: numCorrect,
+                    incorrect: this.state.answersCount.incorrect
+                }
             }, function () {
-                    if (sessionStorage.getItem(`numWrong${ID}`)) {
-                        document.querySelector('#teacher').classList.add(`walk${numWrong}`);
-                        this.setState({
-                            teacherProgress: numWrong,
-                            answersCount: {
-                                correct: this.state.answersCount.correct,
-                                incorrect: numWrong
-                            }
-                        })
-                    }
-                })
+                if (sessionStorage.getItem(`numWrong${ID}`)) {
+                    document.querySelector('#teacher').classList.add(`walk${numWrong}`);
+                    this.setState({
+                        teacherProgress: numWrong,
+                        answersCount: {
+                            correct: this.state.answersCount.correct,
+                            incorrect: numWrong
+                        }
+                    })
+                }
+            })
         } else {
             if (sessionStorage.getItem(`numWrong${ID}`)) {
                 document.querySelector('#teacher').classList.add(`walk${numWrong}`);
@@ -93,8 +94,8 @@ class GamePlay extends Component {
                 this.setState({
                     game: res.data,
                     maxWrong: res.data.numberWrongPermitted,
-                    maxRight: res.data.numberofQuestions-res.data.numberWrongPermitted
-                },function(){
+                    maxRight: res.data.numberofQuestions - res.data.numberWrongPermitted
+                }, function () {
                     console.log(this.state.maxWrong, this.state.maxRight);
                 })
             })
@@ -104,12 +105,13 @@ class GamePlay extends Component {
     toggle = () => {
         this.setState({
             modal: !this.state.modal,
+            disableGame: true
         });
     }
 
 
     shuffleArray(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
+        let currentIndex = array.length, temporaryValue, randomIndex;
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
             // Pick a remaining element...
@@ -142,6 +144,23 @@ class GamePlay extends Component {
         this.setNextQuestion();
     }
 
+    logScore = wonLost => {
+        let won = true;
+        if (wonLost === "lost") won = false;
+        let scoreObj = {
+            numRight: this.state.answersCount.correct,
+            numWrong: this.state.answersCount.incorrect,
+            won: won
+        }
+        scoreAPI.saveScore(scoreObj, this.state.gameID, sessionStorage.getItem("userID"))
+            .then(res => {
+                sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
+                sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
+                sessionStorage.removeItem(`gameCounter${sessionStorage.getItem("gameID")}`);
+                this.toggle();
+            })
+            .catch(err => console.log(err));
+    }
 
     setUserAnswer = answer => {
         if (answer === this.state.correctAnswer) {
@@ -156,10 +175,7 @@ class GamePlay extends Component {
             });
             this.walkleft();
             if (this.state.answersCount.correct >= this.state.maxRight) {
-                sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
-                sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
-                sessionStorage.removeItem(`gameCounter${sessionStorage.getItem("gameID")}`);
-                this.toggle()
+                this.logScore("won");
             }
         }
         else {
@@ -174,10 +190,7 @@ class GamePlay extends Component {
             });
             this.walkright();
             if (this.state.answersCount.incorrect >= this.state.maxWrong) {
-                sessionStorage.removeItem(`numCorrect${sessionStorage.getItem("gameID")}`);
-                sessionStorage.removeItem(`numWrong${sessionStorage.getItem("gameID")}`);
-                sessionStorage.removeItem(`gameCounter${sessionStorage.getItem("gameID")}`);
-                this.toggle()
+                this.logScore("lost");
             }
         }
         console.log(
@@ -286,26 +299,24 @@ class GamePlay extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <div className="footer">
-                                <button>
-                                    <Link onClick={this.handleAnswerSelected} to="/User">
-                                        Home
-                                    </Link>
-                                </button>
+                                    <ButtonBtn><Link to="/User">Home</Link></ButtonBtn>
                             </div>
                         </ModalFooter>
                     </Modal>
 
                     <div className="container gameContainer">
                         <div className="game">
-                            <Game
-                                answer={this.state.answer}
-                                correctAnswer={this.state.correctAnswer}
-                                answers={this.state.answers}
-                                questionId={this.state.counter + 1}
-                                question={this.state.question}
-                                questionTotal={this.state.game.questions.length}
-                                onAnswerSelected={this.handleAnswerSelected}
-                            />
+                            {this.state.disableGame ? <ButtonBtn><Link to="/User">Home</Link></ButtonBtn> :
+                                <Game
+                                    answer={this.state.answer}
+                                    correctAnswer={this.state.correctAnswer}
+                                    answers={this.state.answers}
+                                    questionId={this.state.counter + 1}
+                                    question={this.state.question}
+                                    questionTotal={this.state.game.questions.length}
+                                    onAnswerSelected={this.handleAnswerSelected}
+                                />
+                            }
                             <div className="animationWrap">
                                 <Animation />
                             </div>

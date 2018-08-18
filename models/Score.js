@@ -8,14 +8,20 @@ const Schema = mongoose.Schema;
 const ScoreSchema = new Schema({
     // `title` is required and of type String
     score: {
-        type: Number,
-        required: true
+        numRight: {
+            type: Number,
+            required: true
+        },
+        numWrong: {
+            type: Number,
+            required: true
+        },
+        won:{
+            type: Boolean,
+            required: true
+        }
     },
     // `link` is required and of type String
-    name: {
-        type: String,
-        required: true
-    },
     game: {
         type: Schema.Types.ObjectId,
         ref: "Game"
@@ -29,4 +35,4 @@ const ScoreSchema = new Schema({
 // This creates our model from the above schema, using mongoose's model method
 const Score = mongoose.model("Score", ScoreSchema);
 
-module.exports=Score;
+module.exports = Score;

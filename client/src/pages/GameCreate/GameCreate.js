@@ -24,7 +24,7 @@ class GameCreate extends Component {
                     {this.props.showEdit ? (
                         <div>
                             <h3>Edit Question</h3>
-                            <form>
+                            <form className="container">
                                 <textarea
                                     className="form-control"
                                     rows="3"
@@ -67,7 +67,6 @@ class GameCreate extends Component {
                         </div>) : (
                             <div>
                                 <h3>Create Question</h3>
-                                <h5>{this.props.game.name}</h5>
                                 <form className="container">
                                     <textarea
                                         className="form-control"

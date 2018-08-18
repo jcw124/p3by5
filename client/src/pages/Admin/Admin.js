@@ -202,6 +202,7 @@ class Admin extends Component {
                 })
                 this.setState({
                     questions: newArray,
+                    questionDisplay: newArray[this.state.questionIndex],
                     updateQuestion: "",
                     updateAnswer1: "",
                     updateAnswer2: "",
@@ -360,7 +361,7 @@ class Admin extends Component {
                     <Navigation />
                     <div className="AdminWrap">
                         <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
-                            <ModalHeader toggle={this.toggle}>Edit Game</ModalHeader>
+                            <ModalHeader toggle={this.toggle}>Edit {this.state.currentGame.name}</ModalHeader>
                             <ModalBody>
                                 <GameCreate questions={this.state.questions}
                                     gameID={this.state.selectedGameID}
@@ -452,7 +453,7 @@ class Admin extends Component {
                                     <h4>{this.state.gameForScores}</h4>
                                     {this.state.scores.length ? (
                                         <div className="row">
-                                            <div className="col-4">
+                                            <div className="col-3">
                                                 <ul className="list-group list-group-flush">
                                                     <li className="list-group-item list-group-title">Username</li>
                                                     {this.state.scores.map(score =>
@@ -460,19 +461,29 @@ class Admin extends Component {
                                                     )}
                                                 </ul>
                                             </div>
-                                            <div className="col-4">
+                                            <div className="col-3">
                                                 <ul className="list-group list-group-flush">
-                                                    <li className="list-group-item list-group-title">Name</li>
+                                                    <li className="list-group-item list-group-title">Number Correct</li>
                                                     {this.state.scores.map(score =>
-                                                        <li key={score._id} className="list-group-item list-group-child"> {score.name}</li>
+                                                        < li key={score._id} className="list-group-item list-group-child"> {score.score.numRight}</li>
                                                     )}
                                                 </ul>
                                             </div>
-                                            <div className="col-4">
+                                            <div className="col-3">
                                                 <ul className="list-group list-group-flush">
-                                                    <li className="list-group-item list-group-title">Name</li>
+                                                    <li className="list-group-item list-group-title">Number Wrong</li>
                                                     {this.state.scores.map(score =>
-                                                        < li key={score._id} className="list-group-item list-group-child"> {score.score}</li>
+                                                        < li key={score._id} className="list-group-item list-group-child"> {score.score.numWrong}</li>
+                                                    )}
+                                                </ul>
+                                            </div>
+                                            <div className="col-3">
+                                                <ul className="list-group list-group-flush">
+                                                    <li className="list-group-item list-group-title">Won/Lost</li>
+                                                    {this.state.scores.map(score =>
+                                                        < li key={score._id} className="list-group-item list-group-child">
+                                                            {score.score.won ? <span id="won-span">Won</span> : <span id="lost-span">Lost</span>}
+                                                        </li>
                                                     )}
                                                 </ul>
                                             </div>
