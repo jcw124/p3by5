@@ -6,7 +6,7 @@ import { List, ListItem } from "../../components/List";
 import { Link } from 'react-router-dom';
 import ButtonBtn from "../../components/ButtonBtn";
 import { Input, FormBtn } from "../../components/Form";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 import GameCreate from "../GameCreate";
 import './Admin.css';
 
@@ -452,42 +452,26 @@ class Admin extends Component {
                                     <h1>High Scores</h1>
                                     <h4>{this.state.gameForScores}</h4>
                                     {this.state.scores.length ? (
-                                        <div className="row">
-                                            <div className="col-3">
-                                                <ul className="list-group list-group-flush">
-                                                    <li className="list-group-item list-group-title">Username</li>
-                                                    {this.state.scores.map(score =>
-                                                        <li key={score._id} className="list-group-item list-group-child">{score.user.username}</li>
-                                                    )}
-                                                </ul>
-                                            </div>
-                                            <div className="col-3">
-                                                <ul className="list-group list-group-flush">
-                                                    <li className="list-group-item list-group-title">Number Correct</li>
-                                                    {this.state.scores.map(score =>
-                                                        < li key={score._id} className="list-group-item list-group-child"> {score.score.numRight}</li>
-                                                    )}
-                                                </ul>
-                                            </div>
-                                            <div className="col-3">
-                                                <ul className="list-group list-group-flush">
-                                                    <li className="list-group-item list-group-title">Number Wrong</li>
-                                                    {this.state.scores.map(score =>
-                                                        < li key={score._id} className="list-group-item list-group-child"> {score.score.numWrong}</li>
-                                                    )}
-                                                </ul>
-                                            </div>
-                                            <div className="col-3">
-                                                <ul className="list-group list-group-flush">
-                                                    <li className="list-group-item list-group-title">Won/Lost</li>
-                                                    {this.state.scores.map(score =>
-                                                        < li key={score._id} className="list-group-item list-group-child">
-                                                            {score.score.won ? <span id="won-span">Won</span> : <span id="lost-span">Lost</span>}
-                                                        </li>
-                                                    )}
-                                                </ul>
-                                            </div>
-                                        </div>
+                                        <Table borderless size="sm">
+                                        <thead>
+                                          <tr>
+                                            <th>Username</th>
+                                            <th>Number Correct</th>
+                                            <th>Number Wrong</th>
+                                            <th>Won/Lost</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        {this.state.scores.map(score =>
+                                          <tr key={score._id}>
+                                            <td>{score.user.username}</td>
+                                            <td>{score.score.numRight}</td>
+                                            <td>{score.score.numWrong}</td>
+                                            <td>{score.score.won?"Won":"Lost"}</td>
+                                          </tr>
+                                        )}
+                                        </tbody>
+                                      </Table>
                                     ) : (
                                             <h3>No Scores to Display</h3>
                                         )}

@@ -13,7 +13,7 @@ exports.getScores = function (req, res) {
     if (req.query.user) { query.user = req.query.user };
     db.Score.find(query)
         .populate("user")
-        .sort({ "score.numRight": -1 })
+        .sort([["score.won", -1], ["score.numRight", -1], ["score.numWrong", 1], ["score.user.username", 1]])
         .then(function (dbScores) {
             // If we were able to successfully find an Headline with the given id, send it back to the client
             res.json(dbScores);
