@@ -8,6 +8,26 @@
     background: transparent !important;
     border:none !important;
 }
+.AdminWrap tbody{
+    color: white;
+    font-weight: 500;
+    overflow-y: auto;
+    display: block;
+    max-height: 10rem;  
+}
+thead {         
+    display: table;  
+    width: 100%;
+    table-layout: fixed;
+ }
+ tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; 
+ }
+ th, td {
+    width: auto;
+ }
 .modal-content{
     background: url("../../images/bg.jpg");
 }

@@ -7,10 +7,9 @@ export default {
         return axios.get(url);
     },
 
-    saveScore: function (score, name, gameID, userID) {
+    saveScore: function (score, gameID, userID) {
         return axios.put('/api/score', {
             score: score,
-            name: name,
             game: gameID,
             user: userID
         });

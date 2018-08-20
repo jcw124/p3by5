@@ -1,10 +1,10 @@
 import React from "react";
-import "./ButtonBtn.css"; 
+import "./ButtonBtn.css";
 
 const ButtonBtn = props => (
-        <button 
-            className="btn btn-primary" {...props}>
-        </button>
+    <button className="btn btn-primary" {...props}>
+        {props.children}
+    </button>
 );
 
 export default ButtonBtn;
